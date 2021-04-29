@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.dorianpb.cem.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "entityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
