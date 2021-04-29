@@ -45,6 +45,7 @@ Please don't repost this project anywhere without my written permission first.
 * Implement the rest of the entities
 * Maybe support custom animation translation the same way as optifine?
 * `attach` support
+* A better icon! This one succs
 
 ## Credits
 * dorianpb, for actually creating the mod
