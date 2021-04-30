@@ -8,7 +8,7 @@ This mod is currently in ***ALPHA***, meaning that things *MAY* or *MAY NOT* wor
 
 ## Installation
 
-Check out the CurseForge page for downloads, or build it yourself. This mod *DOES* require the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader") and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api "Fabric API").
+Check out the [CurseForge page for downloads](https://www.curseforge.com/minecraft/mc-mods/custom-entity-models-cem "CurseForge Page"), or build it yourself. This mod *DOES* require the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader") and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api "Fabric API").
 
 ## How to use
 
