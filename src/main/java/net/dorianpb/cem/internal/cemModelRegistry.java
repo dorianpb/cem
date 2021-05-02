@@ -17,6 +17,7 @@ public class cemModelRegistry{
     private final HashMap<ArrayList<String>,cemModelEntry> database;
     private final ArrayList<cemAnimation> animations;
     private final jemFile file;
+    private Model in;
     
     
     public cemModelRegistry(LinkedTreeMap<String,Object> json, String path){
@@ -32,6 +33,7 @@ public class cemModelRegistry{
      * @param pivotZ Pivot the whole model in the Z direction by this amount
      */
     public void initModels(Model in, float pivotX, float pivotY, float pivotZ){
+        this.in = in;
         in.textureWidth = this.file.getTextureSize().get(0).intValue();
         in.textureHeight = this.file.getTextureSize().get(1).intValue();
         //models
@@ -82,7 +84,12 @@ public class cemModelRegistry{
      * @return The ModelPart of the specified part
      */
     public ModelPart getModel(String key){
-        return this.findChild(key).getModel();
+        try{
+            return this.findChild(key).getModel();
+        } catch(Exception e){
+            cemFairy.getLogger().error(e.getMessage());
+            return new ModelPart(in);
+        }
     }
     
     /**Test if the user specified a special texture to use
