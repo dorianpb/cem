@@ -38,7 +38,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 
 ## Licensing
 
-This project is licensed with AGPL v3.0.
+This project is licensed with LGPL v3.0.
 Please don't repost this project anywhere without my written permission first.
 
 ## Goals
