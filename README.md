@@ -21,7 +21,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 
 ## Differences
 * For now, only the following entities are supported (in alphabetical order):
-  	* Armor Stand
+  	* Armor Stands
 	* Blazes
 	* Cats
 	* Creepers
