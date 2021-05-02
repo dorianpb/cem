@@ -9,7 +9,7 @@
     "homepage": "https://github.com/dorianpb/cem",
     "issues": "https://github.com/dorianpb/cem/issues"
   },
-  "license": " AGPL-3.0-only",
+  "license": " LGPL-3.0-only",
   "icon": "assets/cem/icon.png",
   "environment": "client",
   "accessWidener" : "cem.accesswidener",
