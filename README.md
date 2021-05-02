@@ -46,6 +46,7 @@ Please don't repost this project anywhere without my written permission first.
 * Maybe support custom animation translation the same way as optifine?
 * `attach` support
 * A better icon! This one succs
+* Port to 1.17 for various reasons
 
 ## Credits
 * dorianpb, for actually creating the mod
