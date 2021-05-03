@@ -26,6 +26,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 	* Cats
 	* Creepers
 	* Endermen
+  	* Ocelots
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	
 * Custom shadow sizes are not supported.
