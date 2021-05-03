@@ -31,7 +31,13 @@ class cemModelEntry{
         }
     }
     
+    cemModelEntry(jemModel file, jemFile jemFile){
+        this(file.getPart(),file.getModelDef(),null,new float[]{0,0,0},new float[]{0,24,0},0,file.getScale().floatValue(),jemFile.getTextureSize().get(0).intValue(),jemFile.getTextureSize().get(1).intValue());
+    }
     private cemModelEntry(String part, jpmFile data, Model in, float[] debugpos, float[] parents, int gen, float scale){
+        this(part,data,in,debugpos,parents,gen,scale,0,0);
+    }
+    private cemModelEntry(String part, jpmFile data, Model in, float[] debugpos, float[] parents, int gen, float scale, int textureWidth, int textureHeight){
         this.id = data.getId();
         this.part = part;
         this.children = new HashMap<>();
@@ -45,7 +51,13 @@ class cemModelEntry{
                 data.getRotate().get(1).floatValue() * ((data.getInvertAxis()[1])?1:-1),
                 data.getRotate().get(2).floatValue() * ((data.getInvertAxis()[2])?1:-1),
         };
-        this.model = new cemModelPart(in); this.initmodel(data, debugpos,parents,gen,scale);
+        if(in!=null){
+            this.model = new cemModelPart(in);
+            
+        } else {
+            this.model = new cemModelPart(textureWidth,textureHeight);
+        }
+        this.initmodel(data, debugpos, parents, gen, scale);
         //CHILD INIT
         if(data.getSubmodels()!=null){
             for(jpmFile submodel : data.getSubmodels()){
@@ -171,6 +183,12 @@ class cemModelEntry{
         
         private cemModelPart(Model model){
             super(model);
+            this.scale = new float[]{0,0,0};
+            this.rotation = new float[]{0,0,0};
+        }
+        
+        private cemModelPart(int textureWidth, int texureHeight){
+            super(textureWidth,texureHeight,0,0);
             this.scale = new float[]{0,0,0};
             this.rotation = new float[]{0,0,0};
         }

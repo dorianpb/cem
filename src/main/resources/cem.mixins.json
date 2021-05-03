@@ -4,6 +4,7 @@
   "package": "net.dorianpb.cem.mixins",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "blockEntityRendererMixin",
     "entityRendererMixin"
   ],
   "injectors": {

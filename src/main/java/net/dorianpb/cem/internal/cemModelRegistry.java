@@ -34,12 +34,19 @@ public class cemModelRegistry{
      */
     public void initModels(Model in, float pivotX, float pivotY, float pivotZ){
         this.in = in;
-        in.textureWidth = this.file.getTextureSize().get(0).intValue();
-        in.textureHeight = this.file.getTextureSize().get(1).intValue();
+        if(in!=null){
+            in.textureWidth = this.file.getTextureSize().get(0).intValue();
+            in.textureHeight = this.file.getTextureSize().get(1).intValue();
+        }
         //models
         for(String part : this.file.getModelList()){
             jemModel data = this.file.getModel(part);
-            cemModelEntry entry = new cemModelEntry(data,in,pivotX,pivotY,pivotZ);
+            cemModelEntry entry;
+            if(in!=null){
+                entry = new cemModelEntry(data, in, pivotX, pivotY, pivotZ);
+            } else {
+                entry = new cemModelEntry(data, file);
+            }
             this.addEntry(entry, new ArrayList<>());
         }
         //animations
