@@ -5,8 +5,10 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -90,7 +92,7 @@ public abstract class entityRendererMixin{
                     ordinal = 5
             )
     )
-    private void addBlaze(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<CatEntity> entityRenderer) {
+    private void addBlaze(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<BlazeEntity> entityRenderer) {
         register(EntityType.BLAZE, new cemBlazeRenderer(entityRenderDispatcher));
     }
     @Redirect(
@@ -101,7 +103,7 @@ public abstract class entityRendererMixin{
                     ordinal = 1
             )
     )
-    private void addArmorStand(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<CatEntity> entityRenderer) {
+    private void addArmorStand(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<ArmorStandEntity> entityRenderer) {
         register(EntityType.ARMOR_STAND, new cemArmorStandRenderer(entityRenderDispatcher));
     }
     @Redirect(
@@ -112,7 +114,7 @@ public abstract class entityRendererMixin{
                     ordinal = 56
             )
     )
-    private void addOcelot(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<CatEntity> entityRenderer) {
+    private void addOcelot(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<OcelotEntity> entityRenderer) {
         register(EntityType.OCELOT, new cemOcelotRenderer(entityRenderDispatcher));
     }
 }
