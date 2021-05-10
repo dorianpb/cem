@@ -10,7 +10,6 @@ public class cemBatModel extends BatEntityModel{
     public cemBatModel(cemModelRegistry registry) {
         super();
         this.registry = registry;
-//        this.registry.setGen("outer_left_wing",true);
         this.registry.initModels(this);
         this.head = this.registry.getModel("head");
         this.body = this.registry.getModel("body");
