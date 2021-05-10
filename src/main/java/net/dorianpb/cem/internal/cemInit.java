@@ -56,7 +56,7 @@ public class cemInit implements ClientModInitializer {
                             } catch (Exception exception){
                                 cemFairy.getLogger().error("Error parsing "+ id +":");
                                 String message = exception.getMessage();
-                                cemFairy.getLogger().error(message);
+                                cemFairy.getLogger().error(exception);
                                 if(message == null || message.trim().equals("")) {
                                     cemFairy.getLogger().error(exception.getStackTrace()[0]);
                                     cemFairy.getLogger().error(exception.getStackTrace()[1]);
