@@ -77,11 +77,13 @@ public class cemModelRegistry{
         this.initModels(in,0,0,0);
     }
     
+    
     private void addEntry(cemModelEntry entry, ArrayList<String> parentRefmap){
         ArrayList<String> refmap;
         if(parentRefmap!=null && parentRefmap.size()>0){
-            //noinspection unchecked
-            refmap = (ArrayList<String>) parentRefmap.clone();
+            @SuppressWarnings("unchecked")
+            ArrayList<String> temp = (ArrayList<String>) parentRefmap.clone();
+            refmap = temp;
         } else{
             refmap = new ArrayList<>();
             if(entry.getPart()!=null){
