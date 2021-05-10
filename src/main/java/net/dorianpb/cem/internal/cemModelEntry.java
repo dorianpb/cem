@@ -30,13 +30,13 @@ class cemModelEntry{
             }
         }
     }
-    
     cemModelEntry(jemModel file, jemFile jemFile){
         this(file.getPart(),file.getModelDef(),null,new float[]{0,0,0},new float[]{0,24,0},0,file.getScale().floatValue(),jemFile.getTextureSize().get(0).intValue(),jemFile.getTextureSize().get(1).intValue());
     }
     private cemModelEntry(String part, jpmFile data, Model in, float[] debugpos, float[] parents, int gen, float scale){
         this(part,data,in,debugpos,parents,gen,scale,0,0);
     }
+    
     private cemModelEntry(String part, jpmFile data, Model in, float[] debugpos, float[] parents, int gen, float scale, int textureWidth, int textureHeight){
         this.id = data.getId();
         this.part = part;
@@ -61,8 +61,10 @@ class cemModelEntry{
         //CHILD INIT
         if(data.getSubmodels()!=null){
             for(jpmFile submodel : data.getSubmodels()){
+                float childZ = (gen==0) ? ((data.getTranslate().get(2).floatValue()) * (data.getInvertAxis()[2] ? -1 : 1)) : 0;
                 float childY = (gen==0) ? ((data.getTranslate().get(1).floatValue()) * (data.getInvertAxis()[1] ? -1 : 1)) : 0;
-                this.addChild(new cemModelEntry(null,submodel,in,new float[]{0,0,0},new float[]{this.getModel().pivotX,childY,this.getModel().pivotZ},gen+1,1));
+                float childX = (gen==0) ? ((data.getTranslate().get(0).floatValue()) * (data.getInvertAxis()[0] ? -1 : 1)) : 0;
+                this.addChild(new cemModelEntry(null,submodel,in,new float[]{0,0,0},new float[]{childX,childY,childZ},gen+1,1));
             }
         }
         //END CHILD INIT
