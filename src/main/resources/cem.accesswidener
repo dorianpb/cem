@@ -76,3 +76,17 @@ mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRe
 accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  pillar          Lnet/minecraft/client/model/ModelPart;
 mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  crossbar        Lnet/minecraft/client/model/ModelPart;
 accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  crossbar        Lnet/minecraft/client/model/ModelPart;
+
+#Bat
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             head            Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             head            Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             body            Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             body            Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             rightWingTip    Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             rightWingTip    Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;

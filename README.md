@@ -23,6 +23,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 * For now, only the following entities are supported (in alphabetical order):
   	* Armor Stands
   	* Banners
+  	* Bats
 	* Blazes
 	* Cats
 	* Creepers

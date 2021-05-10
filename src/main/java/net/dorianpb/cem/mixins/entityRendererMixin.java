@@ -117,4 +117,15 @@ public abstract class entityRendererMixin{
     private void addOcelot(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<OcelotEntity> entityRenderer) {
         register(EntityType.OCELOT, new cemOcelotRenderer(entityRenderDispatcher));
     }
+    @Redirect(
+            method = "registerRenderers",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;register(Lnet/minecraft/entity/EntityType;Lnet/minecraft/client/render/entity/EntityRenderer;)V",
+                    ordinal = 3
+            )
+    )
+    private void addBat(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<OcelotEntity> entityRenderer) {
+        register(EntityType.BAT, new cemBatRenderer(entityRenderDispatcher));
+    }
 }
