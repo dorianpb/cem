@@ -52,6 +52,11 @@ Please don't repost this project anywhere without my written permission first.
 * A better icon! This one succs
 * Port to 1.17 for various reasons
 
+## For mod devs
+
+If your fabric mod creates new entities, you can add support for CEM without too much work! plz consider...
+I'll make a step-by-step guide later, but basically what you would have to do is make CEM variants of your renderer and model (look in `src/main/java/net/dorianpb/cem/external` for examples)
+
 ## Credits
 * dorianpb, for actually creating the mod
 * sp614x, for Optifine's CEM, which this mod is based on
