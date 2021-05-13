@@ -24,6 +24,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
   	* Armor Stands
   	* Banners
   	* Bats
+  	* Bees
 	* Blazes
 	* Cats
 	* Creepers
