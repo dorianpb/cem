@@ -77,6 +77,26 @@ public class cemModelRegistry{
         this.initModels(in,0,0,0);
     }
     
+    /**Sets the second part to be the child of the first during model creation, call after initmodels()!
+     * MAKE SURE TO DO THIS TO THE YOUNGEST PARTS FIRST AND WORK YOUR WAY UP!
+     * For example, if you have a parent, a child, and grandchild, you should call
+     * setChild("child","grandchild"), then setChild("parent","child")! Will silently fail if both parts are not present.
+     * @param parentPart Name of parent part.
+     * @param childPart Name of child part.
+     */
+    public void setChild(String parentPart, String childPart){
+        cemModelEntry parent = this.getEntryByPartName(parentPart);
+        cemModelEntry child = this.getEntryByPartName(childPart);
+        if(parent==null || child==null){
+            return;
+        }
+        parent.getModel().addChild(child.getModel());
+        child.getModel().pivotX = (parent.getModel().pivotX - child.getModel().pivotX) * (child.getInvertAxis()[0] ?-1 : 1);
+        child.getModel().pivotY = (parent.getModel().pivotY - child.getModel().pivotY) * (child.getInvertAxis()[1] ?-1 : 1);
+        child.getModel().pivotZ = (parent.getModel().pivotZ - child.getModel().pivotZ) * (child.getInvertAxis()[2] ?-1 : 1);
+        
+    }
+    
     
     private void addEntry(cemModelEntry entry, ArrayList<String> parentRefmap){
         ArrayList<String> refmap;
@@ -102,12 +122,16 @@ public class cemModelRegistry{
      * @return The ModelPart of the specified part
      */
     public ModelPart getModel(String key){
-        try{
-            return this.findChild(key).getModel();
-        } catch(Exception e){
-            cemFairy.getLogger().warn(e.getMessage());
-            return new ModelPart(in);
+        cemModelEntry entry = this.getEntryByPartName(key);
+        return entry!=null?entry.getModel():new ModelPart(in);
+    }
+    
+    private cemModelEntry getEntryByPartName(String key){
+        if(this.partNameRefs.containsKey(key)){
+            return this.partNameRefs.get(key);
         }
+        cemFairy.getLogger().warn("Model part "+key+" isn't specified in "+this.file.getPath());
+        return null;
     }
     
     /**Test if the user specified a special texture to use

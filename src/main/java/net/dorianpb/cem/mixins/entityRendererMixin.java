@@ -7,6 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -125,7 +127,18 @@ public abstract class entityRendererMixin{
                     ordinal = 3
             )
     )
-    private void addBat(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<OcelotEntity> entityRenderer) {
+    private void addBat(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<BatEntity> entityRenderer) {
         register(EntityType.BAT, new cemBatRenderer(entityRenderDispatcher));
+    }
+    @Redirect(
+            method = "registerRenderers",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;register(Lnet/minecraft/entity/EntityType;Lnet/minecraft/client/render/entity/EntityRenderer;)V",
+                    ordinal = 4
+            )
+    )
+    private void addBee(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<BeeEntity> entityRenderer) {
+        register(EntityType.BEE, new cemBeeRenderer(entityRenderDispatcher));
     }
 }

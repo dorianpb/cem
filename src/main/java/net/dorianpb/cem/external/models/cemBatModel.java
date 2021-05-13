@@ -17,12 +17,11 @@ public class cemBatModel extends BatEntityModel{
         this.rightWing = this.registry.getModel("right_wing");
         this.leftWingTip = this.registry.getModel("outer_left_wing");
         this.rightWingTip = this.registry.getModel("outer_right_wing");
-        this.body.addChild(this.rightWing);
-        this.body.addChild(this.leftWing);
-        this.rightWing.addChild(this.rightWingTip);
-        this.rightWingTip.pivotZ += 3;
-        this.leftWingTip.pivotZ += 3;
-        this.leftWing.addChild(this.leftWingTip);
+        
+        this.registry.setChild("right_wing","outer_right_wing");
+        this.registry.setChild("left_wing","outer_left_wing");
+        this.registry.setChild("body","left_wing");
+        this.registry.setChild("body","right_wing");
     }
     
     @Override

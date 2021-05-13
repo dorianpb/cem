@@ -10,7 +10,7 @@ class jpmFile {
     private final String id;
     private final String texture;
     private final ArrayList<Double> textureSize;
-    private final Boolean[] invertAxis;
+    private final boolean[] invertAxis;
     private final ArrayList<Double> translate;
     private final ArrayList<Double> rotate;
     private final Boolean[] mirrorTexture;
@@ -26,7 +26,7 @@ class jpmFile {
         this.textureSize = (ArrayList<Double>) json.get("textureSize");
 
         String axes = (String) json.getOrDefault("invertAxis","");
-        this.invertAxis = new Boolean[]{axes.indexOf('x') > -1,axes.indexOf('y') > -1,axes.indexOf('z') > -1};
+        this.invertAxis = new boolean[]{axes.contains("x"),axes.contains("y"),axes.contains("z")};
 
         this.translate = (ArrayList<Double>) json.getOrDefault("translate",new ArrayList<>(Arrays.asList(0D, 0D, 0D)));
         this.rotate = (ArrayList<Double>) json.getOrDefault("rotate",new ArrayList<>(Arrays.asList(0D, 0D, 0D)));
@@ -70,7 +70,7 @@ class jpmFile {
         return translate;
     }
     
-    Boolean[] getInvertAxis(){
+    boolean[] getInvertAxis(){
         return invertAxis;
     }
     
@@ -157,4 +157,3 @@ class jpmFile {
         }
     }
 }
-

@@ -46,7 +46,7 @@ public class cemBatRenderer extends BatEntityRenderer implements cemRenderer{
     
     @Override
     public Identifier getTexture(BatEntity batEntity){
-            if(this.registry!=null && this.registry.hasTexture()){
+        if(this.registry!=null && this.registry.hasTexture()){
             return this.registry.getTexture();
         }
         return super.getTexture(batEntity);

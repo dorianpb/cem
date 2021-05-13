@@ -9,18 +9,6 @@ accessible  field   net/minecraft/client/model/ModelPart                        
 accessible  field   net/minecraft/client/model/ModelPart                                textureOffsetU  I
 accessible  field   net/minecraft/client/model/ModelPart                                textureOffsetV  I
 
-#ModelPart.Cuboid (double sorry)
-#accessible  field   net/minecraft/client/model/ModelPart$Cuboid                        sides           [Lnet/minecraft/client/model/ModelPart$Quad;
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        sides           [Lnet/minecraft/client/model/ModelPart$Quad;
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        minX            F
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        maxX            F
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        minY            F
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        maxY            F
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        minZ            F
-#mutable     field   net/minecraft/client/model/ModelPart$Cuboid                        maxZ            F
-
-
-
 #Piglin-chan and company
 mutable     field   net/minecraft/client/render/entity/model/PiglinEntityModel          rightEar        Lnet/minecraft/client/model/ModelPart;
 mutable     field   net/minecraft/client/render/entity/model/PiglinEntityModel          leftEar         Lnet/minecraft/client/model/ModelPart;
@@ -90,3 +78,25 @@ mutable     field   net/minecraft/client/render/entity/model/BatEntityModel     
 accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             rightWingTip    Lnet/minecraft/client/model/ModelPart;
 mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;
 accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;
+
+#Bee
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             body            Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             body            Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             torso           Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             torso           Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             frontLegs       Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             frontLegs       Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             middleLegs      Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             middleLegs      Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             backLegs        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             backLegs        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             stinger         Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             stinger         Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             leftAntenna     Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             leftAntenna     Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;

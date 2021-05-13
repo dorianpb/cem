@@ -19,6 +19,7 @@ class cemModelEntry{
     private final cemModelPart model;
     private final float[] translates;
     private final float[] rotates;
+    private final boolean[] invertAxis;
     
     cemModelEntry(jemModel file, Model in, float x, float y, float z){
         this(file.getPart(),file.getModelDef(),in,new float[]{x,y,z},new float[]{0,24,0},0,file.getScale().floatValue());
@@ -41,16 +42,18 @@ class cemModelEntry{
         this.id = data.getId();
         this.part = part;
         this.children = new HashMap<>();
+        this.invertAxis = data.getInvertAxis();
         this.translates = new float[]{
-                (data.getTranslate().get(0).floatValue()) * (data.getInvertAxis()[0]?-1:1) + debugpos[0],
-                (data.getTranslate().get(1).floatValue()) * (data.getInvertAxis()[1]?-1:1) + debugpos[1],
-                (data.getTranslate().get(2).floatValue()) * (data.getInvertAxis()[2]?-1:1) + debugpos[2],
+                (data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]?-1:1) + debugpos[0],
+                (data.getTranslate().get(1).floatValue()) * (this.invertAxis[1]?-1:1) + debugpos[1],
+                (data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]?-1:1) + debugpos[2],
         };
         this.rotates = new float[]{
-                data.getRotate().get(0).floatValue() * ((data.getInvertAxis()[0])?1:-1),
-                data.getRotate().get(1).floatValue() * ((data.getInvertAxis()[1])?1:-1),
-                data.getRotate().get(2).floatValue() * ((data.getInvertAxis()[2])?1:-1),
+                data.getRotate().get(0).floatValue() * ((this.invertAxis[0])?1:-1),
+                data.getRotate().get(1).floatValue() * ((this.invertAxis[1])?1:-1),
+                data.getRotate().get(2).floatValue() * ((this.invertAxis[2])?1:-1),
         };
+        
         if(in!=null){
             this.model = new cemModelPart(in);
             
@@ -61,9 +64,9 @@ class cemModelEntry{
         //CHILD INIT
         if(data.getSubmodels()!=null){
             for(jpmFile submodel : data.getSubmodels()){
-                float childZ = (gen==0) ? ((data.getTranslate().get(2).floatValue()) * (data.getInvertAxis()[2] ? -1 : 1)) : 0;
-                float childY = (gen==0) ? ((data.getTranslate().get(1).floatValue()) * (data.getInvertAxis()[1] ? -1 : 1)) : 0;
-                float childX = (gen==0) ? ((data.getTranslate().get(0).floatValue()) * (data.getInvertAxis()[0] ? -1 : 1)) : 0;
+                float childZ = (gen==0) ? ((data.getTranslate().get(2).floatValue()) * (this.invertAxis[2] ? -1 : 1)) : 0;
+                float childY = (gen==0) ? ((data.getTranslate().get(1).floatValue()) * (this.invertAxis[1] ? -1 : 1)) : 0;
+                float childX = (gen==0) ? ((data.getTranslate().get(0).floatValue()) * (this.invertAxis[0] ? -1 : 1)) : 0;
                 this.addChild(new cemModelEntry(null,submodel,in,new float[]{0,0,0},new float[]{childX,childY,childZ},gen+1,1));
             }
         }
@@ -73,6 +76,9 @@ class cemModelEntry{
     String getId(){ return id; }
     String getPart(){ return part; }
     cemModelPart getModel(){ return model; }
+    boolean[] getInvertAxis(){
+        return this.invertAxis;
+    }
     
     float getTranslate(char axis){
         switch(axis){
@@ -112,23 +118,23 @@ class cemModelEntry{
     
     private void initmodel(jpmFile data, float[] debugpos, float[] parents, int gen, float scale){
         float[] pivot= new float[]{
-                (gen==1)?(parents[0]+(data.getTranslate().get(0).floatValue()) * (data.getInvertAxis()[0] ?-1 : 1)):((data.getTranslate().get(0).floatValue()) * (data.getInvertAxis()[0] ? (gen==0)?1:-1 : 1)) + debugpos[0],
+                (gen==1)?(parents[0]+(data.getTranslate().get(0).floatValue()) * (this.invertAxis[0] ?-1 : 1)):((data.getTranslate().get(0).floatValue()) * (this.invertAxis[0] ? (gen==0)?1:-1 : 1)) + debugpos[0],
                 (
                         (gen==0)
-                                ?(parents[1] - (data.getTranslate().get(1).floatValue() * (data.getInvertAxis()[1] ? -1 : 1)))
+                                ?(parents[1] - (data.getTranslate().get(1).floatValue() * (this.invertAxis[1] ? -1 : 1)))
                                 :(
                                         (gen==1)
-                                                ?(parents[1] + (data.getTranslate().get(1).floatValue() * (data.getInvertAxis()[1] ? -1 : 1)))
-                                                :data.getTranslate().get(1).floatValue() * (data.getInvertAxis()[1] ? -1 : 1)
+                                                ?(parents[1] + (data.getTranslate().get(1).floatValue() * (this.invertAxis[1] ? -1 : 1)))
+                                                :data.getTranslate().get(1).floatValue() * (this.invertAxis[1] ? -1 : 1)
                                  )
                 ) + debugpos[1],
-                (gen==1)?(parents[2]+(data.getTranslate().get(2).floatValue()) * (data.getInvertAxis()[2] ?-1 : 1)):((data.getTranslate().get(2).floatValue()) * (data.getInvertAxis()[2] ? (gen==0)?1:-1 : 1)) + debugpos[2],
+                (gen==1)?(parents[2]+(data.getTranslate().get(2).floatValue()) * (this.invertAxis[2] ?-1 : 1)):((data.getTranslate().get(2).floatValue()) * (this.invertAxis[2] ? (gen==0)?1:-1 : 1)) + debugpos[2],
         };
         ///MUST SUBTRACT FROM PARENT FOR GEN1
         float[] translate= new float[]{
-                (data.getTranslate().get(0).floatValue())/* * (data.getInvertAxis()[0] ? -1 : 1)*/ + debugpos[0],
-                (data.getTranslate().get(1).floatValue())/* * (data.getInvertAxis()[1] ? -1 : 1)*/ + debugpos[1],
-                (data.getTranslate().get(2).floatValue())/* * (data.getInvertAxis()[2] ? -1 : 1)*/ + debugpos[2],
+                (data.getTranslate().get(0).floatValue())/* * (this.invertAxis[0] ? -1 : 1)*/ + debugpos[0],
+                (data.getTranslate().get(1).floatValue())/* * (this.invertAxis[1] ? -1 : 1)*/ + debugpos[1],
+                (data.getTranslate().get(2).floatValue())/* * (this.invertAxis[2] ? -1 : 1)*/ + debugpos[2],
         };
         if(data.getBoxes()!=null){
             for(jpmBox box : data.getBoxes()){
@@ -136,11 +142,11 @@ class cemModelEntry{
                 //top level model pivots need to translated up by 24, then 1st gen children need to work off of that rather than the translate values provided by the jpmFile
                 //only top level models need translates applied, others are relative to parent (even gen1)
                 this.model.addCemCuboid(
-                        ((box.getCoordinates().get(0).floatValue() + ((gen==0)?translate[0]:0)) * ((data.getInvertAxis()[0])?-1:1)) - ((data.getInvertAxis()[0])?box.getCoordinates().get(3).floatValue():0),
+                        ((box.getCoordinates().get(0).floatValue() + ((gen==0)?translate[0]:0)) * ((this.invertAxis[0])?-1:1)) - ((this.invertAxis[0])?box.getCoordinates().get(3).floatValue():0),
         
-                        ((box.getCoordinates().get(1).floatValue() + ((gen==0)?translate[1]:0)) * ((data.getInvertAxis()[1])?-1:1)) - ((data.getInvertAxis()[1])?box.getCoordinates().get(4).floatValue():0),
+                        ((box.getCoordinates().get(1).floatValue() + ((gen==0)?translate[1]:0)) * ((this.invertAxis[1])?-1:1)) - ((this.invertAxis[1])?box.getCoordinates().get(4).floatValue():0),
         
-                        ((box.getCoordinates().get(2).floatValue() + ((gen==0)?translate[2]:0)) * ((data.getInvertAxis()[2])?-1:1)) - ((data.getInvertAxis()[2])?box.getCoordinates().get(5).floatValue():0),
+                        ((box.getCoordinates().get(2).floatValue() + ((gen==0)?translate[2]:0)) * ((this.invertAxis[2])?-1:1)) - ((this.invertAxis[2])?box.getCoordinates().get(5).floatValue():0),
                         box.getCoordinates().get(3).intValue(),
                         box.getCoordinates().get(4).intValue(),
                         box.getCoordinates().get(5).intValue(),
