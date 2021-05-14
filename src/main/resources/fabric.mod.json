@@ -6,27 +6,27 @@
   "description": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
   "authors": ["dorianpb"],
   "contact": {
-    "homepage": "https://github.com/dorianpb/cem",
-    "issues": "https://github.com/dorianpb/cem/issues"
+	"homepage": "https://github.com/dorianpb/cem",
+	"issues": "https://github.com/dorianpb/cem/issues"
   },
   "license": " LGPL-3.0-only",
   "icon": "assets/cem/icon.png",
   "environment": "client",
-  "accessWidener" : "cem.accesswidener",
+  "accessWidener": "cem.accesswidener",
   "entrypoints": {
-    "client": [
-      "net.dorianpb.cem.internal.cemInit"
-    ]
+	"client": [
+	  "net.dorianpb.cem.internal.CemInit"
+	]
   },
   "mixins": [
-    "cem.mixins.json"
+	"cem.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.1",
-    "fabric": "*",
-    "minecraft": ">=1.16.4"
+	"fabricloader": ">=0.11.1",
+	"fabric": "*",
+	"minecraft": ">=1.16.4"
   },
   "conflicts": {
-    "optifabric": "*"
+	"optifabric": "*"
   }
 }
