@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRenderer{
 	private final OcelotEntityModel<OcelotEntity> vanilla;
+	private final float origShadowRadius;
 	private final String id;
 	private CemModelRegistry registry;
 	
@@ -20,6 +21,7 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 		this.id = "ocelot";
 		CemFairy.addRenderer(this, id);
 		this.vanilla = this.model;
+		this.origShadowRadius = this.shadowRadius;
 	}
 	
 	@Override
@@ -27,6 +29,9 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 		this.registry = registry;
 		try{
 			this.model = new CemOcelotModel(0.0F, registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
+			}
 		} catch(Exception e){
 			modelError(e);
 		}
@@ -41,6 +46,7 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	public void restoreModel(){
 		this.model = this.vanilla;
 		this.registry = null;
+		this.shadowRadius = this.origShadowRadius;
 	}
 	
 	@Override

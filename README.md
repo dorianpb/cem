@@ -32,7 +32,6 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
   	* Ocelots
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	
-* Custom shadow sizes are not supported.
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
 * Sprites are not supported.
 * Mirroring textures over the 'v' axis is not supported.

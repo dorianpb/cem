@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRenderer{
 	private final PiglinEntityModel<MobEntity> vanilla;
+	private final float origShadowRadius;
 	private final String id;
 	private CemModelRegistry registry;
 	
@@ -20,6 +21,7 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		CemFairy.addRenderer(this, id);
 		this.id = id.toLowerCase();
 		this.vanilla = this.model;
+		this.origShadowRadius = this.shadowRadius;
 	}
 	
 	@Override
@@ -27,6 +29,9 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		this.registry = registry;
 		try{
 			this.model = new CemPiglinModel(0.0F, 64, 64, registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
+			}
 		} catch(Exception e){
 			modelError(e);
 		}
@@ -41,6 +46,7 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	public void restoreModel(){
 		this.model = this.vanilla;
 		this.registry = null;
+		this.shadowRadius = this.origShadowRadius;
 	}
 	
 	@Override
@@ -50,5 +56,4 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		}
 		return super.getTexture(mobEntity);
 	}
-	
 }

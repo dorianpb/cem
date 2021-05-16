@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements CemRenderer{
 	private final ArmorStandArmorEntityModel vanilla;
+	private final float origShadowRadius;
 	private final String id;
 	private CemModelRegistry registry;
 	
@@ -20,6 +21,7 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 		this.id = "armor_stand";
 		CemFairy.addRenderer(this, id);
 		this.vanilla = this.model;
+		this.origShadowRadius = this.shadowRadius;
 	}
 	
 	@Override
@@ -27,6 +29,9 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 		this.registry = registry;
 		try{
 			this.model = new CemArmorStandModel(0.0F, registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
+			}
 		} catch(Exception e){
 			modelError(e);
 		}
@@ -41,6 +46,7 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 	public void restoreModel(){
 		this.model = this.vanilla;
 		this.registry = null;
+		this.shadowRadius = this.origShadowRadius;
 	}
 	
 	@Override

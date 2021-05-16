@@ -62,6 +62,10 @@ class JemFile{
 		return this.path;
 	}
 	
+	Float getShadowsize(){
+		return this.shadowsize;
+	}
+	
 	static class JemModel{
 		private final String baseId;
 		private final String model;

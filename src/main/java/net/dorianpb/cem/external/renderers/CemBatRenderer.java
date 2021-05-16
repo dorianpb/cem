@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	private final BatEntityModel vanilla;
+	private final float origShadowRadius;
 	private final String id;
 	private CemModelRegistry registry;
 	
@@ -20,6 +21,7 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 		this.id = "bat";
 		CemFairy.addRenderer(this, id);
 		this.vanilla = this.model;
+		this.origShadowRadius = this.shadowRadius;
 	}
 	
 	@Override
@@ -27,6 +29,9 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 		this.registry = registry;
 		try{
 			this.model = new CemBatModel(registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
+			}
 		} catch(Exception e){
 			modelError(e);
 		}
@@ -41,6 +46,7 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	public void restoreModel(){
 		this.model = this.vanilla;
 		this.registry = null;
+		this.shadowRadius = this.origShadowRadius;
 	}
 	
 	@Override
@@ -50,5 +56,4 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 		}
 		return super.getTexture(batEntity);
 	}
-	
 }

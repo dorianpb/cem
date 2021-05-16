@@ -160,6 +160,21 @@ public class CemModelRegistry{
 		return new Identifier("dorianpb", this.file.getTexture());
 	}
 	
+	/**
+	 * Test if the user specified a shadow size to use
+	 * @return If a shadow size is specified in the .jem file
+	 */
+	public boolean hasShadowRadius(){
+		return this.file.getShadowsize() != null;
+	}
+	
+	/**
+	 * @return User-specified shadow radius
+	 */
+	public float getShadowRadius(){
+		return this.file.getShadowsize();
+	}
+	
 	public void applyAnimations(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity){
 		for(CemAnimation anim : this.animations){
 			anim.apply(limbAngle, limbDistance, age, head_yaw, head_pitch, livingEntity);
