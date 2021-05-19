@@ -100,3 +100,21 @@ mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel     
 accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             leftAntenna     Lnet/minecraft/client/model/ModelPart;
 mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;
 accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;
+
+#Chicken
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         head            Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         head            Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightLeg        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightLeg        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftLeg         Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftLeg         Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightWing       Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightWing       Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftWing        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftWing        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         beak            Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         beak            Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
