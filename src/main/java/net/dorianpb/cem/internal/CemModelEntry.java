@@ -84,17 +84,21 @@ class CemModelEntry{
 	}
 	
 	private void initmodel(JpmFile data, float[] debugpos, float[] parents, int gen, float scale){
-		float[] pivot = new float[]{(gen == 1)
-		                            ? (parents[0] + (data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]? -1 : 1))
-		                            : ((data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]? (gen == 0)? 1 : -1 : 1)) + debugpos[0],
+		float[] pivot = new float[]{((gen == 0)
+		                             ? (parents[0] - (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
+		                             : ((gen == 1)
+		                                ? (parents[0] + (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
+		                                : data.getTranslate().get(0).floatValue() * (this.invertAxis[1]? -1 : 1))) + debugpos[0],
 		                            ((gen == 0)
 		                             ? (parents[1] - (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
 		                             : ((gen == 1)
 		                                ? (parents[1] + (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
 		                                : data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1))) + debugpos[1],
-		                            (gen == 1)
-		                            ? (parents[2] + (data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]? -1 : 1))
-		                            : ((data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]? (gen == 0)? 1 : -1 : 1)) + debugpos[2],
+		                            ((gen == 0)
+		                             ? (parents[2] - (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
+		                             : ((gen == 1)
+		                                ? (parents[2] + (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
+		                                : data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1))) + debugpos[2],
 		                            };
 		///MUST SUBTRACT FROM PARENT FOR GEN1
 		float[] translate = new float[]{(data.getTranslate().get(0).floatValue())/* * (this.invertAxis[0] ? -1 : 1)*/ + debugpos[0],
@@ -157,10 +161,6 @@ class CemModelEntry{
 	
 	String getPart(){
 		return part;
-	}
-	
-	boolean[] getInvertAxis(){
-		return this.invertAxis;
 	}
 	
 	float getTranslate(char axis){

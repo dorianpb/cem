@@ -97,9 +97,9 @@ public class CemModelRegistry{
 			return;
 		}
 		parent.getModel().addChild(child.getModel());
-		child.getModel().pivotX = (parent.getModel().pivotX - child.getModel().pivotX) * (child.getInvertAxis()[0]? -1 : 1);
-		child.getModel().pivotY = (parent.getModel().pivotY - child.getModel().pivotY) * (child.getInvertAxis()[1]? -1 : 1);
-		child.getModel().pivotZ = (parent.getModel().pivotZ - child.getModel().pivotZ) * (child.getInvertAxis()[2]? -1 : 1);
+		child.getModel().pivotX = (parent.getModel().pivotX - child.getModel().pivotX) * -1;
+		child.getModel().pivotY = (parent.getModel().pivotY - child.getModel().pivotY) * -1;
+		child.getModel().pivotZ = (parent.getModel().pivotZ - child.getModel().pivotZ) * -1;
 		
 	}
 	
