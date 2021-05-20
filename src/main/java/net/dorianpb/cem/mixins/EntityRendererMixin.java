@@ -126,4 +126,13 @@ public abstract class EntityRendererMixin{
 	private void addChicken(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<ChickenEntity> entityRenderer){
 		register(EntityType.CHICKEN, new CemChickenRenderer(entityRenderDispatcher));
 	}
+	
+	@Redirect(method = "registerRenderers",
+	          at = @At(value = "INVOKE",
+	                   target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;register(Lnet/minecraft/entity/EntityType;" +
+	                            "Lnet/minecraft/client/render/entity/EntityRenderer;)V",
+	                   ordinal = 13))
+	private void addCow(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<CowEntity> entityRenderer){
+		register(EntityType.COW, new CemCowRenderer(entityRenderDispatcher));
+	}
 }

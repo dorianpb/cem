@@ -27,6 +27,7 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
   	* Bees
 	* Blazes
 	* Cats
+	* Cows
 	* Chicken
 	* Creepers
 	* Endermen
