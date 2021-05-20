@@ -50,10 +50,10 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	}
 	
 	@Override
-	public Identifier getTexture(OcelotEntity ocelotEntity){
+	public Identifier getTexture(OcelotEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(ocelotEntity);
+		return super.getTexture(entity);
 	}
 }

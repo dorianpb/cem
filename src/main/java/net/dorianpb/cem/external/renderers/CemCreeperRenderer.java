@@ -50,10 +50,10 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	}
 	
 	@Override
-	public Identifier getTexture(CreeperEntity creeperEntity){
+	public Identifier getTexture(CreeperEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(creeperEntity);
+		return super.getTexture(entity);
 	}
 }

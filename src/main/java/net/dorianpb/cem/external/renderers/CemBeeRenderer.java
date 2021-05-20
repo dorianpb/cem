@@ -50,10 +50,10 @@ public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
 	}
 	
 	@Override
-	public Identifier getTexture(BeeEntity beeEntity){
+	public Identifier getTexture(BeeEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(beeEntity);
+		return super.getTexture(entity);
 	}
 }

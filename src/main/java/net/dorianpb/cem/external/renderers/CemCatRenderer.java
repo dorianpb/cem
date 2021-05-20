@@ -50,10 +50,10 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	}
 	
 	@Override
-	public Identifier getTexture(CatEntity catEntity){
+	public Identifier getTexture(CatEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(catEntity);
+		return super.getTexture(entity);
 	}
 }

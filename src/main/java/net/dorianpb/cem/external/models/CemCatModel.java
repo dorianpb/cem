@@ -23,8 +23,8 @@ public class CemCatModel extends CatEntityModel<CatEntity>{
 	}
 	
 	@Override
-	public void setAngles(CatEntity catEntity, float f, float g, float h, float i, float j){
-		super.setAngles(catEntity, f, g, h, i, j);
-		this.registry.applyAnimations(f, g, h, i, j, catEntity);
+	public void setAngles(CatEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch){
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		this.registry.applyAnimations(limbAngle, limbDistance, animationProgress, headYaw, headPitch, entity);
 	}
 }

@@ -50,10 +50,10 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 	}
 	
 	@Override
-	public Identifier getTexture(ArmorStandEntity armorStandEntity){
+	public Identifier getTexture(ArmorStandEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(armorStandEntity);
+		return super.getTexture(entity);
 	}
 }

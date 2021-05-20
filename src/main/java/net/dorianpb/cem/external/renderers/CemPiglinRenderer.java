@@ -50,10 +50,10 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	}
 	
 	@Override
-	public Identifier getTexture(MobEntity mobEntity){
+	public Identifier getTexture(MobEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(mobEntity);
+		return super.getTexture(entity);
 	}
 }

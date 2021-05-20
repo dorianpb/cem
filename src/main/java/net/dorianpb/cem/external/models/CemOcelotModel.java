@@ -23,8 +23,8 @@ public class CemOcelotModel extends OcelotEntityModel<OcelotEntity>{
 	}
 	
 	@Override
-	public void setAngles(OcelotEntity ocelotEntity, float f, float g, float h, float i, float j){
-		super.setAngles(ocelotEntity, f, g, h, i, j);
-		this.registry.applyAnimations(f, g, h, i, j, ocelotEntity);
+	public void setAngles(OcelotEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch){
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		this.registry.applyAnimations(limbAngle, limbDistance, animationProgress, headYaw, headPitch, entity);
 	}
 }

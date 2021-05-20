@@ -28,8 +28,8 @@ public class CemArmorStandModel extends ArmorStandEntityModel{
 	}
 	
 	@Override
-	public void setAngles(ArmorStandEntity armorStandEntity, float f, float g, float h, float i, float j){
-		super.setAngles(armorStandEntity, f, g, h, i, j);
-		this.registry.applyAnimations(f, g, h, i, j, armorStandEntity);
+	public void setAngles(ArmorStandEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch){
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		this.registry.applyAnimations(limbAngle, limbDistance, animationProgress, headYaw, headPitch, entity);
 	}
 }

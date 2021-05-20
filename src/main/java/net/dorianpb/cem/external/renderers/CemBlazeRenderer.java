@@ -50,10 +50,10 @@ public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer
 	}
 	
 	@Override
-	public Identifier getTexture(BlazeEntity blazeEntity){
+	public Identifier getTexture(BlazeEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(blazeEntity);
+		return super.getTexture(entity);
 	}
 }

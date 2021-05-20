@@ -27,7 +27,6 @@ public class CemBlazeModel extends BlazeEntityModel<BlazeEntity>{
 		this.parts = builder.build();
 	}
 	
-	
 	@Override
 	public void setAngles(BlazeEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch){
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);

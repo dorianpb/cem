@@ -50,10 +50,10 @@ public class CemChickenRenderer extends ChickenEntityRenderer implements CemRend
 	}
 	
 	@Override
-	public Identifier getTexture(ChickenEntity chickenEntity){
+	public Identifier getTexture(ChickenEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(chickenEntity);
+		return super.getTexture(entity);
 	}
 }

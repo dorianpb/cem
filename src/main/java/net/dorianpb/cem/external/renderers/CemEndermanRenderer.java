@@ -50,10 +50,10 @@ public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRe
 	}
 	
 	@Override
-	public Identifier getTexture(EndermanEntity endermanEntity){
+	public Identifier getTexture(EndermanEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
-		return super.getTexture(endermanEntity);
+		return super.getTexture(entity);
 	}
 }

@@ -35,9 +35,9 @@ public class CemBeeModel extends BeeEntityModel<BeeEntity>{
 	}
 	
 	@Override
-	public void setAngles(BeeEntity beeEntity, float f, float g, float h, float i, float j){
-		super.setAngles(beeEntity, f, g, h, i, j);
-		this.registry.applyAnimations(f, g, h, i, j, beeEntity);
+	public void setAngles(BeeEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch){
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+		this.registry.applyAnimations(limbAngle, limbDistance, animationProgress, headYaw, headPitch, entity);
 	}
 	
 }
