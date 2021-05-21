@@ -144,4 +144,13 @@ public abstract class EntityRendererMixin{
 	private void addSheep(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<SheepEntity> entityRenderer){
 		register(EntityType.SHEEP, new CemSheepRenderer(entityRenderDispatcher));
 	}
+	
+	@Redirect(method = "registerRenderers",
+	          at = @At(value = "INVOKE",
+	                   target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;register(Lnet/minecraft/entity/EntityType;" +
+	                            "Lnet/minecraft/client/render/entity/EntityRenderer;)V",
+	                   ordinal = 61))
+	private void addPig(EntityRenderDispatcher entityRenderDispatcher, EntityType<Entity> entityType, EntityRenderer<PigEntity> entityRenderer){
+		register(EntityType.PIG, new CemPigRenderer(entityRenderDispatcher));
+	}
 }
