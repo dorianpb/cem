@@ -8,33 +8,37 @@ This mod is currently in ***ALPHA***, meaning that things *MAY* or *MAY NOT* wor
 
 ## Installation
 
-Check out the [CurseForge page for downloads](https://www.curseforge.com/minecraft/mc-mods/custom-entity-models-cem "CurseForge Page"), or build it yourself. This mod *DOES* require the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader") and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api "Fabric API").
+Check out the [CurseForge page for downloads](https://www.curseforge.com/minecraft/mc-mods/custom-entity-models-cem "CurseForge Page"), or build it yourself. This mod *DOES*
+require the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader") and
+the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api "Fabric API").
 
 ## How to use
 
-This mod loads .jem and .jpm files from  "assets/dorianpb/cem" folder in resource packs. For resource packs intended to be used with Optifine, renaming "assets/minecraft/optifine/cem" to "assets/dorianpb/cem" should work fine.
+This mod loads .jem and .jpm files from  "assets/dorianpb/cem" folder in resource packs. For resource packs intended to be used with Optifine, renaming "
+assets/minecraft/optifine/cem" to "assets/dorianpb/cem" should work fine.
 
 ## For resource pack devs
 
-The file format for the .jem and .jpm is identical to the Optfine's (check out [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_model.txt ".jem"), [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_part.txt ".jpm"), and [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_animation.txt "animations")).
-The folder structures inside "assets/dorianpb/cem" does not matter. If you want to assign a custom model for a creeper, you could put the file as "assets/dorianpb/cem/creeper.jem", "assets/dorianpb/cem/creeper/creeper.jem", "assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
+The file format for the .jem and .jpm is identical to the Optfine's (check out [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_model.txt ".jem")
+, [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_part.txt ".jpm"),
+and [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_animation.txt "animations")). The folder structures inside "assets/dorianpb/cem" does not matter.
+If you want to assign a custom model for a creeper, you could put the file as "assets/dorianpb/cem/creeper.jem", "assets/dorianpb/cem/creeper/creeper.jem", "
+assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
 
 ## Differences
+
 * For now, only the following entities are supported (in alphabetical order):
-  	* Armor Stands
-  	* Banners
-  	* Bats
-  	* Bees
-	* Blazes
-	* Cats
-	* Cows
-	* Chicken
-	* Creepers
-	* Endermen
+	* Armor Stands * Banners * Bats * Bees
+		* Blazes
+		* Cats
+		* Cows
+		* Chicken
+		* Creepers
+		* Endermen
 		* Ocelots
-	* Sheep
-	* Piglins (including Piglin Brutes and Zombified Piglins)
-	
+		* Sheep
+		* Piglins (including Piglin Brutes and Zombified Piglins)
+
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
 * Sprites are not supported.
 * Mirroring textures over the 'v' axis is not supported.
@@ -45,10 +49,10 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 
 ## Licensing
 
-This project is licensed with LGPL v3.0.
-Please don't repost this project anywhere without my written permission first.
+This project is licensed with LGPL v3.0. Please don't repost this project anywhere without my written permission first.
 
 ## Goals
+
 * Implement the rest of the entities
 * Maybe support custom animation translation the same way as optifine?
 * `attach` support
@@ -57,10 +61,11 @@ Please don't repost this project anywhere without my written permission first.
 
 ## For mod devs
 
-If your fabric mod creates new entities, you can add support for CEM without too much work! plz consider...
-I'll make a step-by-step guide later, but basically what you would have to do is make CEM variants of your renderer and model (look in `src/main/java/net/dorianpb/cem/external` for examples)
+If your fabric mod creates new entities, you can add support for CEM without too much work! plz consider... I'll make a step-by-step guide later, but basically what you would
+have to do is make CEM variants of your renderer and model (look in `src/main/java/net/dorianpb/cem/external` for examples)
 
 ## Credits
+
 * dorianpb, for actually creating the mod
 * sp614x, for Optifine's CEM, which this mod is based on
 * Mojang, for actually creating Minecraft
