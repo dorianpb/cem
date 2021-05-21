@@ -31,7 +31,8 @@ The folder structures inside "assets/dorianpb/cem" does not matter. If you want 
 	* Chicken
 	* Creepers
 	* Endermen
-  	* Ocelots
+		* Ocelots
+	* Sheep
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).

@@ -118,3 +118,9 @@ mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel 
 accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         beak            Lnet/minecraft/client/model/ModelPart;
 mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
 accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
+
+#Sheep Wool
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer SKIN            Lnet/minecraft/util/Identifier;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer SKIN            Lnet/minecraft/util/Identifier;
