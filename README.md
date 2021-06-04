@@ -28,17 +28,20 @@ assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
 ## Differences
 
 * For now, only the following entities are supported (in alphabetical order):
-	* Armor Stands * Banners * Bats * Bees
-		* Blazes
-		* Cats
-		* Cows
-		* Chicken
-		* Creepers
-		* Endermen
-		* Ocelots
-		* Sheep
-		* Pigs
-		* Piglins (including Piglin Brutes and Zombified Piglins)
+	* Armor Stands
+	* Banners
+	* Bats
+	* Bees
+	* Blazes
+	* Cats
+	* Cows
+	* Chicken
+	* Creepers
+	* Endermen
+	* Ocelots
+	* Sheep
+	* Pigs
+	* Piglins (including Piglin Brutes and Zombified Piglins)
 
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
 * Sprites are not supported.
