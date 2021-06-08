@@ -1,24 +1,16 @@
 package net.dorianpb.cem.external.models;
 
-
-import net.dorianpb.cem.internal.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.entity.mob.CreeperEntity;
 
 public class CemCreeperModel extends CreeperEntityModel<CreeperEntity>{
 	private final CemModelRegistry registry;
 	
-	public CemCreeperModel(float scale, CemModelRegistry registry){
-		super(scale);
+	public CemCreeperModel(ModelPart root, CemModelRegistry registry){
+		super(root);
 		this.registry = registry;
-		this.registry.initModels(this);
-		this.head = this.registry.getModel("head");
-		this.helmet = this.registry.getModel("armor");
-		this.torso = this.registry.getModel("body");
-		this.leftBackLeg = this.registry.getModel("leg1");
-		this.leftFrontLeg = this.registry.getModel("leg3");
-		this.rightBackLeg = this.registry.getModel("leg2");
-		this.rightFrontLeg = this.registry.getModel("leg4");
 	}
 	
 	@Override

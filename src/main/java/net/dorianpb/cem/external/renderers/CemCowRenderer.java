@@ -1,52 +1,55 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCowModel;
-import net.dorianpb.cem.internal.CemFairy;
-import net.dorianpb.cem.internal.CemModelRegistry;
-import net.dorianpb.cem.internal.CemRenderer;
+import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CowEntityRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.CowEntityModel;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
-	private final CowEntityModel<CowEntity> vanilla;
-	private final float origShadowRadius;
-	private final String id;
-	private CemModelRegistry registry;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private              CemModelRegistry          registry;
 	
-	public CemCowRenderer(EntityRenderDispatcher dispatcher){
-		super(dispatcher);
-		this.id = "cow";
-		CemFairy.addRenderer(this, id);
-		this.vanilla = this.model;
-		this.origShadowRadius = this.shadowRadius;
+	static{
+		partNames.put("leg1", "left_hind_leg");
+		partNames.put("leg2", "right_hind_leg");
+		partNames.put("leg3", "left_front_leg");
+		partNames.put("leg4", "right_front_leg");
 	}
 	
-	@Override
-	public void apply(CemModelRegistry registry){
-		this.registry = registry;
-		try{
-			this.model = new CemCowModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+	static{
+		parentChildPairs.put("head", Arrays.asList("right_horn", "left_horn"));
+	}
+	
+	public CemCowRenderer(EntityRendererFactory.Context context){
+		super(context);
+		if(CemRegistryManager.hasEntity(EntityType.COW)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.COW);
+			try{
+				this.registry.setChildren(parentChildPairs);
+				this.model = new CemCowModel(this.registry.prepRootPart(partNames), registry);
+				if(registry.hasShadowRadius()){
+					this.shadowRadius = registry.getShadowRadius();
+				}
+			} catch(Exception e){
+				modelError(e);
 			}
-		} catch(Exception e){
-			modelError(e);
 		}
 	}
 	
 	@Override
 	public String getId(){
-		return this.id;
-	}
-	
-	@Override
-	public void restoreModel(){
-		this.model = this.vanilla;
-		this.registry = null;
-		this.shadowRadius = this.origShadowRadius;
+		return EntityType.COW.toString();
 	}
 	
 	@Override

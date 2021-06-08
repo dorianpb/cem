@@ -1,58 +1,38 @@
-package net.dorianpb.cem.internal;
+package net.dorianpb.cem.internal.models;
 
-import com.google.gson.internal.LinkedTreeMap;
-import net.dorianpb.cem.internal.CemStringParser.ParsedExpression;
-import net.dorianpb.cem.internal.JemFile.JemModel;
-import net.minecraft.client.model.Model;
+import net.dorianpb.cem.internal.file.CemStringParser;
+import net.dorianpb.cem.internal.file.CemStringParser.ParsedExpression;
+import net.dorianpb.cem.internal.file.JemFile;
+import net.dorianpb.cem.internal.file.JemFile.JemModel;
+import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
+import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /** Contains all of the data for the CEM model */
 public class CemModelRegistry{
 	private final HashMap<ArrayList<String>, CemModelEntry> database; //actual storage of cemModelEntries
-	private final ArrayList<CemAnimation> animations; //actual storage of all the cemAnimations
-	private final HashMap<String, CemModelEntry> partNameRefs; //used to refer to parts by their model names rather
-	// than id names
-	private final JemFile file; //stores the jemFile
-	private Model in; //stores reference to the Model
+	private final ArrayList<CemAnimation>                   animations; //actual storage of all the cemAnimations
+	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
+	private final JemFile                                   file; //stores the jemFile
+	private final Map<String, List<String>>                 familyTree; //stores parent-child relationships
 	
 	
-	public CemModelRegistry(LinkedTreeMap<String, Object> json, String path){
+	public CemModelRegistry(JemFile file){
 		this.database = new HashMap<>();
 		this.animations = new ArrayList<>();
 		this.partNameRefs = new HashMap<>();
-		this.file = new JemFile(json, path);
-	}
-	
-	/**
-	 * Used to set the entity model's texture size and to internally construct the cemModel translated by specified
-	 * amounts
-	 * @param in     The entity model
-	 * @param pivotX Pivot the whole model in the X direction by this amount
-	 * @param pivotY Pivot the whole model in the Y direction by this amount
-	 * @param pivotZ Pivot the whole model in the Z direction by this amount
-	 */
-	public void initModels(Model in, float pivotX, float pivotY, float pivotZ){
-		this.in = in;
-		if(in != null){
-			in.textureWidth = this.file.getTextureSize().get(0).intValue();
-			in.textureHeight = this.file.getTextureSize().get(1).intValue();
-		}
+		this.file = file;
+		this.familyTree = new LinkedHashMap<>();
 		//models
 		for(String part : this.file.getModelList()){
 			JemModel data = this.file.getModel(part);
 			CemModelEntry entry;
-			if(in != null){
-				entry = new CemModelEntry(data, in, pivotX, pivotY, pivotZ);
-			}
-			else{
-				entry = new CemModelEntry(data, file);
-			}
+			entry = new CemModelEntry(data, file.getTextureSize().get(0).intValue(), file.getTextureSize().get(1).intValue());
 			this.addEntry(entry, new ArrayList<>());
 		}
 		//animations
@@ -61,9 +41,7 @@ public class CemModelRegistry{
 			for(String key : data.getAnimations().keySet()){
 				try{
 					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf("."))),
-					                                data.getAnimations().get(key),
-					                                key.substring(key.indexOf(".") + 1),
-					                                this
+					                                data.getAnimations().get(key), key.substring(key.indexOf(".") + 1), this
 					));
 				} catch(Exception e){
 					CemFairy.getLogger().error(e.getMessage());
@@ -72,17 +50,43 @@ public class CemModelRegistry{
 		}
 	}
 	
-	/**
-	 * Used to set the entity model's texture size and to internally construct the cemModel, with no translation,
-	 * which is the default
-	 * @param in The entity model
-	 */
-	public void initModels(Model in){
-		this.initModels(in, 0, 0, 0);
+	private CemModelPart prepRootPart(ModelPart root, Map<String, String> partNameMap){
+		CemModelPart newRoot = CemModelPart.of(root);
+		for(String partName : this.partNameRefs.keySet()){
+			this.getParent(newRoot, partName).addChild(partNameMap.getOrDefault(partName, partName), Objects.requireNonNull(this.getEntryByPartName(partName)).getModel());
+		}
+		return newRoot;
+	}
+	
+	public CemModelPart prepRootPart(Map<String, String> partNameMap, @Nullable Float inflate){
+		CemModelPart newRoot = new CemModelPart();
+		//populate it first
+		for(String partName : this.partNameRefs.keySet()){
+			this.getParent(newRoot, partNameMap.getOrDefault(partName, partName));
+		}
+		CemModelPart part = this.prepRootPart(newRoot, partNameMap);
+		if(inflate != null){
+			part.inflate(inflate);
+		}
+		return part;
+	}
+	
+	public CemModelPart prepRootPart(Map<String, String> partNameMap){
+		return this.prepRootPart(partNameMap, null);
+	}
+	
+	public void setChildren(Map<String, List<String>> childMap){
+		this.familyTree.clear();
+		this.familyTree.putAll(childMap);
+		for(String parent : this.familyTree.keySet()){
+			for(String child : this.familyTree.get(parent)){
+				this.setChild(parent, child);
+			}
+		}
 	}
 	
 	/**
-	 * Sets the second part to be the child of the first during model creation, call after initmodels()!
+	 * Sets the second part to be the child of the first during model creation.
 	 * MAKE SURE TO DO THIS TO THE YOUNGEST PARTS FIRST AND WORK YOUR WAY UP!
 	 * For example, if you have a parent, a child, and grandchild, you should call
 	 * setChild("child","grandchild"), then setChild("parent","child")! Will silently fail if both parts are not
@@ -90,13 +94,13 @@ public class CemModelRegistry{
 	 * @param parentPart Name of parent part.
 	 * @param childPart  Name of child part.
 	 */
-	public void setChild(String parentPart, String childPart){
+	private void setChild(String parentPart, String childPart){
 		CemModelEntry parent = this.getEntryByPartName(parentPart);
 		CemModelEntry child = this.getEntryByPartName(childPart);
 		if(parent == null || child == null){
 			return;
 		}
-		parent.getModel().addChild(child.getModel());
+		parent.getModel().addChild(child.getPart(), child.getModel());
 		child.getModel().pivotX = (parent.getModel().pivotX - child.getModel().pivotX) * -1;
 		child.getModel().pivotY = (parent.getModel().pivotY - child.getModel().pivotY) * -1;
 		child.getModel().pivotZ = (parent.getModel().pivotZ - child.getModel().pivotZ) * -1;
@@ -114,7 +118,8 @@ public class CemModelRegistry{
 	private void addEntry(CemModelEntry entry, ArrayList<String> parentRefmap){
 		ArrayList<String> refmap;
 		if(parentRefmap != null && parentRefmap.size() > 0){
-			@SuppressWarnings("unchecked") ArrayList<String> temp = (ArrayList<String>) parentRefmap.clone();
+			@SuppressWarnings("unchecked")
+			ArrayList<String> temp = (ArrayList<String>) parentRefmap.clone();
 			refmap = temp;
 		}
 		else{
@@ -128,17 +133,6 @@ public class CemModelRegistry{
 		for(CemModelEntry child : entry.getChildren().values()){
 			this.addEntry(child, refmap);
 		}
-	}
-	
-	/**
-	 * Returns the ModelPart for the specified part
-	 * @param key Name of part as defined in the .jem file
-	 *
-	 * @return The ModelPart of the specified part
-	 */
-	public ModelPart getModel(String key){
-		CemModelEntry entry = this.getEntryByPartName(key);
-		return (entry != null)? entry.getModel() : new ModelPart(in);
 	}
 	
 	/**
@@ -181,7 +175,7 @@ public class CemModelRegistry{
 		}
 	}
 	
-	CemModelEntry findChild(String target, CemModelEntry parent){
+	public CemModelEntry findChild(String target, CemModelEntry parent){
 		CemModelEntry victim = null;
 		ArrayList<String> hit = null;
 		ArrayList<String> refmap = new ArrayList<>(Arrays.asList(target.split(":")));
@@ -218,12 +212,45 @@ public class CemModelRegistry{
 		return this.findChild(target, null);
 	}
 	
+	private String findParent(String name){
+		for(String key : this.familyTree.keySet()){
+			if(this.familyTree.get(key).contains(name)){
+				return key;
+			}
+		}
+		return null;
+	}
+	
+	private CemModelPart getParent(ModelPart root, String name){
+		ArrayList<String> names = new ArrayList<>();
+		while(true){
+			name = this.findParent(name);
+			if(name != null){
+				names.add(name);
+			}
+			else{
+				break;
+			}
+		}
+		if(names.size() == 0){
+			return (CemModelPart) root;
+		}
+		else{
+			ModelPart part = root;
+			for(int i = names.size() - 1; i >= 0; i--){
+				part = part.getChild(names.get(i));
+			}
+			return (CemModelPart) part;
+		}
+		
+	}
+	
 	private static class CemAnimation{
 		private final CemModelRegistry registry;
-		private final CemModelEntry target;
+		private final CemModelEntry    target;
 		private final ParsedExpression expression;
-		private final char operation;
-		private final char axis;
+		private final char             operation;
+		private final char             axis;
 		
 		CemAnimation(CemModelEntry target, String expr, String var, CemModelRegistry registry){
 			this.target = target;
@@ -236,17 +263,10 @@ public class CemModelRegistry{
 		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity){
 			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, livingEntity, this.registry);
 			switch(operation){
-				case 't':
-					this.target.setTranslate(this.axis, val);
-					break;
-				case 'r':
-					this.target.getModel().setRotation(this.axis, val);
-					break;
-				case 's':
-					target.getModel().setScale(this.axis, val);
-					break;
-				default:
-					throw new IllegalStateException("Unknown operation \"" + operation + "\"");
+				case 't' -> this.target.setTranslate(this.axis, val);
+				case 'r' -> this.target.getModel().setRotation(this.axis, val);
+				case 's' -> target.getModel().setScale(this.axis, val);
+				default -> throw new IllegalStateException("Unknown operation \"" + operation + "\"");
 			}
 		}
 	}

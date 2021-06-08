@@ -1,126 +1,29 @@
 accessWidener	v1	named
 
 #ModelPart (sorry)
-accessible  field   net/minecraft/client/model/ModelPart                                cuboids         Lit/unimi/dsi/fastutil/objects/ObjectList;
-#accessible  class   net/minecraft/client/model/ModelPart$Quad
-#accessible  class   net/minecraft/client/model/ModelPart$Vertex
-accessible  field   net/minecraft/client/model/ModelPart                                textureWidth    F
-accessible  field   net/minecraft/client/model/ModelPart                                textureHeight   F
-accessible  field   net/minecraft/client/model/ModelPart                                textureOffsetU  I
-accessible  field   net/minecraft/client/model/ModelPart                                textureOffsetV  I
-
-#Piglin-chan and company
-mutable     field   net/minecraft/client/render/entity/model/PiglinEntityModel          rightEar        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/PiglinEntityModel          leftEar         Lnet/minecraft/client/model/ModelPart;
-
-#Creeper
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         head            Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         head            Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         helmet          Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         helmet          Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         leftBackLeg     Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         leftBackLeg     Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         leftFrontLeg    Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         leftFrontLeg    Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         rightBackLeg    Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         rightBackLeg    Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/CreeperEntityModel         rightFrontLeg   Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/CreeperEntityModel         rightFrontLeg   Lnet/minecraft/client/model/ModelPart;
-
-#Ocelot + Cat
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          head            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          torso           Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          leftBackLeg     Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          leftFrontLeg    Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          rightBackLeg    Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          rightFrontLeg   Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          lowerTail       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/OcelotEntityModel          upperTail       Lnet/minecraft/client/model/ModelPart;
-
-#Blaze
-mutable		field   net/minecraft/client/render/entity/model/BlazeEntityModel           head            Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/BlazeEntityModel           head            Lnet/minecraft/client/model/ModelPart;
-mutable		field   net/minecraft/client/render/entity/model/BlazeEntityModel           rods            [Lnet/minecraft/client/model/ModelPart;
-accessible	field   net/minecraft/client/render/entity/model/BlazeEntityModel           rods            [Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BlazeEntityModel           parts           Lcom/google/common/collect/ImmutableList;
-accessible  field   net/minecraft/client/render/entity/model/BlazeEntityModel           parts           Lcom/google/common/collect/ImmutableList;
-
-#Armor Stand
-mutable     field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      rightTorso      Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      rightTorso      Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      leftTorso       Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      leftTorso       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      hip             Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      hip             Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      plate           Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ArmorStandEntityModel      plate           Lnet/minecraft/client/model/ModelPart;
-
-#Banner
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  banner          Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  banner          Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  pillar          Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  pillar          Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  crossbar        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer  crossbar        Lnet/minecraft/client/model/ModelPart;
-
-#Bat
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             head            Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             head            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             body            Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             body            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             rightWingTip    Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             rightWingTip    Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BatEntityModel             leftWingTip     Lnet/minecraft/client/model/ModelPart;
-
-#Bee
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             body            Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             body            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             torso           Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             torso           Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             rightWing       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             leftWing        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             frontLegs       Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             frontLegs       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             middleLegs      Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             middleLegs      Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             backLegs        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             backLegs        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             stinger         Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             stinger         Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             leftAntenna     Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             leftAntenna     Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/BeeEntityModel             rightAntenna    Lnet/minecraft/client/model/ModelPart;
-
-#Chicken
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         head            Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         head            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         torso           Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightLeg        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightLeg        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftLeg         Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftLeg         Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightWing       Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         rightWing       Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftWing        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         leftWing        Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         beak            Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         beak            Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/entity/model/ChickenEntityModel         wattle          Lnet/minecraft/client/model/ModelPart;
+extendable  class   net/minecraft/client/model/ModelPart
+accessible  field   net/minecraft/client/model/ModelPart                                    cuboids         Ljava/util/List;
+accessible  field   net/minecraft/client/model/ModelPart                                    children        Ljava/util/Map;
+accessible  field   net/minecraft/client/model/ModelPart$Cuboid                             sides           [Lnet/minecraft/client/model/ModelPart$Quad;
 
 #Sheep Wool
-mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
-accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
-mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer SKIN            Lnet/minecraft/util/Identifier;
-accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer SKIN            Lnet/minecraft/util/Identifier;
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
+
+#Banner
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      banner          Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      banner          Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      pillar          Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      pillar          Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      crossbar        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      crossbar        Lnet/minecraft/client/model/ModelPart;
+
+#Cat Collar
+mutable     field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
+
+#Creeper Charge model
+mutable     field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;

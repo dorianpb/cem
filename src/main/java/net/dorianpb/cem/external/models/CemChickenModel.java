@@ -1,25 +1,16 @@
 package net.dorianpb.cem.external.models;
 
-
-import net.dorianpb.cem.internal.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.ChickenEntityModel;
 import net.minecraft.entity.passive.ChickenEntity;
 
 public class CemChickenModel extends ChickenEntityModel<ChickenEntity>{
 	private final CemModelRegistry registry;
 	
-	public CemChickenModel(CemModelRegistry registry){
-		super();
+	public CemChickenModel(ModelPart root, CemModelRegistry registry){
+		super(root);
 		this.registry = registry;
-		this.registry.initModels(this);
-		this.head = this.registry.getModel("head");
-		this.torso = this.registry.getModel("body");
-		this.leftWing = this.registry.getModel("left_wing");
-		this.rightWing = this.registry.getModel("right_wing");
-		this.leftLeg = this.registry.getModel("left_leg");
-		this.rightLeg = this.registry.getModel("right_leg");
-		this.beak = this.registry.getModel("bill");
-		this.wattle = this.registry.getModel("chin");
 	}
 	
 	@Override

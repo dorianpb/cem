@@ -1,4 +1,4 @@
-package net.dorianpb.cem.internal;
+package net.dorianpb.cem.internal.file;
 
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -6,17 +6,17 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class JpmFile{
-	private final String id;
-	private final String texture;
-	private final ArrayList<Double> textureSize;
-	private final boolean[] invertAxis;
-	private final ArrayList<Double> translate;
-	private final ArrayList<Double> rotate;
-	private final Boolean[] mirrorTexture;
-	private final ArrayList<JpmBox> boxes;
+public class JpmFile{
+	private final String               id;
+	private final String               texture;
+	private final ArrayList<Double>    textureSize;
+	private final boolean[]            invertAxis;
+	private final ArrayList<Double>    translate;
+	private final ArrayList<Double>    rotate;
+	private final Boolean[]            mirrorTexture;
+	private final ArrayList<JpmBox>    boxes;
 	private final ArrayList<JpmSprite> sprites;
-	private final ArrayList<JpmFile> submodels;
+	private final ArrayList<JpmFile>   submodels;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -71,35 +71,35 @@ class JpmFile{
 		}
 	}
 	
-	ArrayList<JpmBox> getBoxes(){
+	public ArrayList<JpmBox> getBoxes(){
 		return boxes;
 	}
 	
-	ArrayList<Double> getTranslate(){
+	public ArrayList<Double> getTranslate(){
 		return translate;
 	}
 	
-	boolean[] getInvertAxis(){
+	public boolean[] getInvertAxis(){
 		return invertAxis;
 	}
 	
-	ArrayList<JpmFile> getSubmodels(){
+	public ArrayList<JpmFile> getSubmodels(){
 		return submodels;
 	}
 	
-	ArrayList<Double> getRotate(){
+	public ArrayList<Double> getRotate(){
 		return this.rotate;
 	}
 	
-	String getId(){
+	public String getId(){
 		return id;
 	}
 	
-	Boolean[] getMirrorTexture(){
+	public Boolean[] getMirrorTexture(){
 		return mirrorTexture;
 	}
 	
-	static class JpmBox{
+	public static class JpmBox{
 		private final ArrayList<Double> textureOffset;
 		private final ArrayList<Double> uvUp;
 		private final ArrayList<Double> uvDown;
@@ -108,7 +108,7 @@ class JpmFile{
 		private final ArrayList<Double> uvLeft;
 		private final ArrayList<Double> uvRight;
 		private final ArrayList<Double> coordinates;
-		private final Double sizeAdd;
+		private final Double            sizeAdd;
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		JpmBox(LinkedTreeMap json){
@@ -140,15 +140,15 @@ class JpmFile{
 			}
 		}
 		
-		ArrayList<Double> getTextureOffset(){
+		public ArrayList<Double> getTextureOffset(){
 			return textureOffset;
 		}
 		
-		ArrayList<Double> getCoordinates(){
+		public ArrayList<Double> getCoordinates(){
 			return coordinates;
 		}
 		
-		Double getSizeAdd(){
+		public Double getSizeAdd(){
 			return sizeAdd;
 		}
 		
@@ -157,7 +157,7 @@ class JpmFile{
 	static class JpmSprite{
 		private final ArrayList<Integer> textureOffset;
 		private final ArrayList<Integer> coordinates;
-		private final Double sizeAdd;
+		private final Double             sizeAdd;
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		JpmSprite(LinkedTreeMap json){

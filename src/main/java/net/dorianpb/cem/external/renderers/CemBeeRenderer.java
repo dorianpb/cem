@@ -1,52 +1,54 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemBeeModel;
-import net.dorianpb.cem.internal.CemFairy;
-import net.dorianpb.cem.internal.CemModelRegistry;
-import net.dorianpb.cem.internal.CemRenderer;
+import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.BeeEntityRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.BeeEntityModel;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
-	private final BeeEntityModel<BeeEntity> vanilla;
-	private final float origShadowRadius;
-	private final String id;
-	private CemModelRegistry registry;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private              CemModelRegistry          registry;
 	
-	public CemBeeRenderer(EntityRenderDispatcher dispatcher){
-		super(dispatcher);
-		this.id = "bee";
-		CemFairy.addRenderer(this, id);
-		this.vanilla = this.model;
-		this.origShadowRadius = this.shadowRadius;
+	static{
+		partNames.put("body", "bone");
+		partNames.put("torso", "body");
 	}
 	
-	@Override
-	public void apply(CemModelRegistry registry){
-		this.registry = registry;
-		try{
-			this.model = new CemBeeModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+	static{
+		parentChildPairs.put("torso", Arrays.asList("stinger", "left_antenna", "right_antenna"));
+		parentChildPairs.put("body", Arrays.asList("torso", "right_wing", "left_wing", "front_legs", "middle_legs", "back_legs"));
+	}
+	
+	public CemBeeRenderer(EntityRendererFactory.Context context){
+		super(context);
+		if(CemRegistryManager.hasEntity(EntityType.BEE)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.BEE);
+			try{
+				this.registry.setChildren(parentChildPairs);
+				this.model = new CemBeeModel(this.registry.prepRootPart(partNames), registry);
+				if(registry.hasShadowRadius()){
+					this.shadowRadius = registry.getShadowRadius();
+				}
+			} catch(Exception e){
+				modelError(e);
 			}
-		} catch(Exception e){
-			modelError(e);
 		}
 	}
 	
 	@Override
 	public String getId(){
-		return this.id;
-	}
-	
-	@Override
-	public void restoreModel(){
-		this.model = this.vanilla;
-		this.registry = null;
-		this.shadowRadius = this.origShadowRadius;
+		return EntityType.BEE.toString();
 	}
 	
 	@Override

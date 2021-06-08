@@ -48,6 +48,7 @@ assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
 * Mirroring textures over the 'v' axis is not supported.
 * The `attach` option is not supported.
 * Texture offsets must be specified using `textureOffset`, using individual `uvDown`, `uvUp`, etc. is not supported.
+* This mod will auto create features like the charge aura around a creeper, and the pig's saddle model so that it fits with your custom model, which Optifine doesn't do
 * Currently, all translation in custom animations is relative to the parent
 	* This *IS* different from Optifine, so if your model wants to use super fancy custom animations, you might need to change a few values, especially `*.ty` values
 

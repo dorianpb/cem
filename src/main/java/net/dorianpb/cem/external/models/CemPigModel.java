@@ -1,23 +1,16 @@
 package net.dorianpb.cem.external.models;
 
-
-import net.dorianpb.cem.internal.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.PigEntityModel;
 import net.minecraft.entity.passive.PigEntity;
 
 public class CemPigModel extends PigEntityModel<PigEntity>{
 	private final CemModelRegistry registry;
 	
-	public CemPigModel(float scale, CemModelRegistry registry){
-		super(scale);
+	public CemPigModel(ModelPart root, CemModelRegistry registry){
+		super(root);
 		this.registry = registry;
-		this.registry.initModels(this);
-		this.head = this.registry.getModel("head");
-		this.torso = this.registry.getModel("body");
-		this.backLeftLeg = this.registry.getModel("leg1");
-		this.backRightLeg = this.registry.getModel("leg2");
-		this.frontLeftLeg = this.registry.getModel("leg3");
-		this.frontRightLeg = this.registry.getModel("leg4");
 	}
 	
 	@Override

@@ -1,30 +1,36 @@
-package net.dorianpb.cem.internal;
+package net.dorianpb.cem.internal.file;
 
 import com.google.gson.internal.LinkedTreeMap;
+import net.dorianpb.cem.internal.util.CemFairy;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 
-class JemFile{
-	private final String texture;
-	private final ArrayList<Double> textureSize;
-	private final Float shadowsize;
+public class JemFile{
+	private final String                    texture;
+	private final ArrayList<Double>         textureSize;
+	private final Float                     shadowsize;
 	private final HashMap<String, JemModel> models;
-	private final String path;
+	private final String                    path;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	JemFile(LinkedTreeMap<String, Object> json, String path){
+	public JemFile(LinkedTreeMap<String, Object> json, String path, ResourceManager resourceManager){
 		this.texture = (String) json.get("texture");
 		this.textureSize = (ArrayList<Double>) json.get("textureSize");
 		this.shadowsize = (Float) json.get("shadowSize");
 		this.path = path;
 		models = new HashMap<>();
 		for(LinkedTreeMap model : (ArrayList<LinkedTreeMap>) json.get("models")){
-			JemModel newmodel = new JemModel(model, this.path);
+			JemModel newmodel = new JemModel(model, this.path, resourceManager);
 			models.put(newmodel.getPart(), newmodel);
 		}
 		this.validate();
@@ -39,45 +45,45 @@ class JemFile{
 		}
 	}
 	
-	String getTexture(){
+	public String getTexture(){
 		if(this.texture != null){
 			return CemFairy.transformPath(this.texture, this.path);
 		}
 		return null;
 	}
 	
-	ArrayList<Double> getTextureSize(){
+	public ArrayList<Double> getTextureSize(){
 		return textureSize;
 	}
 	
-	Set<String> getModelList(){
+	public Set<String> getModelList(){
 		return this.models.keySet();
 	}
 	
-	JemModel getModel(String key){
+	public JemModel getModel(String key){
 		return this.models.get(key);
 	}
 	
-	String getPath(){
+	public String getPath(){
 		return this.path;
 	}
 	
-	Float getShadowsize(){
+	public Float getShadowsize(){
 		return this.shadowsize;
 	}
 	
-	static class JemModel{
-		private final String baseId;
-		private final String model;
-		private final String part;
-		private final Boolean attach;
-		private final Double scale;
+	public static class JemModel{
+		private final String                        baseId;
+		private final String                        model;
+		private final String                        part;
+		private final Boolean                       attach;
+		private final Double                        scale;
 		private final LinkedTreeMap<String, String> animations;
-		private final JpmFile modelDef;
+		private final JpmFile                       modelDef;
 		
 		
 		@SuppressWarnings({"rawtypes", "unchecked"})
-		JemModel(LinkedTreeMap json, String path){
+		JemModel(LinkedTreeMap json, String path, ResourceManager resourceManager){
 			this.baseId = (String) json.get("baseId");
 			this.model = (String) json.get("model");
 			this.part = (String) json.get("part");
@@ -86,12 +92,24 @@ class JemFile{
 			this.animations = ((ArrayList<LinkedTreeMap<String, String>>) json.getOrDefault("animations",
 			                                                                                new ArrayList<>(Collections.singletonList(new LinkedTreeMap()))
 			                                                                               )).get(0);
+			JpmFile temp = null;
 			if(this.model != null){
-				this.modelDef = CemFairy.loadJpmFile(CemFairy.transformPath(this.model, path));
+				Identifier id = new Identifier("dorianpb", CemFairy.transformPath(this.model, path));
+				try(InputStream stream = resourceManager.getResource(id).getInputStream()){
+					@SuppressWarnings("unchecked")
+					LinkedTreeMap<String, Object> file = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
+					if(file == null){
+						throw new Exception("Invalid File");
+					}
+					temp = new JpmFile(file);
+				} catch(Exception exception){
+					CemFairy.postReadError(exception, id);
+				}
 			}
 			else{
-				this.modelDef = new JpmFile(json);
+				temp = new JpmFile(json);
 			}
+			this.modelDef = temp;
 			this.validate();
 		}
 		
@@ -101,11 +119,11 @@ class JemFile{
 			}
 		}
 		
-		String getPart(){
+		public String getPart(){
 			return part;
 		}
 		
-		Double getScale(){
+		public Double getScale(){
 			return scale;
 		}
 		
@@ -117,11 +135,11 @@ class JemFile{
 			return this.getModelDef().getId();
 		}
 		
-		JpmFile getModelDef(){
+		public JpmFile getModelDef(){
 			return modelDef;
 		}
 		
-		LinkedTreeMap<String, String> getAnimations(){
+		public LinkedTreeMap<String, String> getAnimations(){
 			return animations;
 		}
 		

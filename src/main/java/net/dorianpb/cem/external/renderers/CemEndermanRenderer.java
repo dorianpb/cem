@@ -1,52 +1,47 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemEndermanModel;
-import net.dorianpb.cem.internal.CemFairy;
-import net.dorianpb.cem.internal.CemModelRegistry;
-import net.dorianpb.cem.internal.CemRenderer;
+import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EndermanEntityRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.render.entity.model.EndermanEntityModel;
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRenderer{
-	private final EndermanEntityModel<EndermanEntity> vanilla;
-	private final float origShadowRadius;
-	private final String id;
-	private CemModelRegistry registry;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private              CemModelRegistry          registry;
 	
-	public CemEndermanRenderer(EntityRenderDispatcher dispatcher){
-		super(dispatcher);
-		this.id = "enderman";
-		CemFairy.addRenderer(this, id);
-		this.vanilla = this.model;
-		this.origShadowRadius = this.shadowRadius;
+	static{
+		partNames.put("headwear", "hat");
 	}
 	
-	@Override
-	public void apply(CemModelRegistry registry){
-		this.registry = registry;
-		try{
-			this.model = new CemEndermanModel(0.0F, registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+	public CemEndermanRenderer(EntityRendererFactory.Context context){
+		super(context);
+		if(CemRegistryManager.hasEntity(EntityType.ENDERMAN)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.ENDERMAN);
+			try{
+				this.registry.setChildren(parentChildPairs);
+				this.model = new CemEndermanModel(this.registry.prepRootPart(partNames), registry);
+				if(registry.hasShadowRadius()){
+					this.shadowRadius = registry.getShadowRadius();
+				}
+			} catch(Exception e){
+				modelError(e);
 			}
-		} catch(Exception e){
-			modelError(e);
 		}
 	}
 	
 	@Override
 	public String getId(){
-		return this.id;
-	}
-	
-	@Override
-	public void restoreModel(){
-		this.model = this.vanilla;
-		this.registry = null;
-		this.shadowRadius = this.origShadowRadius;
+		return EntityType.ENDERMAN.toString();
 	}
 	
 	@Override

@@ -1,52 +1,51 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemOcelotModel;
-import net.dorianpb.cem.internal.CemFairy;
-import net.dorianpb.cem.internal.CemModelRegistry;
-import net.dorianpb.cem.internal.CemRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemRegistryManager;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.OcelotEntityRenderer;
-import net.minecraft.client.render.entity.model.OcelotEntityModel;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRenderer{
-	private final OcelotEntityModel<OcelotEntity> vanilla;
-	private final float origShadowRadius;
-	private final String id;
-	private CemModelRegistry registry;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private              CemModelRegistry          registry;
 	
-	public CemOcelotRenderer(EntityRenderDispatcher dispatcher){
-		super(dispatcher);
-		this.id = "ocelot";
-		CemFairy.addRenderer(this, id);
-		this.vanilla = this.model;
-		this.origShadowRadius = this.shadowRadius;
+	static{
+		partNames.put("front_right_leg", "right_front_leg");
+		partNames.put("front_left_leg", "left_front_leg");
+		partNames.put("back_right_leg", "right_hind_leg");
+		partNames.put("back_left_leg", "left_hind_leg");
+		partNames.put("tail", "tail1");
 	}
 	
-	@Override
-	public void apply(CemModelRegistry registry){
-		this.registry = registry;
-		try{
-			this.model = new CemOcelotModel(0.0F, registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+	public CemOcelotRenderer(EntityRendererFactory.Context context){
+		super(context);
+		if(CemRegistryManager.hasEntity(EntityType.OCELOT)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.OCELOT);
+			try{
+				this.registry.setChildren(parentChildPairs);
+				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames), registry);
+				if(registry.hasShadowRadius()){
+					this.shadowRadius = registry.getShadowRadius();
+				}
+			} catch(Exception e){
+				modelError(e);
 			}
-		} catch(Exception e){
-			modelError(e);
 		}
 	}
 	
 	@Override
 	public String getId(){
-		return this.id;
-	}
-	
-	@Override
-	public void restoreModel(){
-		this.model = this.vanilla;
-		this.registry = null;
-		this.shadowRadius = this.origShadowRadius;
+		return EntityType.OCELOT.toString();
 	}
 	
 	@Override

@@ -19,12 +19,15 @@
 	]
   },
   "mixins": [
-	"cem.mixins.json"
+	{
+	  "config": "cem.mixins.json",
+	  "environment": "client"
+	}
   ],
   "depends": {
-	"fabricloader": ">=0.11.1",
+	"fabricloader": ">=0.11.3",
 	"fabric": "*",
-	"minecraft": ">=1.16.4"
+	"minecraft": ">=1.17"
   },
   "conflicts": {
 	"optifabric": "*"

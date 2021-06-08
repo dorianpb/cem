@@ -2,55 +2,53 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemSheepModel;
 import net.dorianpb.cem.external.models.CemSheepModel.CemSheepWoolModel;
-import net.dorianpb.cem.internal.CemFairy;
-import net.dorianpb.cem.internal.CemModelRegistry;
-import net.dorianpb.cem.internal.CemRenderer;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemRegistryManager;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.SheepEntityRenderer;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
-import net.minecraft.client.render.entity.model.SheepEntityModel;
-import net.minecraft.client.render.entity.model.SheepWoolEntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer{
-	private final SheepEntityModel<SheepEntity> vanilla;
-	private final float origShadowRadius;
-	private final String id;
-	private CemModelRegistry registry;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private              CemModelRegistry          registry;
 	
-	public CemSheepRenderer(EntityRenderDispatcher dispatcher){
-		super(dispatcher);
-		this.id = "sheep";
-		CemFairy.addRenderer(this, id);
-		this.features.set(0, new CemSheepWoolFeatureRenderer(this));
-		this.vanilla = this.model;
-		this.origShadowRadius = this.shadowRadius;
+	static{
+		partNames.put("leg1", "left_hind_leg");
+		partNames.put("leg2", "right_hind_leg");
+		partNames.put("leg3", "left_front_leg");
+		partNames.put("leg4", "right_front_leg");
 	}
 	
-	@Override
-	public void apply(CemModelRegistry registry){
-		this.registry = registry;
-		try{
-			this.model = new CemSheepModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+	public CemSheepRenderer(EntityRendererFactory.Context context){
+		super(context);
+		if(CemRegistryManager.hasEntity(EntityType.SHEEP)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.SHEEP);
+			try{
+				this.registry.setChildren(parentChildPairs);
+				this.model = new CemSheepModel(this.registry.prepRootPart(partNames), registry);
+				if(registry.hasShadowRadius()){
+					this.shadowRadius = registry.getShadowRadius();
+				}
+				this.features.set(0, new CemSheepWoolFeatureRenderer(this, context.getModelLoader()));
+			} catch(Exception e){
+				modelError(e);
 			}
-		} catch(Exception e){
-			modelError(e);
 		}
 	}
 	
 	@Override
 	public String getId(){
-		return this.id;
-	}
-	
-	@Override
-	public void restoreModel(){
-		this.model = this.vanilla;
-		this.registry = null;
-		this.shadowRadius = this.origShadowRadius;
+		return EntityType.SHEEP.toString();
 	}
 	
 	@Override
@@ -62,40 +60,40 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 	}
 	
 	public static class CemSheepWoolFeatureRenderer extends SheepWoolFeatureRenderer implements CemRenderer{
-		private final SheepWoolEntityModel<SheepEntity> vanilla;
-		private final Identifier origSkin;
-		private final String id;
-		private CemModelRegistry registry;
+		private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+		private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+		private static final Identifier                origSKIN         = SKIN;
+		private              CemModelRegistry          registry;
 		
-		public CemSheepWoolFeatureRenderer(CemSheepRenderer featureRendererContext){
-			super(featureRendererContext);
-			this.id = "sheep_wool";
-			CemFairy.addRenderer(this, id);
-			this.vanilla = this.model;
-			this.origSkin = SKIN;
+		static{
+			partNames.put("leg1", "left_hind_leg");
+			partNames.put("leg2", "right_hind_leg");
+			partNames.put("leg3", "left_front_leg");
+			partNames.put("leg4", "right_front_leg");
 		}
 		
-		@Override
-		public void apply(CemModelRegistry registry){
-			this.registry = registry;
-			try{
-				this.model = new CemSheepWoolModel(registry);
-				SKIN = this.registry.getTexture();
-			} catch(Exception e){
-				modelError(e);
+		public CemSheepWoolFeatureRenderer(CemSheepRenderer featureRendererContext, EntityModelLoader modelLoader){
+			super(featureRendererContext, modelLoader);
+			if(CemRegistryManager.hasEntity(this.getId())){
+				this.registry = CemRegistryManager.getRegistry(this.getId());
+				try{
+					this.registry.setChildren(parentChildPairs);
+					this.model = new CemSheepWoolModel(this.registry.prepRootPart(partNames), registry);
+					if(this.registry != null && this.registry.hasTexture()){
+						SKIN = this.registry.getTexture();
+					}
+					else{
+						SKIN = origSKIN;
+					}
+				} catch(Exception e){
+					modelError(e);
+				}
 			}
 		}
 		
 		@Override
 		public String getId(){
-			return this.id;
-		}
-		
-		@Override
-		public void restoreModel(){
-			this.model = this.vanilla;
-			this.registry = null;
-			SKIN = origSkin;
+			return "sheep_wool";
 		}
 		
 		@Override
