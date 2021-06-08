@@ -3,6 +3,8 @@ package net.dorianpb.cem.internal;
 import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionBool;
 import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionFloat;
 import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionType;
+import net.dorianpb.cem.internal.models.CemModelEntry;
+import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
@@ -14,9 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-class CemStringParser{
+public class CemStringParser{
 	
-	static ParsedExpression parse(String expr, CemModelRegistry registry, CemModelEntry parent){
+	public static ParsedExpression parse(String expr, CemModelRegistry registry, CemModelEntry parent){
 		Token token = initParseLoop(expr);
 		ParsedFunction matched = matchToken(token);
 		DexEnvironment.setRegistry(registry);
@@ -176,20 +178,12 @@ class CemStringParser{
 				ArrayList<Token> args = new ArrayList<>();
 				args.add(getToken(work.get(i - 1), tokens));
 				args.add(getToken(work.get(i + 1), tokens));
-				String name;
-				switch(work.get(i)){
-					case "*":
-						name = "MULT";
-						break;
-					case "/":
-						name = "DIV";
-						break;
-					case "%":
-						name = "MOD";
-						break;
-					default:
-						throw new IllegalStateException("Unexpected value: " + work.get(i));
-				}
+				String name = switch(work.get(i)){
+					case "*" -> "MULT";
+					case "/" -> "DIV";
+					case "%" -> "MOD";
+					default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
+				};
 				tokens.add(new Token(name, args));
 				work.remove(i);
 				work.remove(i);
@@ -241,29 +235,15 @@ class CemStringParser{
 				ArrayList<Token> args = new ArrayList<>();
 				args.add(getToken(work.get(i - 1), tokens));
 				args.add(getToken(work.get(i + 1), tokens));
-				String name;
-				switch(work.get(i)){
-					case "==":
-						name = "EQ";
-						break;
-					case "!=":
-						name = "NOTEQ";
-						break;
-					case "<=":
-						name = "LESSEQ";
-						break;
-					case ">=":
-						name = "GREATEREQ";
-						break;
-					case "<":
-						name = "LESS";
-						break;
-					case ">":
-						name = "GREATER";
-						break;
-					default:
-						throw new IllegalStateException("Unexpected value: " + work.get(i));
-				}
+				String name = switch(work.get(i)){
+					case "==" -> "EQ";
+					case "!=" -> "NOTEQ";
+					case "<=" -> "LESSEQ";
+					case ">=" -> "GREATEREQ";
+					case "<" -> "LESS";
+					case ">" -> "GREATER";
+					default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
+				};
 				tokens.add(new Token(name, args));
 				work.remove(i);
 				work.remove(i);
@@ -499,70 +479,40 @@ class CemStringParser{
 		
 		@Override
 		public Float eval(ArrayList<ParsedExpression> args){
-			switch(this){
-				case SIN:
-					return MathHelper.sin(((ParsedExpressionFloat) args.get(0)).eval());
-				case COS:
-					return MathHelper.cos(((ParsedExpressionFloat) args.get(0)).eval());
-				case ASIN:
-					return (float) Math.asin(((ParsedExpressionFloat) args.get(0)).eval());
-				case ACOS:
-					return (float) Math.acos(((ParsedExpressionFloat) args.get(0)).eval());
-				case TAN:
-					return (float) Math.tan(((ParsedExpressionFloat) args.get(0)).eval());
-				case ATAN:
-					return (float) Math.atan(((ParsedExpressionFloat) args.get(0)).eval());
-				case ATAN2:
-					return (float) MathHelper.atan2(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
-				case TORAD:
-					return (float) Math.toRadians(((ParsedExpressionFloat) args.get(0)).eval());
-				case TODEG:
-					return (float) Math.toDegrees(((ParsedExpressionFloat) args.get(0)).eval());
-				case MIN:
-					return findExtreme(args, false);
-				case MAX:
-					return findExtreme(args, true);
-				case CLAMP:
-					return MathHelper.clamp(((ParsedExpressionFloat) args.get(0)).eval(),
-					                        ((ParsedExpressionFloat) args.get(1)).eval(),
-					                        ((ParsedExpressionFloat) args.get(2)).eval()
-					                       );
-				case ABS:
-					return MathHelper.abs(((ParsedExpressionFloat) args.get(0)).eval());
-				case FLOOR:
-					return (float) MathHelper.fastFloor(((ParsedExpressionFloat) args.get(0)).eval());
-				case CEIL:
-					return (float) MathHelper.ceil(((ParsedExpressionFloat) args.get(0)).eval());
-				case EXP:
-					return (float) Math.exp(((ParsedExpressionFloat) args.get(0)).eval());
-				case FRAC:
-					return MathHelper.fractionalPart(((ParsedExpressionFloat) args.get(0)).eval());
-				case LOG:
-					return (float) Math.log(((ParsedExpressionFloat) args.get(0)).eval());
-				case POW:
-					return (float) Math.pow(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
-				case RANDOM:
-					return (float) Math.random();
-				case ROUND:
-					return (float) Math.round(((ParsedExpressionFloat) args.get(0)).eval());
-				case SIGNUM:
-					return Math.signum(((ParsedExpressionFloat) args.get(0)).eval());
-				case SQRT:
-					return MathHelper.sqrt(((ParsedExpressionFloat) args.get(0)).eval());
-				case FMOD:
-					return MathHelper.floorMod(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
-				case ADD:
-					return ((ParsedExpressionFloat) args.get(0)).eval() + ((ParsedExpressionFloat) args.get(1)).eval();
-				case SUB:
-					return ((ParsedExpressionFloat) args.get(0)).eval() - ((ParsedExpressionFloat) args.get(1)).eval();
-				case MULT:
-					return ((ParsedExpressionFloat) args.get(0)).eval() * ((ParsedExpressionFloat) args.get(1)).eval();
-				case DIV:
-					return ((ParsedExpressionFloat) args.get(0)).eval() / ((ParsedExpressionFloat) args.get(1)).eval();
-				case MOD:
-					return ((ParsedExpressionFloat) args.get(0)).eval() % ((ParsedExpressionFloat) args.get(1)).eval();
-			}
-			throw new NullPointerException("onii-chan?");
+			return switch(this){
+				case SIN -> MathHelper.sin(((ParsedExpressionFloat) args.get(0)).eval());
+				case COS -> MathHelper.cos(((ParsedExpressionFloat) args.get(0)).eval());
+				case ASIN -> (float) Math.asin(((ParsedExpressionFloat) args.get(0)).eval());
+				case ACOS -> (float) Math.acos(((ParsedExpressionFloat) args.get(0)).eval());
+				case TAN -> (float) Math.tan(((ParsedExpressionFloat) args.get(0)).eval());
+				case ATAN -> (float) Math.atan(((ParsedExpressionFloat) args.get(0)).eval());
+				case ATAN2 -> (float) MathHelper.atan2(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
+				case TORAD -> (float) Math.toRadians(((ParsedExpressionFloat) args.get(0)).eval());
+				case TODEG -> (float) Math.toDegrees(((ParsedExpressionFloat) args.get(0)).eval());
+				case MIN -> findExtreme(args, false);
+				case MAX -> findExtreme(args, true);
+				case CLAMP -> MathHelper.clamp(((ParsedExpressionFloat) args.get(0)).eval(),
+				                               ((ParsedExpressionFloat) args.get(1)).eval(),
+				                               ((ParsedExpressionFloat) args.get(2)).eval()
+				                              );
+				case ABS -> MathHelper.abs(((ParsedExpressionFloat) args.get(0)).eval());
+				case FLOOR -> (float) MathHelper.fastFloor(((ParsedExpressionFloat) args.get(0)).eval());
+				case CEIL -> (float) MathHelper.ceil(((ParsedExpressionFloat) args.get(0)).eval());
+				case EXP -> (float) Math.exp(((ParsedExpressionFloat) args.get(0)).eval());
+				case FRAC -> MathHelper.fractionalPart(((ParsedExpressionFloat) args.get(0)).eval());
+				case LOG -> (float) Math.log(((ParsedExpressionFloat) args.get(0)).eval());
+				case POW -> (float) Math.pow(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
+				case RANDOM -> (float) Math.random();
+				case ROUND -> (float) Math.round(((ParsedExpressionFloat) args.get(0)).eval());
+				case SIGNUM -> Math.signum(((ParsedExpressionFloat) args.get(0)).eval());
+				case SQRT -> MathHelper.sqrt(((ParsedExpressionFloat) args.get(0)).eval());
+				case FMOD -> MathHelper.floorMod(((ParsedExpressionFloat) args.get(0)).eval(), ((ParsedExpressionFloat) args.get(1)).eval());
+				case ADD -> ((ParsedExpressionFloat) args.get(0)).eval() + ((ParsedExpressionFloat) args.get(1)).eval();
+				case SUB -> ((ParsedExpressionFloat) args.get(0)).eval() - ((ParsedExpressionFloat) args.get(1)).eval();
+				case MULT -> ((ParsedExpressionFloat) args.get(0)).eval() * ((ParsedExpressionFloat) args.get(1)).eval();
+				case DIV -> ((ParsedExpressionFloat) args.get(0)).eval() / ((ParsedExpressionFloat) args.get(1)).eval();
+				case MOD -> ((ParsedExpressionFloat) args.get(0)).eval() % ((ParsedExpressionFloat) args.get(1)).eval();
+			};
 		}
 		
 		@Override
@@ -581,51 +531,13 @@ class CemStringParser{
 		
 		@Override
 		public int getArgNumber(){
-			int paramNum;
-			switch(this){
-				case SIN:
-				case COS:
-				case ASIN:
-				case ACOS:
-				case TAN:
-				case ATAN:
-				case TORAD:
-				case TODEG:
-				case ABS:
-				case FLOOR:
-				case CEIL:
-				case EXP:
-				case FRAC:
-				case LOG:
-				case ROUND:
-				case SIGNUM:
-				case SQRT:
-					paramNum = 1;
-					break;
-				case ATAN2:
-				case POW:
-				case FMOD:
-				case ADD:
-				case SUB:
-				case MULT:
-				case DIV:
-				case MOD:
-					paramNum = 2;
-					break;
-				case MIN:
-				case MAX:
-					paramNum = -1;
-					break;
-				case CLAMP:
-					paramNum = 3;
-					break;
-				case RANDOM:
-					paramNum = 0;
-					break;
-				default:
-					throw new IllegalStateException("Unexpected value: " + this);
-			}
-			return paramNum;
+			return switch(this){
+				case SIN, COS, ASIN, ACOS, TAN, ATAN, TORAD, TODEG, ABS, FLOOR, CEIL, EXP, FRAC, LOG, ROUND, SIGNUM, SQRT -> 1;
+				case ATAN2, POW, FMOD, ADD, SUB, MULT, DIV, MOD -> 2;
+				case MIN, MAX -> -1;
+				case CLAMP -> 3;
+				case RANDOM -> 0;
+			};
 		}
 	}
 	
@@ -650,42 +562,24 @@ class CemStringParser{
 		
 		@Override
 		public Boolean eval(ArrayList<ParsedExpression> args){
-			switch(this){
-				case IS_ALIVE:
-					return DexEnvironment.getLivingEntity().isAlive();
-				case IS_BURNING:
-					return DexEnvironment.getLivingEntity().isOnFire();
-				case IS_CHILD:
-					return DexEnvironment.getLivingEntity().isBaby();
-				case IS_GLOWING:
-					return DexEnvironment.getLivingEntity().isGlowing();
-				case IS_HURT:
-					return DexEnvironment.getLivingEntity().hurtTime != 0;
-				case IS_IN_LAVA:
-					return DexEnvironment.getLivingEntity().isInLava();
-				case IS_IN_WATER:
-					return DexEnvironment.getLivingEntity().isSubmergedInWater();
-				case IS_INVISIBLE:
-					return DexEnvironment.getLivingEntity().isInvisible();
-				case IS_ON_GROUND:
-					return DexEnvironment.getLivingEntity().isOnGround();
-				case IS_RIDDEN:
-					return DexEnvironment.getLivingEntity().hasPassengers();
-				case IS_RIDING:
-					return DexEnvironment.getLivingEntity().hasVehicle();
-				case IS_SNEAKING:
-					return DexEnvironment.getLivingEntity().isSneaking();
-				case IS_SPRINTING:
-					return DexEnvironment.getLivingEntity().isSprinting();
-				case IS_WET:
-					return DexEnvironment.getLivingEntity().isWet();
-				case TRUE:
-					return true;
-				case FALSE:
-					return false;
-				
-			}
-			throw new NullPointerException("owo");
+			return switch(this){
+				case IS_ALIVE -> DexEnvironment.getLivingEntity().isAlive();
+				case IS_BURNING -> DexEnvironment.getLivingEntity().isOnFire();
+				case IS_CHILD -> DexEnvironment.getLivingEntity().isBaby();
+				case IS_GLOWING -> DexEnvironment.getLivingEntity().isGlowing();
+				case IS_HURT -> DexEnvironment.getLivingEntity().hurtTime != 0;
+				case IS_IN_LAVA -> DexEnvironment.getLivingEntity().isInLava();
+				case IS_IN_WATER -> DexEnvironment.getLivingEntity().isSubmergedInWater();
+				case IS_INVISIBLE -> DexEnvironment.getLivingEntity().isInvisible();
+				case IS_ON_GROUND -> DexEnvironment.getLivingEntity().isOnGround();
+				case IS_RIDDEN -> DexEnvironment.getLivingEntity().hasPassengers();
+				case IS_RIDING -> DexEnvironment.getLivingEntity().hasVehicle();
+				case IS_SNEAKING -> DexEnvironment.getLivingEntity().isSneaking();
+				case IS_SPRINTING -> DexEnvironment.getLivingEntity().isSprinting();
+				case IS_WET -> DexEnvironment.getLivingEntity().isWet();
+				case TRUE -> true;
+				case FALSE -> false;
+			};
 		}
 		
 		@Override
@@ -751,27 +645,11 @@ class CemStringParser{
 		
 		@Override
 		public int getArgNumber(){
-			int paramNum;
-			switch(this){
-				case BETWEEN:
-				case EQUALS:
-					paramNum = 3;
-					break;
-				case IN:
-					paramNum = -1;
-					break;
-				case GREATER:
-				case GREATEREQ:
-				case LESS:
-				case EQ:
-				case LESSEQ:
-				case NOTEQ:
-					paramNum = 2;
-					break;
-				default:
-					throw new IllegalStateException("Unexpected value: " + this);
-			}
-			return paramNum;
+			return switch(this){
+				case BETWEEN, EQUALS -> 3;
+				case IN -> -1;
+				case GREATER, GREATEREQ, LESS, EQ, LESSEQ, NOTEQ -> 2;
+			};
 		}
 	}
 	
@@ -781,15 +659,11 @@ class CemStringParser{
 		
 		@Override
 		public Boolean eval(ArrayList<ParsedExpression> args){
-			switch(this){
-				case NOT:
-					return !((ParsedExpressionBool) args.get(0)).eval();
-				case AND:
-					return ((ParsedExpressionBool) args.get(0)).eval() && ((ParsedExpressionBool) args.get(1)).eval();
-				case OR:
-					return ((ParsedExpressionBool) args.get(0)).eval() || ((ParsedExpressionBool) args.get(1)).eval();
-			}
-			throw new NullPointerException("sussy");
+			return switch(this){
+				case NOT -> !((ParsedExpressionBool) args.get(0)).eval();
+				case AND -> ((ParsedExpressionBool) args.get(0)).eval() && ((ParsedExpressionBool) args.get(1)).eval();
+				case OR -> ((ParsedExpressionBool) args.get(0)).eval() || ((ParsedExpressionBool) args.get(1)).eval();
+			};
 		}
 		
 		@Override
@@ -838,7 +712,7 @@ class CemStringParser{
 		}
 	}
 	
-	interface ParsedExpression{
+	public interface ParsedExpression{
 		String getName();
 		
 		default void checkArgs(ArrayList<ParsedExpression> args, int paramNum){
@@ -1120,16 +994,12 @@ class CemStringParser{
 		
 		@Override
 		public Float eval(ArrayList<ParsedExpression> args){
-			switch(val){
-				case 't':
-					return entry.getTranslate(axis);
-				case 'r':
-					return entry.getModel().getRotation(axis);
-				case 's':
-					return entry.getModel().getScale(axis);
-				default:
-					throw new IllegalStateException("Unknown operation \"" + val + "\"");
-			}
+			return switch(val){
+				case 't' -> entry.getTranslate(axis);
+				case 'r' -> entry.getModel().getRotation(axis);
+				case 's' -> entry.getModel().getScale(axis);
+				default -> throw new IllegalStateException("Unknown operation \"" + val + "\"");
+			};
 		}
 	}
 	
