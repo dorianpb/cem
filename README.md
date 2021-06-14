@@ -38,10 +38,12 @@ assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
 	* Chicken
 	* Creepers
 	* Endermen
+    * Mooshrooms
 	* Ocelots
 	* Sheep
 	* Pigs
 	* Piglins (including Piglin Brutes and Zombified Piglins)
+	* Zombies and their variants (Husks and Drowned)
 
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
 * Sprites are not supported.

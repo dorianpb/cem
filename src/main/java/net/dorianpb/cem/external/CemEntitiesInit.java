@@ -26,5 +26,9 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register("sheep_wool");
 		register(EntityType.PIG, new CemFactory(CemPigRenderer.class));
 		register(BlockEntityType.BANNER, new CemFactory(CemBannerRenderer.class));
+		register(EntityType.MOOSHROOM, new CemFactory(CemMooshroomRenderer.class));
+		register(EntityType.ZOMBIE, new CemFactory(CemZombieRenderer.class));
+		register(EntityType.HUSK, new CemFactory(CemHuskZombieRenderer.class));
+		register(EntityType.DROWNED, new CemFactory(CemDrownedZombieRenderer.class));
 	}
 }

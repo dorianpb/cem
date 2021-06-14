@@ -1,13 +1,20 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCowModel;
+import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CowEntityRenderer;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.MooshroomEntityRenderer;
+import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
+import net.minecraft.client.render.entity.feature.MooshroomMushroomFeatureRenderer;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.CowEntity;
+import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
@@ -15,7 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
+public class CemMooshroomRenderer extends MooshroomEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
@@ -31,10 +38,10 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 		parentChildPairs.put("head", Arrays.asList("right_horn", "left_horn"));
 	}
 	
-	public CemCowRenderer(EntityRendererFactory.Context context){
+	public CemMooshroomRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.COW)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.COW);
+		if(CemRegistryManager.hasEntity(EntityType.MOOSHROOM)){
+			this.registry = CemRegistryManager.getRegistry(EntityType.MOOSHROOM);
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames), registry);
@@ -49,11 +56,11 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.COW.toString();
+		return EntityType.MOOSHROOM.toString();
 	}
 	
 	@Override
-	public Identifier getTexture(CowEntity entity){
+	public Identifier getTexture(MooshroomEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
