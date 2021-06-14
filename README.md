@@ -66,8 +66,8 @@ This project is licensed with LGPL v3.0. Please don't repost this project anywhe
 
 ## For mod devs
 
-If your fabric mod creates new entities, you can add support for CEM without too much work! plz consider... I'll make a step-by-step guide later, but basically what you would
-have to do is make CEM variants of your renderer and model (look in `src/main/java/net/dorianpb/cem/external` for examples)
+If your fabric mod creates new entities, you can add support for CEM without too much work! Look at net.dorianpb.external for an example implementation. Make sure to use the "
+cem" entrypoint.
 
 ## Credits
 

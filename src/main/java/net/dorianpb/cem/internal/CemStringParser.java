@@ -748,12 +748,12 @@ public class CemStringParser{
 	}
 	
 	private static class DexEnvironment{
-		private static float limbAngle;
-		private static float limbDistance;
-		private static float age;
-		private static float head_yaw;
-		private static float head_pitch;
-		private static LivingEntity livingEntity;
+		private static float            limbAngle;
+		private static float            limbDistance;
+		private static float            age;
+		private static float            head_yaw;
+		private static float            head_pitch;
+		private static LivingEntity     livingEntity;
 		private static CemModelRegistry registry;
 		
 		static void setEnv(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity, CemModelRegistry registry){
@@ -801,7 +801,7 @@ public class CemStringParser{
 	}
 	
 	static class ParsedExpressionFloat implements ParsedExpression{
-		private final ParsedFunctionFloat operation;
+		private final ParsedFunctionFloat         operation;
 		private final ArrayList<ParsedExpression> arguments;
 		
 		ParsedExpressionFloat(Token token){
@@ -847,7 +847,7 @@ public class CemStringParser{
 	 * The "if" operator is the only operator that actually steals arguments from it's container class, the ParsedExpressionFloat
 	 */
 	static class ParsedIf implements ParsedFunctionFloat{
-		private final ArrayList<ParsedExpressionBool> conditions;
+		private final ArrayList<ParsedExpressionBool>  conditions;
 		private final ArrayList<ParsedExpressionFloat> expressions;
 		
 		ParsedIf(Token token){
@@ -907,7 +907,7 @@ public class CemStringParser{
 	}
 	
 	static class ParsedExpressionBool implements ParsedExpression{
-		private final ParsedFunctionBool operation;
+		private final ParsedFunctionBool          operation;
 		private final ArrayList<ParsedExpression> arguments;
 		
 		ParsedExpressionBool(Token token){
@@ -972,11 +972,11 @@ public class CemStringParser{
 	}
 	
 	static class ParsedVar implements ParsedFunctionFloat{
-		private static final Pattern PATTERN = Pattern.compile("(\\w\\d?:?)+[.][trs][xyz]");
-		static CemModelEntry parent;
-		private final CemModelEntry entry;
-		private final char val;
-		private final char axis;
+		private static final Pattern       PATTERN = Pattern.compile("(\\w\\d?:?)+[.][trs][xyz]");
+		static               CemModelEntry parent;
+		private final        CemModelEntry entry;
+		private final        char          val;
+		private final        char          axis;
 		
 		ParsedVar(Token token){
 			if(!PATTERN.matcher(token.getName()).find()){
@@ -1004,7 +1004,7 @@ public class CemStringParser{
 	}
 	
 	private static class Token{
-		private final String name;
+		private final String           name;
 		private final ArrayList<Token> args;
 		
 		Token(String name, ArrayList<Token> args){

@@ -1,0 +1,30 @@
+package net.dorianpb.cem.external;
+
+import net.dorianpb.cem.external.renderers.*;
+import net.dorianpb.cem.internal.api.CemEntityInitializer;
+import net.dorianpb.cem.internal.api.CemFactory;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityType;
+
+public class CemEntitiesInit extends CemEntityInitializer{
+	@Override
+	public void onInit(){
+		register(EntityType.PIGLIN, new CemFactory(CemPiglinRenderer.class, EntityType.PIGLIN));
+		register(EntityType.PIGLIN_BRUTE, new CemFactory(CemPiglinRenderer.class, EntityType.PIGLIN_BRUTE));
+		register(EntityType.ZOMBIFIED_PIGLIN, new CemFactory(CemPiglinRenderer.class, EntityType.ZOMBIFIED_PIGLIN));
+		register(EntityType.ENDERMAN, new CemFactory(CemEndermanRenderer.class));
+		register(EntityType.CREEPER, new CemFactory(CemCreeperRenderer.class));
+		register(EntityType.CAT, new CemFactory(CemCatRenderer.class));
+		register(EntityType.BLAZE, new CemFactory(CemBlazeRenderer.class));
+		register(EntityType.ARMOR_STAND, new CemFactory(CemArmorStandRenderer.class));
+		register(EntityType.OCELOT, new CemFactory(CemOcelotRenderer.class));
+		register(EntityType.BAT, new CemFactory(CemBatRenderer.class));
+		register(EntityType.BEE, new CemFactory(CemBeeRenderer.class));
+		register(EntityType.CHICKEN, new CemFactory(CemChickenRenderer.class));
+		register(EntityType.COW, new CemFactory(CemCowRenderer.class));
+		register(EntityType.SHEEP, new CemFactory(CemSheepRenderer.class));
+		register("sheep_wool");
+		register(EntityType.PIG, new CemFactory(CemPigRenderer.class));
+		register(BlockEntityType.BANNER, new CemFactory(CemBannerRenderer.class));
+	}
+}
