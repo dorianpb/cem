@@ -12,6 +12,7 @@ import net.fabricmc.loader.api.metadata.ModMetadata;
 
 public class CemInit implements ClientModInitializer{
 	@Override
+	@SuppressWarnings({"unchecked", "RedundantSuppression"})
 	public void onInitializeClient(){
 		FabricLoader.getInstance().getEntrypointContainers("cem", CemEntityInitializer.class).forEach((container) -> {
 			ModMetadata provider = container.getProvider().getMetadata();

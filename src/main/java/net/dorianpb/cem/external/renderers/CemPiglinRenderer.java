@@ -6,10 +6,8 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PiglinEntityRenderer;
-import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.PiglinEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
@@ -46,22 +44,6 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				this.features.set(0,
-				                  new ArmorFeatureRenderer<MobEntity, PiglinEntityModel<MobEntity>, PiglinEntityModel<MobEntity>>(this,
-				                                                                                                                  getCemPiglinModel(CemRegistryManager.getRegistry(
-						                                                                                                                  entityType),
-				                                                                                                                                    entityType.equals(
-						                                                                                                                                    EntityType.ZOMBIFIED_PIGLIN),
-				                                                                                                                                    0.5F
-				                                                                                                                                   ),
-				                                                                                                                  getCemPiglinModel(CemRegistryManager.getRegistry(
-						                                                                                                                  entityType),
-				                                                                                                                                    entityType.equals(
-						                                                                                                                                    EntityType.ZOMBIFIED_PIGLIN),
-				                                                                                                                                    1.02F
-				                                                                                                                                   )
-				                  )
-				                 );
 			} catch(Exception e){
 				modelError(e);
 			}

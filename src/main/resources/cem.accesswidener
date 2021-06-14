@@ -2,28 +2,36 @@ accessWidener	v1	named
 
 #ModelPart (sorry)
 extendable  class   net/minecraft/client/model/ModelPart
-accessible  field   net/minecraft/client/model/ModelPart                                    cuboids         Ljava/util/List;
-accessible  field   net/minecraft/client/model/ModelPart                                    children        Ljava/util/Map;
-accessible  field   net/minecraft/client/model/ModelPart$Cuboid                             sides           [Lnet/minecraft/client/model/ModelPart$Quad;
+accessible  field   net/minecraft/client/model/ModelPart                                        cuboids         Ljava/util/List;
+accessible  field   net/minecraft/client/model/ModelPart                                        children        Ljava/util/Map;
+accessible  field   net/minecraft/client/model/ModelPart$Cuboid                                 sides           [Lnet/minecraft/client/model/ModelPart$Quad;
 
 #Sheep Wool
-mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
-accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
-mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
-accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer         model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer         model           Lnet/minecraft/client/render/entity/model/SheepWoolEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer         SKIN            Lnet/minecraft/util/Identifier;
+accessible  field   net/minecraft/client/render/entity/feature/SheepWoolFeatureRenderer         SKIN            Lnet/minecraft/util/Identifier;
 
 #Banner
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      banner          Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      banner          Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      pillar          Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      pillar          Lnet/minecraft/client/model/ModelPart;
-mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      crossbar        Lnet/minecraft/client/model/ModelPart;
-accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer      crossbar        Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          banner          Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          banner          Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          pillar          Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          pillar          Lnet/minecraft/client/model/ModelPart;
+mutable     field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          crossbar        Lnet/minecraft/client/model/ModelPart;
+accessible  field   net/minecraft/client/render/block/entity/BannerBlockEntityRenderer          crossbar        Lnet/minecraft/client/model/ModelPart;
 
 #Cat Collar
-mutable     field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
-accessible  field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer         model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/CatCollarFeatureRenderer         model           Lnet/minecraft/client/render/entity/model/CatEntityModel;
 
 #Creeper Charge model
-mutable     field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;
-accessible  field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/CreeperEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
+accessible  field   net/minecraft/client/render/entity/feature/CreeperChargeFeatureRenderer     SKIN            Lnet/minecraft/util/Identifier;
+
+#Drowned Outer layer
+mutable     field   net/minecraft/client/render/entity/feature/DrownedOverlayFeatureRenderer    model           Lnet/minecraft/client/render/entity/model/DrownedEntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/DrownedOverlayFeatureRenderer    model           Lnet/minecraft/client/render/entity/model/DrownedEntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/DrownedOverlayFeatureRenderer    SKIN            Lnet/minecraft/util/Identifier;
+accessible  field   net/minecraft/client/render/entity/feature/DrownedOverlayFeatureRenderer    SKIN            Lnet/minecraft/util/Identifier;

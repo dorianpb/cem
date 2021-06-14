@@ -1,6 +1,7 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCatModel;
+import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
@@ -8,8 +9,10 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.CatCollarFeatureRenderer;
+import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.util.Identifier;
 
@@ -40,7 +43,13 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				this.features.set(0, new CemCatCollarFeatureRenderer(this, context.getModelLoader()));
+				this.features.replaceAll((feature) -> {
+					if(feature instanceof CatCollarFeatureRenderer){
+						return new CemCatCollarFeatureRenderer(this, context.getModelLoader());
+					} else {
+						return feature;
+					}
+				});
 			} catch(Exception e){
 				modelError(e);
 			}

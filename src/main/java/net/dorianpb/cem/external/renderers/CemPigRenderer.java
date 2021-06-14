@@ -1,14 +1,17 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemPigModel;
+import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PigEntityRenderer;
+import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.SaddleFeatureRenderer;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 
@@ -39,10 +42,16 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(EntityType.PIG);
-				saddleRegistry.setChildren(parentChildPairs);
-				CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, 0.5F);
-				this.features.set(0, new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png")));
+				this.features.replaceAll((feature) -> {
+					if(feature instanceof SaddleFeatureRenderer){
+						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(EntityType.PIG);
+						saddleRegistry.setChildren(parentChildPairs);
+						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, 0.5F);
+						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
+					} else {
+						return feature;
+					}
+				});
 			} catch(Exception e){
 				modelError(e);
 			}

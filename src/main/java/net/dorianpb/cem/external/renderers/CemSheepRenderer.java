@@ -2,14 +2,17 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemSheepModel;
 import net.dorianpb.cem.external.models.CemSheepModel.CemSheepWoolModel;
+import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.SheepEntityRenderer;
+import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.Identifier;
 
@@ -39,7 +42,13 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				this.features.set(0, new CemSheepWoolFeatureRenderer(this, context.getModelLoader()));
+				this.features.replaceAll((feature) -> {
+					if(feature instanceof SheepWoolFeatureRenderer){
+						return new CemSheepWoolFeatureRenderer(this, context.getModelLoader());
+					} else {
+						return feature;
+					}
+				});
 			} catch(Exception e){
 				modelError(e);
 			}
@@ -60,17 +69,10 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 	}
 	
 	public static class CemSheepWoolFeatureRenderer extends SheepWoolFeatureRenderer implements CemRenderer{
-		private static final Map<String, String>       partNames        = new LinkedHashMap<>();
-		private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+		private static final Map<String, String>       partNames        = CemSheepRenderer.partNames;
+		private static final Map<String, List<String>> parentChildPairs = CemSheepRenderer.parentChildPairs;
 		private static final Identifier                origSKIN         = SKIN;
 		private              CemModelRegistry          registry;
-		
-		static{
-			partNames.put("leg1", "left_hind_leg");
-			partNames.put("leg2", "right_hind_leg");
-			partNames.put("leg3", "left_front_leg");
-			partNames.put("leg4", "right_front_leg");
-		}
 		
 		public CemSheepWoolFeatureRenderer(CemSheepRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);

@@ -1,6 +1,7 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCreeperModel;
+import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
@@ -8,9 +9,11 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CreeperEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
+import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
@@ -39,7 +42,13 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				this.features.set(0, new CemCreeperChargeFeatureRenderer(this, context.getModelLoader()));
+				this.features.replaceAll((feature) -> {
+					if(feature instanceof CreeperChargeFeatureRenderer){
+						return new CemCreeperChargeFeatureRenderer(this, context.getModelLoader());
+					} else {
+						return feature;
+					}
+				});
 			} catch(Exception e){
 				modelError(e);
 			}
@@ -62,6 +71,7 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	public static class CemCreeperChargeFeatureRenderer extends CreeperChargeFeatureRenderer implements CemRenderer{
 		private static final Map<String, String>       partNames        = CemCreeperRenderer.partNames;
 		private static final Map<String, List<String>> parentChildPairs = CemCreeperRenderer.parentChildPairs;
+		private static final Identifier                origSKIN         = SKIN;
 		private final        CemModelRegistry          registry;
 		
 		public CemCreeperChargeFeatureRenderer(CemCreeperRenderer featureRendererContext, EntityModelLoader modelLoader){
@@ -71,6 +81,12 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 				this.registry.setChildren(parentChildPairs);
 				CemModelPart rootPart = this.registry.prepRootPart(partNames, 2F);
 				this.model = new CemCreeperModel(rootPart, registry);
+				if(this.registry.hasTexture()){
+					SKIN = this.registry.getTexture();
+				}
+				else{
+					SKIN = origSKIN;
+				}
 			} catch(Exception e){
 				modelError(e);
 			}
