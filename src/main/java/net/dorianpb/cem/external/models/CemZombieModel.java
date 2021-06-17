@@ -2,9 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.PiglinEntityModel;
 import net.minecraft.client.render.entity.model.ZombieEntityModel;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 
 public class CemZombieModel extends ZombieEntityModel<ZombieEntity>{

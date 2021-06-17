@@ -17,15 +17,15 @@ public abstract class CemEntityInitializer{
 	
 	public abstract void onInit();
 	
-	public Map<EntityType<? extends Entity>, CemFactory> getCemEntityFactories(){
+	public final Map<EntityType<? extends Entity>, CemFactory> getCemEntityFactories(){
 		return cemEntityFactories;
 	}
 	
-	public Map<BlockEntityType<? extends BlockEntity>, CemFactory> getCemBlockEntityFactories(){
+	public final Map<BlockEntityType<? extends BlockEntity>, CemFactory> getCemBlockEntityFactories(){
 		return cemBlockEntityFactories;
 	}
 	
-	public List<String> getCemOthers(){
+	public final List<String> getCemOthers(){
 		return cemOthers;
 	}
 	
@@ -39,5 +39,9 @@ public abstract class CemEntityInitializer{
 	
 	public final <T extends BlockEntity> void register(BlockEntityType<? extends T> type, CemFactory factory){
 		this.cemBlockEntityFactories.put(type, factory); /*BlockEntityRendererAccessor.callRegister(type, factory::create);*/
+	}
+	
+	public final int getSize(){
+		return this.cemEntityFactories.size() + this.cemBlockEntityFactories.size() + this.cemOthers.size();
 	}
 }

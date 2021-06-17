@@ -1,20 +1,16 @@
 package net.dorianpb.cem.external.renderers;
 
-import net.dorianpb.cem.external.models.CemCreeperModel;
 import net.dorianpb.cem.external.models.CemDrownedZombieModel;
-import net.dorianpb.cem.external.models.CemZombieModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.DrownedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.ZombieEntityRenderer;
-import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
 import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
@@ -34,8 +30,8 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 	
 	public CemDrownedZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.DROWNED)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.DROWNED);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames), registry);
@@ -44,8 +40,9 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				}
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof DrownedOverlayFeatureRenderer<DrownedEntity>){
-						return new CemDrownedOverlayRenderer(this,context.getModelLoader());
-					} else {
+						return new CemDrownedOverlayRenderer(this, context.getModelLoader());
+					}
+					else{
 						return feature;
 					}
 				});
@@ -57,7 +54,11 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 	
 	@Override
 	public String getId(){
-		return EntityType.DROWNED.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.DROWNED;
 	}
 	
 	@Override

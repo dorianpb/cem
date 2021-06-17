@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.BlazeEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
@@ -27,8 +28,8 @@ public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer
 	
 	public CemBlazeRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.BLAZE)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.BLAZE);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemBlazeModel(this.registry.prepRootPart(partNames), registry);
@@ -43,7 +44,11 @@ public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer
 	
 	@Override
 	public String getId(){
-		return EntityType.BLAZE.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.BLAZE;
 	}
 	
 	@Override

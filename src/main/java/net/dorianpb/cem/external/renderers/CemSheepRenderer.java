@@ -2,17 +2,15 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemSheepModel;
 import net.dorianpb.cem.external.models.CemSheepModel.CemSheepWoolModel;
-import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.SheepEntityRenderer;
-import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.Identifier;
 
@@ -34,8 +32,8 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 	
 	public CemSheepRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.SHEEP)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.SHEEP);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemSheepModel(this.registry.prepRootPart(partNames), registry);
@@ -45,7 +43,8 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof SheepWoolFeatureRenderer){
 						return new CemSheepWoolFeatureRenderer(this, context.getModelLoader());
-					} else {
+					}
+					else{
 						return feature;
 					}
 				});
@@ -57,7 +56,11 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 	
 	@Override
 	public String getId(){
-		return EntityType.SHEEP.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.SHEEP;
 	}
 	
 	@Override

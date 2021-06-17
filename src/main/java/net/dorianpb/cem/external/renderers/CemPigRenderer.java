@@ -1,17 +1,15 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemPigModel;
-import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PigEntityRenderer;
-import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.SaddleFeatureRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 
@@ -33,8 +31,8 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	
 	public CemPigRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.PIG)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.PIG);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				CemModelPart rootPart = this.registry.prepRootPart(partNames);
@@ -44,11 +42,12 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 				}
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof SaddleFeatureRenderer){
-						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(EntityType.PIG);
+						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(this.getType());
 						saddleRegistry.setChildren(parentChildPairs);
 						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, 0.5F);
 						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
-					} else {
+					}
+					else{
 						return feature;
 					}
 				});
@@ -60,7 +59,11 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.PIG.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.PIG;
 	}
 	
 	@Override

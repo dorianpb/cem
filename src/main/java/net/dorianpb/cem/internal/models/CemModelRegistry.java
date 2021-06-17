@@ -41,7 +41,9 @@ public class CemModelRegistry{
 			for(String key : data.getAnimations().keySet()){
 				try{
 					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf("."))),
-					                                data.getAnimations().get(key), key.substring(key.indexOf(".") + 1), this
+					                                data.getAnimations().get(key),
+					                                key.substring(key.indexOf(".") + 1),
+					                                this
 					));
 				} catch(Exception e){
 					CemFairy.getLogger().error(e.getMessage());

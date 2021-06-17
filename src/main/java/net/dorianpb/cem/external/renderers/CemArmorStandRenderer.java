@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
@@ -29,8 +30,8 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 	
 	public CemArmorStandRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.ARMOR_STAND)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.ARMOR_STAND);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames), registry);
@@ -45,7 +46,11 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 	
 	@Override
 	public String getId(){
-		return EntityType.ARMOR_STAND.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.ARMOR_STAND;
 	}
 	
 	@Override

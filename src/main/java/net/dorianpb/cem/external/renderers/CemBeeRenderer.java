@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.BeeEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
@@ -32,8 +33,8 @@ public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
 	
 	public CemBeeRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.BEE)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.BEE);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemBeeModel(this.registry.prepRootPart(partNames), registry);
@@ -48,7 +49,11 @@ public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.BEE.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.BEE;
 	}
 	
 	@Override

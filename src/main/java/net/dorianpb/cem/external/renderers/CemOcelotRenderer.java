@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.OcelotEntityRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.util.Identifier;
@@ -29,8 +30,8 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	
 	public CemOcelotRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.OCELOT)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.OCELOT);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames), registry);
@@ -45,7 +46,11 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	
 	@Override
 	public String getId(){
-		return EntityType.OCELOT.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.OCELOT;
 	}
 	
 	@Override

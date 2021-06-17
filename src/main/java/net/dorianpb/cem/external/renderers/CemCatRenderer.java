@@ -1,7 +1,6 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCatModel;
-import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
@@ -9,10 +8,9 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.CatCollarFeatureRenderer;
-import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.util.Identifier;
 
@@ -35,8 +33,8 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	
 	public CemCatRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.CAT)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.CAT);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCatModel(this.registry.prepRootPart(partNames), registry);
@@ -46,7 +44,8 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof CatCollarFeatureRenderer){
 						return new CemCatCollarFeatureRenderer(this, context.getModelLoader());
-					} else {
+					}
+					else{
 						return feature;
 					}
 				});
@@ -58,7 +57,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.CAT.toString();
+		return this.getType().toString();
 	}
 	
 	@Override
@@ -67,6 +66,10 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 			return this.registry.getTexture();
 		}
 		return super.getTexture(entity);
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.CAT;
 	}
 	
 	public static class CemCatCollarFeatureRenderer extends CatCollarFeatureRenderer implements CemRenderer{

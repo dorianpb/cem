@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.BatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.util.Identifier;
@@ -30,8 +31,8 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	
 	public CemBatRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.BAT)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.BAT);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemBatModel(this.registry.prepRootPart(partNames), registry);
@@ -46,7 +47,11 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.BAT.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.BAT;
 	}
 	
 	@Override

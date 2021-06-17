@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CowEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.util.Identifier;
@@ -33,8 +34,8 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 	
 	public CemCowRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.COW)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.COW);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames), registry);
@@ -49,7 +50,11 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return EntityType.COW.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.COW;
 	}
 	
 	@Override

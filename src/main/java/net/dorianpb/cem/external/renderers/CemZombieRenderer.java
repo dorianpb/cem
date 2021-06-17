@@ -6,12 +6,10 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieEntityRenderer;
-import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
-import net.minecraft.client.render.entity.model.ZombieEntityModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,8 +26,8 @@ public class CemZombieRenderer extends ZombieEntityRenderer implements CemRender
 	
 	public CemZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.ZOMBIE)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.ZOMBIE);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemZombieModel(this.registry.prepRootPart(partNames), registry);
@@ -44,7 +42,11 @@ public class CemZombieRenderer extends ZombieEntityRenderer implements CemRender
 	
 	@Override
 	public String getId(){
-		return EntityType.ZOMBIE.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.SHEEP;
 	}
 	
 	@Override

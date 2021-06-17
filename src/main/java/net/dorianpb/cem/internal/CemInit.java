@@ -1,7 +1,6 @@
 package net.dorianpb.cem.internal;
 
 import net.dorianpb.cem.internal.api.CemEntityInitializer;
-import net.dorianpb.cem.internal.api.CemFactory;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.dorianpb.cem.mixins.BlockEntityRendererAccessor;
 import net.dorianpb.cem.mixins.EntityRendererAccessor;
@@ -16,10 +15,10 @@ public class CemInit implements ClientModInitializer{
 	public void onInitializeClient(){
 		FabricLoader.getInstance().getEntrypointContainers("cem", CemEntityInitializer.class).forEach((container) -> {
 			ModMetadata provider = container.getProvider().getMetadata();
-			CemFairy.getLogger().info("Loading entities from " + provider.getName() + " " + provider.getVersion());
 			CemEntityInitializer entrypoint = container.getEntrypoint();
 			
 			entrypoint.onInit();
+			CemFairy.getLogger().info("Loading " + entrypoint.getSize() + " entities from " + provider.getName() + " " + provider.getVersion());
 			entrypoint.getCemEntityFactories().forEach((type, factory) -> {
 				CemFairy.addSupport(type);
 				EntityRendererAccessor.callRegister(type, factory::create);

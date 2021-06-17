@@ -4,6 +4,7 @@ import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -29,8 +30,8 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 	
 	public CemBannerRenderer(BlockEntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(BlockEntityType.BANNER)){
-			CemModelRegistry registry = CemRegistryManager.getRegistry(BlockEntityType.BANNER);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				registry.setChildren(parentChildPairs);
 				CemModelPart root = registry.prepRootPart(partNames);
@@ -47,6 +48,10 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 	
 	@Override
 	public String getId(){
-		return BlockEntityType.BANNER.toString();
+		return this.getType().toString();
+	}
+	
+	private BlockEntityType<? extends BlockEntity> getType(){
+		return BlockEntityType.BANNER;
 	}
 }

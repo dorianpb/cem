@@ -3,9 +3,7 @@ package net.dorianpb.cem.external.models;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.DrownedEntityModel;
-import net.minecraft.client.render.entity.model.ZombieEntityModel;
 import net.minecraft.entity.mob.DrownedEntity;
-import net.minecraft.entity.mob.ZombieEntity;
 
 public class CemDrownedZombieModel extends DrownedEntityModel<DrownedEntity>{
 	private final CemModelRegistry registry;

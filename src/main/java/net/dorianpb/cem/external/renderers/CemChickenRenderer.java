@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.ChickenEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.util.Identifier;
@@ -26,8 +27,8 @@ public class CemChickenRenderer extends ChickenEntityRenderer implements CemRend
 	
 	public CemChickenRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.CHICKEN)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.CHICKEN);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemChickenModel(this.registry.prepRootPart(partNames), registry);
@@ -42,7 +43,11 @@ public class CemChickenRenderer extends ChickenEntityRenderer implements CemRend
 	
 	@Override
 	public String getId(){
-		return EntityType.CHICKEN.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.CHICKEN;
 	}
 	
 	@Override

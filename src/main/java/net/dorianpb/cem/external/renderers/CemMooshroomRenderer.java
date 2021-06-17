@@ -1,19 +1,13 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCowModel;
-import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
-import net.minecraft.client.render.entity.CowEntityRenderer;
-import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MooshroomEntityRenderer;
-import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
-import net.minecraft.client.render.entity.feature.MooshroomMushroomFeatureRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.DrownedEntity;
-import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.util.Identifier;
 
@@ -40,8 +34,8 @@ public class CemMooshroomRenderer extends MooshroomEntityRenderer implements Cem
 	
 	public CemMooshroomRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.MOOSHROOM)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.MOOSHROOM);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames), registry);
@@ -56,7 +50,11 @@ public class CemMooshroomRenderer extends MooshroomEntityRenderer implements Cem
 	
 	@Override
 	public String getId(){
-		return EntityType.MOOSHROOM.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.MOOSHROOM;
 	}
 	
 	@Override

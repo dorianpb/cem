@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EndermanEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.util.Identifier;
@@ -25,8 +26,8 @@ public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRe
 	
 	public CemEndermanRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.ENDERMAN)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.ENDERMAN);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemEndermanModel(this.registry.prepRootPart(partNames), registry);
@@ -41,7 +42,11 @@ public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRe
 	
 	@Override
 	public String getId(){
-		return EntityType.ENDERMAN.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.ENDERMAN;
 	}
 	
 	@Override

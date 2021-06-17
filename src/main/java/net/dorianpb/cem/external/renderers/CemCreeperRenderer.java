@@ -1,7 +1,6 @@
 package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemCreeperModel;
-import net.dorianpb.cem.external.renderers.CemDrownedZombieRenderer.CemDrownedOverlayRenderer;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
@@ -9,11 +8,10 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CreeperEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
-import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
@@ -34,8 +32,8 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	
 	public CemCreeperRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.CREEPER)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.CREEPER);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames), registry);
@@ -45,7 +43,8 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof CreeperChargeFeatureRenderer){
 						return new CemCreeperChargeFeatureRenderer(this, context.getModelLoader());
-					} else {
+					}
+					else{
 						return feature;
 					}
 				});
@@ -57,7 +56,11 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	
 	@Override
 	public String getId(){
-		return EntityType.CREEPER.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.CREEPER;
 	}
 	
 	@Override

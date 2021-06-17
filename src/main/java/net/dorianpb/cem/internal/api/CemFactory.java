@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CemFactory{
 	private final Class<? extends CemRenderer> renderer;
-	private final List<Object> params;
+	private final List<Object>                 params;
 	
 	public CemFactory(Class<? extends CemRenderer> renderer, Object... params){
 		this.renderer = renderer;
@@ -43,7 +43,7 @@ public class CemFactory{
 				return (EntityRenderer) hello;
 			}
 			else{
-				throw new InvalidParameterException("Provided renderer "+hello.getClass()+" isn't an entity renderer!");
+				throw new InvalidParameterException("Provided renderer " + hello.getClass() + " isn't an entity renderer!");
 			}
 		} catch(Exception e){
 			CemFairy.getLogger().error(e);
@@ -59,7 +59,7 @@ public class CemFactory{
 				return (BlockEntityRenderer) hello;
 			}
 			else{
-				throw new InvalidParameterException("Provided renderer "+hello.getClass()+" isn't a block entity renderer!");
+				throw new InvalidParameterException("Provided renderer " + hello.getClass() + " isn't a block entity renderer!");
 			}
 		} catch(Exception e){
 			CemFairy.getLogger().error(e);

@@ -6,7 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.HuskEntityRenderer;
-import net.minecraft.client.render.entity.ZombieEntityRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
@@ -26,8 +26,8 @@ public class CemHuskZombieRenderer extends HuskEntityRenderer implements CemRend
 	
 	public CemHuskZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(EntityType.HUSK)){
-			this.registry = CemRegistryManager.getRegistry(EntityType.HUSK);
+		if(CemRegistryManager.hasEntity(this.getType())){
+			this.registry = CemRegistryManager.getRegistry(this.getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemZombieModel(this.registry.prepRootPart(partNames), registry);
@@ -42,7 +42,11 @@ public class CemHuskZombieRenderer extends HuskEntityRenderer implements CemRend
 	
 	@Override
 	public String getId(){
-		return EntityType.HUSK.toString();
+		return this.getType().toString();
+	}
+	
+	private EntityType<? extends Entity> getType(){
+		return EntityType.HUSK;
 	}
 	
 	@Override
