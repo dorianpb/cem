@@ -95,7 +95,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		
 		@Override
 		public String getId(){
-			return "creeper_charge";
+			return "drowned_outer";
 		}
 		
 		@Override
