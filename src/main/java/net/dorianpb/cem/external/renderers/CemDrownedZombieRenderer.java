@@ -77,17 +77,24 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		
 		public CemDrownedOverlayRenderer(CemDrownedZombieRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);
-			this.registry = CemRegistryManager.getRegistry(EntityType.DROWNED);
-			try{
-				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, 0.25F);
-				this.model = new CemDrownedZombieModel(rootPart, registry);
+			if(CemRegistryManager.hasEntity(this.getId())){
+				this.registry = CemRegistryManager.getRegistry(this.getId());
 				if(this.registry.hasTexture()){
 					SKIN = this.registry.getTexture();
 				}
 				else{
 					SKIN = origSKIN;
 				}
+			}
+			else{
+				this.registry = CemRegistryManager.getRegistry(EntityType.DROWNED);
+				SKIN = origSKIN;
+			}
+			try{
+				this.registry.setChildren(parentChildPairs);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, 0.25F);
+				this.model = new CemDrownedZombieModel(rootPart, registry);
+				
 			} catch(Exception e){
 				modelError(e);
 			}

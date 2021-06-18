@@ -23,7 +23,7 @@ The file format for the .jem and .jpm is identical to the Optfine's (check out [
 , [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_part.txt ".jpm"),
 and [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_animation.txt "animations")). The folder structures inside "assets/dorianpb/cem" does not matter.
 If you want to assign a custom model for a creeper, you could put the file as "assets/dorianpb/cem/creeper.jem", "assets/dorianpb/cem/creeper/creeper.jem", "
-assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
+assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 
 ## Differences
 
@@ -51,6 +51,7 @@ assets/dorianpb/cem/ur/mom/gay/creeper.jem", etc.
 * The `attach` option is not supported.
 * Texture offsets must be specified using `textureOffset`, using individual `uvDown`, `uvUp`, etc. is not supported.
 * This mod will auto create features like the charge aura around a creeper, and the pig's saddle model so that it fits with your custom model, which Optifine doesn't do
+	* Mobs like Drowned support customization of their outer layers (drowned_outer.jem would work here).
 * Currently, all translation in custom animations is relative to the parent
 	* This *IS* different from Optifine, so if your model wants to use super fancy custom animations, you might need to change a few values, especially `*.ty` values
 
