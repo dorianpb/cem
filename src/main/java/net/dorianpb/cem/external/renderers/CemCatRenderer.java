@@ -33,8 +33,8 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	
 	public CemCatRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCatModel(this.registry.prepRootPart(partNames), registry);
@@ -57,7 +57,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
 	@Override
@@ -68,7 +68,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 		return super.getTexture(entity);
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.CAT;
 	}
 	

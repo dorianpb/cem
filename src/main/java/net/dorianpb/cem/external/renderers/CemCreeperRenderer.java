@@ -32,8 +32,8 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	
 	public CemCreeperRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames), registry);
@@ -56,10 +56,10 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.CREEPER;
 	}
 	
@@ -79,17 +79,26 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 		
 		public CemCreeperChargeFeatureRenderer(CemCreeperRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);
-			this.registry = CemRegistryManager.getRegistry(EntityType.CREEPER);
-			try{
-				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, 2F);
-				this.model = new CemCreeperModel(rootPart, registry);
+			boolean inflate = false;
+			if(CemRegistryManager.hasEntity(this.getId())){
+				this.registry = CemRegistryManager.getRegistry(this.getId());
 				if(this.registry.hasTexture()){
 					SKIN = this.registry.getTexture();
 				}
 				else{
 					SKIN = origSKIN;
 				}
+			}
+			else{
+				this.registry = CemRegistryManager.getRegistry(CemCreeperRenderer.getType());
+				SKIN = origSKIN;
+				inflate = true;
+			}
+			try{
+				this.registry.setChildren(parentChildPairs);
+				CemModelPart rootPart = inflate? this.registry.prepRootPart(partNames, 2.00F) : this.registry.prepRootPart(partNames);
+				this.model = new CemCreeperModel(rootPart, registry);
+				
 			} catch(Exception e){
 				modelError(e);
 			}

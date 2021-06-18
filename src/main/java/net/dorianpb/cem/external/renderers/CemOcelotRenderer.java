@@ -30,8 +30,8 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	
 	public CemOcelotRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames), registry);
@@ -46,10 +46,10 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.OCELOT;
 	}
 	

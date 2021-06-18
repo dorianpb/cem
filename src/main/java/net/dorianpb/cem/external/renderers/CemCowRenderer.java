@@ -34,8 +34,8 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 	
 	public CemCowRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames), registry);
@@ -50,10 +50,10 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.COW;
 	}
 	

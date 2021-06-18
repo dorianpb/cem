@@ -31,8 +31,8 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	
 	public CemBatRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				this.model = new CemBatModel(this.registry.prepRootPart(partNames), registry);
@@ -47,10 +47,10 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.BAT;
 	}
 	

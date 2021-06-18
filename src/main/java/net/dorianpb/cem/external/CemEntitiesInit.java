@@ -14,6 +14,7 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.ZOMBIFIED_PIGLIN, new CemFactory(CemPiglinRenderer.class, EntityType.ZOMBIFIED_PIGLIN));
 		register(EntityType.ENDERMAN, new CemFactory(CemEndermanRenderer.class));
 		register(EntityType.CREEPER, new CemFactory(CemCreeperRenderer.class));
+		register("creeper_charge");
 		register(EntityType.CAT, new CemFactory(CemCatRenderer.class));
 		register(EntityType.BLAZE, new CemFactory(CemBlazeRenderer.class));
 		register(EntityType.ARMOR_STAND, new CemFactory(CemArmorStandRenderer.class));

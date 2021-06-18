@@ -31,8 +31,8 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	
 	public CemPigRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			this.registry = CemRegistryManager.getRegistry(this.getType());
+		if(CemRegistryManager.hasEntity(getType())){
+			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
 				CemModelPart rootPart = this.registry.prepRootPart(partNames);
@@ -42,7 +42,7 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 				}
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof SaddleFeatureRenderer){
-						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(this.getType());
+						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
 						saddleRegistry.setChildren(parentChildPairs);
 						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, 0.5F);
 						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
@@ -59,10 +59,10 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	
 	@Override
 	public String getId(){
-		return this.getType().toString();
+		return getType().toString();
 	}
 	
-	private EntityType<? extends Entity> getType(){
+	private static EntityType<? extends Entity> getType(){
 		return EntityType.PIG;
 	}
 	
