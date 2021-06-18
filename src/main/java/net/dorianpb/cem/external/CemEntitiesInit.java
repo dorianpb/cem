@@ -32,5 +32,9 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.HUSK, new CemFactory(CemHuskZombieRenderer.class));
 		register(EntityType.DROWNED, new CemFactory(CemDrownedZombieRenderer.class));
 		register("drowned_outer");
+		register(EntityType.SKELETON, new CemFactory(CemSkeletonRenderer.class));
+		register(EntityType.WITHER_SKELETON, new CemFactory(CemWitherSkeletonRenderer.class));
+		register(EntityType.STRAY, new CemFactory(CemStraySkeletonRenderer.class));
+		register("stray_outer");
 	}
 }
