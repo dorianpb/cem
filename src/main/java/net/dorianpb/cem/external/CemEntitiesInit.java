@@ -36,5 +36,9 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.WITHER_SKELETON, new CemFactory(CemWitherSkeletonRenderer.class));
 		register(EntityType.STRAY, new CemFactory(CemStraySkeletonRenderer.class));
 		register("stray_outer");
+		register(EntityType.PILLAGER, new CemFactory(CemPillagerRenderer.class));
+		register(EntityType.VINDICATOR, new CemFactory(CemVindicatorRenderer.class));
+		register(EntityType.EVOKER, new CemFactory(CemEvokerRenderer.class));
+		register(EntityType.ILLUSIONER, new CemFactory(CemIllusionerRenderer.class));
 	}
 }
