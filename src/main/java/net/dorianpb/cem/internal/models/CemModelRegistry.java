@@ -31,21 +31,20 @@ public class CemModelRegistry{
 		//models
 		for(String part : this.file.getModelList()){
 			JemModel data = this.file.getModel(part);
-			CemModelEntry entry;
-			entry = new CemModelEntry(data, file.getTextureSize().get(0).intValue(), file.getTextureSize().get(1).intValue());
-			this.addEntry(entry, new ArrayList<>());
+			this.addEntry(new CemModelEntry(data, file.getTextureSize().get(0).intValue(), file.getTextureSize().get(1).intValue()), new ArrayList<>());
 		}
 		//animations
 		for(String part : this.file.getModelList()){
 			JemModel data = this.file.getModel(part);
 			for(String key : data.getAnimations().keySet()){
 				try{
-					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf("."))),
+					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf(".")), this.findChild(part)),
 					                                data.getAnimations().get(key),
 					                                key.substring(key.indexOf(".") + 1),
 					                                this
 					));
 				} catch(Exception e){
+					CemFairy.getLogger().error("Error applying animation:");
 					CemFairy.getLogger().error(e.getMessage());
 				}
 			}
@@ -185,8 +184,18 @@ public class CemModelRegistry{
 			victim = this.partNameRefs.get(refmap.get(0));
 			return victim;
 		}
-		else if(parent != null && refmap.get(0).equals("this")){
-			return parent;
+		else if(parent != null && (refmap.get(0).equals("this") || refmap.get(0).equals("part"))){
+			if(refmap.size() == 1){
+				return parent;
+			}
+			else{
+				StringBuilder newTarget = new StringBuilder();
+				newTarget.append((parent.getId() == null)? parent.getPart() : parent.getId());
+				for(int d = 1; d < refmap.size(); d++){
+					newTarget.append(":").append(refmap.get(d));
+				}
+				return findChild(newTarget.toString(), parent);
+			}
 		}
 		else{
 			for(ArrayList<String> part : this.database.keySet()){
