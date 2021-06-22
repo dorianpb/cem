@@ -108,7 +108,7 @@ public class CemModelRegistry{
 		
 	}
 	
-	private CemModelEntry getEntryByPartName(String key){
+	public CemModelEntry getEntryByPartName(String key){
 		if(this.partNameRefs.containsKey(key)){
 			return this.partNameRefs.get(key);
 		}

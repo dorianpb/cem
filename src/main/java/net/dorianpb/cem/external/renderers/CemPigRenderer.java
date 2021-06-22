@@ -40,6 +40,8 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
+				var body = this.registry.getEntryByPartName("body");
+				body.getModel().setRotation('x', (float) (body.getModel().getRotation('x') + Math.toRadians(90)));
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof SaddleFeatureRenderer){
 						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
