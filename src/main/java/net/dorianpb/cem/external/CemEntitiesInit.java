@@ -41,5 +41,7 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.EVOKER, new CemFactory(CemEvokerRenderer.class));
 		register(EntityType.ILLUSIONER, new CemFactory(CemIllusionerRenderer.class));
 		register(EntityType.FOX, new CemFactory(CemFoxRenderer.class));
+		register(EntityType.SLIME, new CemFactory(CemSlimeRenderer.class));
+		register("slime_gel");
 	}
 }

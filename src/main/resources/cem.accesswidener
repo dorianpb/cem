@@ -41,3 +41,7 @@ mutable     field   net/minecraft/client/render/entity/feature/StrayOverlayFeatu
 accessible  field   net/minecraft/client/render/entity/feature/StrayOverlayFeatureRenderer      model           Lnet/minecraft/client/render/entity/model/SkeletonEntityModel;
 mutable     field   net/minecraft/client/render/entity/feature/StrayOverlayFeatureRenderer      SKIN            Lnet/minecraft/util/Identifier;
 accessible  field   net/minecraft/client/render/entity/feature/StrayOverlayFeatureRenderer      SKIN            Lnet/minecraft/util/Identifier;
+
+#Slime Outer Layer
+mutable     field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/EntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer     model           Lnet/minecraft/client/render/entity/model/EntityModel;

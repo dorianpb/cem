@@ -43,7 +43,8 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
     * Mooshrooms
 	* Ocelots
 	* Sheep
-    * Skeletons and their variants (Wither Skeletons and Strays)
+	* Skeletons and their variants (Wither Skeletons and Strays)
+	* Slimes
 	* Pigs
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	* Zombies and their variants (Husks and Drowned)
