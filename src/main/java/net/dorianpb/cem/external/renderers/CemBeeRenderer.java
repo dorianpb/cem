@@ -47,13 +47,13 @@ public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.BEE;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.BEE;
 	}
 	
 	@Override

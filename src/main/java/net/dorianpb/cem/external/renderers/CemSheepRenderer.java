@@ -56,13 +56,13 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.SHEEP;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.SHEEP;
 	}
 	
 	@Override

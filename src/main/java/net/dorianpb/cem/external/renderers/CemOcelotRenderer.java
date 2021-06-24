@@ -44,13 +44,13 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.OCELOT;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.OCELOT;
 	}
 	
 	@Override

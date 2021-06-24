@@ -44,13 +44,13 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.ARMOR_STAND;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.ARMOR_STAND;
 	}
 	
 	@Override

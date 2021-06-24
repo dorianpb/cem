@@ -39,13 +39,13 @@ public class CemPillagerRenderer extends PillagerEntityRenderer implements CemRe
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.PILLAGER;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.PILLAGER;
 	}
 	
 	@Override

@@ -40,13 +40,13 @@ public class CemHuskZombieRenderer extends HuskEntityRenderer implements CemRend
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.HUSK;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.HUSK;
 	}
 	
 	@Override

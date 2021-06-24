@@ -47,13 +47,13 @@ public class CemFoxRenderer extends FoxEntityRenderer implements CemRenderer{
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.FOX;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.FOX;
 	}
 	
 	@Override

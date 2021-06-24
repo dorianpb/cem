@@ -39,13 +39,13 @@ public class CemIllusionerRenderer extends IllusionerEntityRenderer implements C
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.ILLUSIONER;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.ILLUSIONER;
 	}
 	
 	@Override

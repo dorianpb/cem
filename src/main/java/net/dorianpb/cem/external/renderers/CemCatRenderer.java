@@ -55,6 +55,10 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.CAT;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
@@ -66,10 +70,6 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 			return this.registry.getTexture();
 		}
 		return super.getTexture(entity);
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.CAT;
 	}
 	
 	public static class CemCatCollarFeatureRenderer extends CatCollarFeatureRenderer implements CemRenderer{

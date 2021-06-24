@@ -2,9 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.client.render.entity.model.FoxEntityModel;
-import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.FoxEntity;
 
 public class CemFoxModel extends FoxEntityModel<FoxEntity>{

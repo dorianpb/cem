@@ -52,13 +52,13 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.STRAY;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.STRAY;
 	}
 	
 	@Override

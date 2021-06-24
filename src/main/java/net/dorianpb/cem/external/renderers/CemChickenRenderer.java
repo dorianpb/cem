@@ -41,13 +41,13 @@ public class CemChickenRenderer extends ChickenEntityRenderer implements CemRend
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.CHICKEN;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.CHICKEN;
 	}
 	
 	@Override

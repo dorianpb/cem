@@ -52,13 +52,13 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.DROWNED;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.DROWNED;
 	}
 	
 	@Override

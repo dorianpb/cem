@@ -40,13 +40,13 @@ public class CemSkeletonRenderer extends SkeletonEntityRenderer implements CemRe
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.SKELETON;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.SKELETON;
 	}
 	
 	@Override

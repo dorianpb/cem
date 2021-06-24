@@ -50,13 +50,13 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.COW;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.COW;
 	}
 	
 	@Override

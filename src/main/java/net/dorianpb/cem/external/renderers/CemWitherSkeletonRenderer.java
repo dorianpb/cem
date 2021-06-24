@@ -40,13 +40,13 @@ public class CemWitherSkeletonRenderer extends WitherSkeletonEntityRenderer impl
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.WITHER_SKELETON;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.WITHER_SKELETON;
 	}
 	
 	@Override

@@ -54,13 +54,13 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.CREEPER;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.CREEPER;
 	}
 	
 	@Override

@@ -39,13 +39,13 @@ public class CemVindicatorRenderer extends VindicatorEntityRenderer implements C
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.VINDICATOR;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.VINDICATOR;
 	}
 	
 	@Override

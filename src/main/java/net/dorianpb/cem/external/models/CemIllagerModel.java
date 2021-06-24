@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
 import net.minecraft.entity.mob.IllagerEntity;
 
-public class CemIllagerModel <T extends IllagerEntity> extends IllagerEntityModel<T>{
+public class CemIllagerModel<T extends IllagerEntity> extends IllagerEntityModel<T>{
 	private final CemModelRegistry registry;
 	
 	public CemIllagerModel(ModelPart root, CemModelRegistry registry){

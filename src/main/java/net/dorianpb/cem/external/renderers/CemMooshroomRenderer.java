@@ -50,13 +50,13 @@ public class CemMooshroomRenderer extends MooshroomEntityRenderer implements Cem
 		}
 	}
 	
+	private static EntityType<? extends Entity> getType(){
+		return EntityType.MOOSHROOM;
+	}
+	
 	@Override
 	public String getId(){
 		return getType().toString();
-	}
-	
-	private static EntityType<? extends Entity> getType(){
-		return EntityType.MOOSHROOM;
 	}
 	
 	@Override
