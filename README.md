@@ -38,9 +38,10 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Chicken
 	* Creepers
 	* Endermen
-    * Foxes
-    * Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
-    * Mooshrooms
+	* Foxes
+	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
+	* Magma Cubes
+	* Mooshrooms
 	* Ocelots
 	* Sheep
 	* Skeletons and their variants (Wither Skeletons and Strays)
