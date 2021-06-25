@@ -38,7 +38,7 @@ public abstract class CemEntityInitializer{
 	}
 	
 	public final <T extends BlockEntity> void register(BlockEntityType<? extends T> type, CemFactory factory){
-		this.cemBlockEntityFactories.put(type, factory); /*BlockEntityRendererAccessor.callRegister(type, factory::create);*/
+		this.cemBlockEntityFactories.put(type, factory);
 	}
 	
 	public final int getSize(){
