@@ -43,5 +43,7 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.SLIME, CemSlimeRenderer.class);
 		register("slime_gel");
 		register(EntityType.MAGMA_CUBE, CemMagmaCubeRenderer.class);
+		register(EntityType.SPIDER, CemSpiderRenderer.class);
+		register(EntityType.CAVE_SPIDER, CemCaveSpiderRenderer.class);
 	}
 }
