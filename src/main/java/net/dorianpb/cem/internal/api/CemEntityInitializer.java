@@ -33,12 +33,12 @@ public abstract class CemEntityInitializer{
 		this.cemOthers.add(type);
 	}
 	
-	public final <T extends Entity> void register(EntityType<? extends T> type, CemFactory factory){
-		this.cemEntityFactories.put(type, factory);
+	public final <T extends Entity> void register(EntityType<? extends T> type, Class<? extends CemRenderer> renderer, Object... params){
+		this.cemEntityFactories.put(type, new CemFactory(renderer, params));
 	}
 	
-	public final <T extends BlockEntity> void register(BlockEntityType<? extends T> type, CemFactory factory){
-		this.cemBlockEntityFactories.put(type, factory);
+	public final <T extends BlockEntity> void register(BlockEntityType<? extends T> type, Class<? extends CemRenderer> renderer, Object... params){
+		this.cemBlockEntityFactories.put(type, new CemFactory(renderer, params));
 	}
 	
 	public final int getSize(){
