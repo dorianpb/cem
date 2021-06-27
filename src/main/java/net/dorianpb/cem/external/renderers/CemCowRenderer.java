@@ -42,8 +42,6 @@ public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				var body = this.registry.getEntryByPartName("body");
-				body.getModel().setRotation('x', (float) (body.getModel().getRotation('x') + Math.toRadians(90)));
 			} catch(Exception e){
 				modelError(e);
 			}

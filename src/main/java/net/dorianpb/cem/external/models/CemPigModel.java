@@ -11,6 +11,10 @@ public class CemPigModel extends PigEntityModel<PigEntity>{
 	public CemPigModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
+		var body = this.registry.getEntryByPartName("body");
+		if(body != null && body.getModel() != null){
+			body.getModel().setRotation('x', (float) (body.getModel().getRotation('x') + Math.toRadians(90)));
+		}
 	}
 	
 	@Override

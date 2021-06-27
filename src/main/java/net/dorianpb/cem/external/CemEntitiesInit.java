@@ -45,5 +45,8 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.MAGMA_CUBE, CemMagmaCubeRenderer.class);
 		register(EntityType.SPIDER, CemSpiderRenderer.class);
 		register(EntityType.CAVE_SPIDER, CemCaveSpiderRenderer.class);
+		register(EntityType.VILLAGER, CemVillagerRenderer.class);
+		register(EntityType.WANDERING_TRADER, CemWanderingTraderRenderer.class);
+		register(EntityType.ZOMBIE_VILLAGER, CemZombieVillagerRenderer.class);
 	}
 }
