@@ -29,7 +29,7 @@ public class CemPillagerRenderer extends PillagerEntityRenderer implements CemRe
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemIllagerModel<>(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemIllagerModel<>(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

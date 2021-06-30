@@ -36,7 +36,7 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -96,7 +96,9 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 			}
 			try{
 				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = inflate? this.registry.prepRootPart(partNames, 2.00F) : this.registry.prepRootPart(partNames);
+				CemModelPart rootPart = inflate
+				                        ? this.registry.prepRootPart(partNames, this.model.getPart(), 2.00F)
+				                        : this.registry.prepRootPart(partNames, this.model.getPart());
 				this.model = new CemCreeperModel(rootPart, registry);
 				
 			} catch(Exception e){

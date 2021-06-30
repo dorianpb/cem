@@ -5,6 +5,7 @@ import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelPart.Cuboid;
+import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -177,10 +178,15 @@ public class CemModelEntry{
 	}
 	
 	public static class CemModelPart extends ModelPart{
-		private final float[] scale;
-		private final float[] rotation;
-		private final int     textureWidth;
-		private final int     textureHeight;
+		private final float[]                 scale;
+		private final float[]                 rotation;
+		private final int                     textureWidth;
+		private final int                     textureHeight;
+		private       TransparentCemModelPart parent;
+		
+		public CemModelPart(){
+			this(0, 0);
+		}
 		
 		public CemModelPart(int textureWidth, int textureHeight){
 			super(new ArrayList<>(), new HashMap<>());
@@ -188,10 +194,6 @@ public class CemModelEntry{
 			this.textureHeight = textureHeight;
 			this.scale = new float[]{1, 1, 1};
 			this.rotation = new float[]{0, 0, 0};
-		}
-		
-		public CemModelPart(){
-			this(0, 0);
 		}
 		
 		public static CemModelPart of(ModelPart modelPart){
@@ -264,9 +266,9 @@ public class CemModelEntry{
 		
 		public float getRotation(char axis){
 			return switch(axis){
-				case 'x' -> this.pitch + this.rotation[0];
-				case 'y' -> this.yaw + this.rotation[1];
-				case 'z' -> this.roll + this.rotation[2];
+				case 'x' -> ((this.parent == null)? this.pitch : parent.pitch) + this.rotation[0];
+				case 'y' -> ((this.parent == null)? this.yaw : parent.yaw) + this.rotation[1];
+				case 'z' -> ((this.parent == null)? this.roll : parent.roll) + this.rotation[2];
 				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
 			};
 		}
@@ -311,16 +313,47 @@ public class CemModelEntry{
 			this.yaw -= this.rotation[1];
 			this.roll -= this.rotation[2];
 		}
+		
+		private void setParent(TransparentCemModelPart transparentCemModelPart){
+			this.parent = transparentCemModelPart;
+		}
+	}
+	
+	public static class TransparentCemModelPart extends CemModelPart{
+		private final CemModelPart part;
+		
+		public TransparentCemModelPart(ModelPart part, ModelTransform modelTransform){
+			super();
+			if(!(part instanceof CemModelPart)){
+				this.part = CemModelPart.of(part);
+			}
+			else{
+				this.part = (CemModelPart) part;
+			}
+			this.setTransform(modelTransform);
+			addChild("my_precious", part);
+			this.part.pivotX = (pivotX - part.pivotX) * -1;
+			this.part.pivotY = (pivotY - part.pivotY) * -1;
+			this.part.pivotZ = (pivotZ - part.pivotZ) * -1;
+			this.part.setParent(this);
+		}
+		
+		@Override
+		public ModelPart getChild(String name){
+			return part.getChild(name);
+		}
+		
+		@Override
+		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha){
+			super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+		}
 	}
 	
 	public static class CemCuboid extends Cuboid{
 		private final CemCuboidParams params;
 		
 		public CemCuboid(CemCuboidParams cemCuboidParams){
-			super(cemCuboidParams.getU(),
-			      cemCuboidParams.getV(),
-			      cemCuboidParams.getX(),
-			      cemCuboidParams.getY(),
+			super(cemCuboidParams.getU(), cemCuboidParams.getV(), cemCuboidParams.getX(), cemCuboidParams.getY(),
 			      cemCuboidParams.getZ(),
 			      cemCuboidParams.getSizeX(),
 			      cemCuboidParams.getSizeY(),

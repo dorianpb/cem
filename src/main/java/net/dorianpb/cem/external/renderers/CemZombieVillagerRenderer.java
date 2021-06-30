@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieVillagerEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
@@ -35,7 +36,7 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemZombieVillagerModel<>(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemZombieVillagerModel<>(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.ZOMBIE_VILLAGER)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

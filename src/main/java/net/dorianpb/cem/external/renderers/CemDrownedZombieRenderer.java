@@ -8,6 +8,7 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.DrownedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -34,7 +35,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.DROWNED)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -92,7 +93,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 			}
 			try{
 				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, 0.25F);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, modelLoader.getModelPart(EntityModelLayers.DROWNED_OUTER), 0.25F);
 				this.model = new CemDrownedZombieModel(rootPart, registry);
 				
 			} catch(Exception e){

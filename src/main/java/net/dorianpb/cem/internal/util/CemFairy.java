@@ -20,11 +20,6 @@ public class CemFairy{
 	private static final Logger                                      LOGGER                 = LogManager.getLogger("Custom Entity Models");
 	private static final Gson                                        GSON                   = new Gson();
 	
-	//logger
-	public static Logger getLogger(){
-		return LOGGER;
-	}
-	
 	//Gson
 	public static Gson getGson(){
 		return GSON;
@@ -61,25 +56,31 @@ public class CemFairy{
 	}
 	
 	//file stuff
-	public static String transformPath(String path, String location){
-		String shiny = "";
-		//look for file in current folder
-		if(path.chars().filter(ch -> ch == '/').count() == 0){
-			shiny = location.substring(0, location.lastIndexOf('/') + 1) + path;
-		}
+	public static Identifier transformPath(String path, Identifier location){
 		//relative to current folder
-		else if(path.startsWith("./")){
-			shiny = location.substring(0, location.lastIndexOf('/') + 1) + path.substring(2);
+		if(path.startsWith("./")){
+			return new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/') + 1) + path.substring(2));
 		}
 		//go up a folder
 		else if(path.startsWith("../")){
-			shiny = transformPath(path.substring(3), location.substring(0, location.lastIndexOf('/')));
+			return transformPath(path.substring(3), new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/'))));
 		}
 		//relative to "assets/dorianpb/cem"
 		else if(path.startsWith("~/")){
-			shiny = "cem/" + path.substring(2);
+			return new Identifier("dorianpb", "cem/" + path.substring(2));
 		}
-		return shiny;
+		//relative to "assets/namespace/"
+		else if(path.chars().filter(ch -> ch == ':').count() == 1){
+			String path2 = path.substring(path.indexOf(":") + 1);
+			if(path2.startsWith("/")){
+				path2 = path2.replaceFirst("/", "");
+			}
+			return transformPath(path2, new Identifier(path.substring(0, path.indexOf(":")), ""));
+		}
+		//look for file in current folder
+		else{
+			return new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/') + 1) + path);
+		}
 	}
 	
 	public static void postReadError(Exception exception, Identifier id){
@@ -91,6 +92,11 @@ public class CemFairy{
 			CemFairy.getLogger().error(exception.getStackTrace()[1]);
 			CemFairy.getLogger().error(exception.getStackTrace()[2]);
 		}
+	}
+	
+	//logger
+	public static Logger getLogger(){
+		return LOGGER;
 	}
 	
 }

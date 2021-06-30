@@ -40,7 +40,7 @@ public abstract class EntityModelLoaderMixin{
 				if(json == null){
 					throw new Exception("Invalid File");
 				}
-				JemFile file = new JemFile(json, id.getPath(), manager);
+				JemFile file = new JemFile(json, id, manager);
 				
 				String entityName = CemFairy.getEntityNameFromId(id);
 				Optional<EntityType<?>> entityTypeOptional = EntityType.get(entityName);

@@ -33,7 +33,7 @@ public class CemMagmaCubeRenderer extends MagmaCubeEntityRenderer implements Cem
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemMagmaCubeModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemMagmaCubeModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

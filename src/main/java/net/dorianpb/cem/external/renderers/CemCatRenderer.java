@@ -8,6 +8,7 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.CatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.CatCollarFeatureRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -37,7 +38,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemCatModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemCatModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.CAT)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -82,7 +83,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 			this.registry = CemRegistryManager.getRegistry(EntityType.CAT);
 			try{
 				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, 0.01F);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, modelLoader.getModelPart(EntityModelLayers.CAT_COLLAR), 0.01F);
 				this.model = new CemCatModel(rootPart, registry);
 			} catch(Exception e){
 				modelError(e);

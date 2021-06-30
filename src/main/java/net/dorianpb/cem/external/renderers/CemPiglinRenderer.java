@@ -5,6 +5,7 @@ import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.PiglinEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -40,7 +40,7 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 			this.registry = CemRegistryManager.getRegistry(entityType);
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), null);
+				this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), context);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -80,8 +80,8 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		}
 	}
 	
-	private static CemPiglinModel getCemPiglinModel(CemModelRegistry registry, boolean zombie, @Nullable Float inflate){
-		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry.prepRootPart(partNames, inflate), registry);
+	private CemPiglinModel getCemPiglinModel(CemModelRegistry registry, boolean zombie, Context context){
+		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry.prepRootPart(partNames, context.getPart(getLayer(this.entityType, "main")), null), registry);
 		if(zombie){
 			piglinEntityModel.rightEar.visible = false;
 		}

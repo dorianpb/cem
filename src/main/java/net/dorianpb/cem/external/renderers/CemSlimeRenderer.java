@@ -33,7 +33,7 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemSlimeModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -79,7 +79,7 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 				this.registry = CemRegistryManager.getRegistry(this.getId());
 				try{
 					this.registry.setChildren(parentChildPairs);
-					CemModelPart rootPart = this.registry.prepRootPart(partNames);
+					CemModelPart rootPart = this.registry.prepRootPart(partNames, this.getContextModel().getPart());
 					this.model = new CemSlimeModel(rootPart, registry);
 					
 				} catch(Exception e){

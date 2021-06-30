@@ -18,5 +18,4 @@ public class CemEndermanModel extends EndermanEntityModel<EndermanEntity>{
 		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 		this.registry.applyAnimations(limbAngle, limbDistance, animationProgress, headYaw, headPitch, entity);
 	}
-	
 }

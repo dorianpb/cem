@@ -21,8 +21,8 @@ public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer
 	private              CemModelRegistry          registry;
 	
 	static{
-		for(int i = 0; i <= 12; i++){
-			partNames.put("stick" + i, "part" + i);
+		for(int i = 0; i < 12; i++){
+			partNames.put("stick" + (i + 1), "part" + i);
 		}
 	}
 	
@@ -32,7 +32,7 @@ public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemBlazeModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemBlazeModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

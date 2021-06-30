@@ -36,7 +36,7 @@ public class CemWanderingTraderRenderer extends WanderingTraderEntityRenderer im
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemVillagerModel<>(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemVillagerModel<>(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

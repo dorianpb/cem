@@ -8,6 +8,7 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.SheepEntityRenderer;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -36,7 +37,7 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemSheepModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemSheepModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.SHEEP)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -83,7 +84,7 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 				this.registry = CemRegistryManager.getRegistry(this.getId());
 				try{
 					this.registry.setChildren(parentChildPairs);
-					this.model = new CemSheepWoolModel(this.registry.prepRootPart(partNames), registry);
+					this.model = new CemSheepWoolModel(this.registry.prepRootPart(partNames, modelLoader.getModelPart(EntityModelLayers.SHEEP_FUR)), registry);
 					if(this.registry != null && this.registry.hasTexture()){
 						SKIN = this.registry.getTexture();
 					}

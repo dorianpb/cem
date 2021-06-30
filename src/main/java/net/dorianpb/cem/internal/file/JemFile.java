@@ -19,11 +19,11 @@ public class JemFile{
 	private final ArrayList<Double>         textureSize;
 	private final Float                     shadowsize;
 	private final HashMap<String, JemModel> models;
-	private final String                    path;
+	private final Identifier                path;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public JemFile(LinkedTreeMap<String, Object> json, String path, ResourceManager resourceManager){
+	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager){
 		this.texture = (String) json.get("texture");
 		this.textureSize = (ArrayList<Double>) json.get("textureSize");
 		this.shadowsize = (Float) json.get("shadowSize");
@@ -45,7 +45,7 @@ public class JemFile{
 		}
 	}
 	
-	public String getTexture(){
+	public Identifier getTexture(){
 		if(this.texture != null){
 			return CemFairy.transformPath(this.texture, this.path);
 		}
@@ -65,7 +65,7 @@ public class JemFile{
 	}
 	
 	public String getPath(){
-		return this.path;
+		return this.path.getPath();
 	}
 	
 	public Float getShadowsize(){
@@ -83,7 +83,7 @@ public class JemFile{
 		
 		
 		@SuppressWarnings({"rawtypes", "unchecked"})
-		JemModel(LinkedTreeMap json, String path, ResourceManager resourceManager){
+		JemModel(LinkedTreeMap json, Identifier path, ResourceManager resourceManager){
 			this.baseId = (String) json.get("baseId");
 			this.model = (String) json.get("model");
 			this.part = (String) json.get("part");
@@ -94,7 +94,7 @@ public class JemFile{
 			yeah.forEach((key, value) -> this.animations.put(key, value.toString()));
 			JpmFile temp = null;
 			if(this.model != null){
-				Identifier id = new Identifier("dorianpb", CemFairy.transformPath(this.model, path));
+				Identifier id = CemFairy.transformPath(this.model, path);
 				try(InputStream stream = resourceManager.getResource(id).getInputStream()){
 					@SuppressWarnings("unchecked")
 					LinkedTreeMap<String, Object> file = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);

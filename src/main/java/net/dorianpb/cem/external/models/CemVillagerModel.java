@@ -16,9 +16,9 @@ public class CemVillagerModel<T extends LivingEntity> extends VillagerResembling
 			headwear2.getModel().setRotation('x', (float) (headwear2.getModel().getRotation('x') + Math.toRadians(-90)));
 		}
 		var arms = this.registry.getEntryByPartName("arms");
-		if(arms != null && arms.getModel() != null){
-			arms.getModel().setRotation('x', (float) (arms.getModel().getRotation('x') + Math.toRadians(-43)));
-		}
+		//		if(arms != null && arms.getModel() != null){
+		//			arms.getModel().setRotation('x', (float) (arms.getModel().getRotation('x') + Math.toRadians(-43)));
+		//		}
 	}
 	
 	@Override

@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.OcelotEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -34,7 +35,7 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames), registry);
+				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.OCELOT)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

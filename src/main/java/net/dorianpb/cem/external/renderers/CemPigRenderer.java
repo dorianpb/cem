@@ -8,6 +8,7 @@ import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PigEntityRenderer;
 import net.minecraft.client.render.entity.feature.SaddleFeatureRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.PigEntity;
@@ -35,7 +36,7 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
 				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.PIG));
 				this.model = new CemPigModel(rootPart, registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
@@ -44,7 +45,7 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 					if(feature instanceof SaddleFeatureRenderer){
 						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
 						saddleRegistry.setChildren(parentChildPairs);
-						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, 0.5F);
+						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, context.getPart(EntityModelLayers.PIG), 0.5F);
 						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
 					}
 					else{

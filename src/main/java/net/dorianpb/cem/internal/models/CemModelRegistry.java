@@ -1,10 +1,13 @@
 package net.dorianpb.cem.internal.models;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import net.dorianpb.cem.internal.CemStringParser;
 import net.dorianpb.cem.internal.CemStringParser.ParsedExpression;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
+import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +23,7 @@ public class CemModelRegistry{
 	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
 	private final JemFile                                   file; //stores the jemFile
 	private final Map<String, List<String>>                 familyTree; //stores parent-child relationships
+	private final BiMap<String, String>                     partNameMap; //stores translation from optifine to vanilla part names
 	
 	
 	public CemModelRegistry(JemFile file){
@@ -28,6 +32,7 @@ public class CemModelRegistry{
 		this.partNameRefs = new HashMap<>();
 		this.file = file;
 		this.familyTree = new LinkedHashMap<>();
+		this.partNameMap = HashBiMap.create();
 		//models
 		for(String part : this.file.getModelList()){
 			JemModel data = this.file.getModel(part);
@@ -40,8 +45,7 @@ public class CemModelRegistry{
 				try{
 					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf(".")), this.findChild(part)),
 					                                data.getAnimations().get(key),
-					                                key.substring(key.indexOf(".") + 1),
-					                                this
+					                                key.substring(key.indexOf(".") + 1), this
 					));
 				} catch(Exception e){
 					CemFairy.getLogger().error("Error applying animation:");
@@ -49,6 +53,56 @@ public class CemModelRegistry{
 				}
 			}
 		}
+	}
+	
+	public CemModelPart prepRootPart(Map<String, String> partNameMap, ModelPart vanillaModel){
+		return this.prepRootPart(partNameMap, vanillaModel, null);
+	}
+	
+	public CemModelPart prepRootPart(Map<String, String> partNameMap, ModelPart vanillaModel, @Nullable Float inflate){
+		CemModelPart newRoot = new CemModelPart();
+		this.partNameMap.clear();
+		this.partNameMap.putAll(partNameMap);
+		//populate it first
+		for(String partName : this.partNameRefs.keySet()){
+			this.getParent(newRoot, partNameMap.getOrDefault(partName, partName));
+		}
+		CemModelPart part = this.prepRootPart(newRoot, partNameMap);
+		if(inflate != null){
+			part.inflate(inflate);
+		}
+		for(String key : part.children.keySet()){
+			try{
+				TransparentCemModelPart replacement = new TransparentCemModelPart(part.getChild(key), vanillaModel.getChild(key).getTransform());
+				part.addChild(key, replacement);
+			} catch(Exception ignored){
+			}
+		}
+		return part;
+	}
+	
+	private CemModelPart getParent(ModelPart root, String name){
+		ArrayList<String> names = new ArrayList<>();
+		while(true){
+			name = this.findParent(name);
+			if(name != null){
+				names.add(name);
+			}
+			else{
+				break;
+			}
+		}
+		if(names.size() == 0){
+			return (CemModelPart) root;
+		}
+		else{
+			ModelPart part = root;
+			for(int i = names.size() - 1; i >= 0; i--){
+				part = part.getChild(partNameMap.getOrDefault(names.get(i), names.get(i)));
+			}
+			return (CemModelPart) part;
+		}
+		
 	}
 	
 	private CemModelPart prepRootPart(ModelPart root, Map<String, String> partNameMap){
@@ -59,21 +113,21 @@ public class CemModelRegistry{
 		return newRoot;
 	}
 	
-	public CemModelPart prepRootPart(Map<String, String> partNameMap, @Nullable Float inflate){
-		CemModelPart newRoot = new CemModelPart();
-		//populate it first
-		for(String partName : this.partNameRefs.keySet()){
-			this.getParent(newRoot, partNameMap.getOrDefault(partName, partName));
+	private String findParent(String name){
+		for(String key : this.familyTree.keySet()){
+			if(this.familyTree.get(key).contains(name)){
+				return key;
+			}
 		}
-		CemModelPart part = this.prepRootPart(newRoot, partNameMap);
-		if(inflate != null){
-			part.inflate(inflate);
-		}
-		return part;
+		return null;
 	}
 	
-	public CemModelPart prepRootPart(Map<String, String> partNameMap){
-		return this.prepRootPart(partNameMap, null);
+	public CemModelEntry getEntryByPartName(String key){
+		if(this.partNameRefs.containsKey(key)){
+			return this.partNameRefs.get(key);
+		}
+		CemFairy.getLogger().warn("Model part " + key + " isn't specified in " + this.file.getPath());
+		return null;
 	}
 	
 	public void setChildren(Map<String, List<String>> childMap){
@@ -101,19 +155,14 @@ public class CemModelRegistry{
 		if(parent == null || child == null){
 			return;
 		}
-		parent.getModel().addChild(child.getPart(), child.getModel());
-		child.getModel().pivotX = (parent.getModel().pivotX - child.getModel().pivotX) * -1;
-		child.getModel().pivotY = (parent.getModel().pivotY - child.getModel().pivotY) * -1;
-		child.getModel().pivotZ = (parent.getModel().pivotZ - child.getModel().pivotZ) * -1;
-		
+		setChild(parent.getModel(), child.getModel(), child.getPart());
 	}
 	
-	public CemModelEntry getEntryByPartName(String key){
-		if(this.partNameRefs.containsKey(key)){
-			return this.partNameRefs.get(key);
-		}
-		CemFairy.getLogger().warn("Model part " + key + " isn't specified in " + this.file.getPath());
-		return null;
+	public static void setChild(CemModelPart parentPart, ModelPart childPart, String name){
+		parentPart.addChild(name, childPart);
+		childPart.pivotX = (parentPart.pivotX - childPart.pivotX) * -1;
+		childPart.pivotY = (parentPart.pivotY - childPart.pivotY) * -1;
+		childPart.pivotZ = (parentPart.pivotZ - childPart.pivotZ) * -1;
 	}
 	
 	private void addEntry(CemModelEntry entry, ArrayList<String> parentRefmap){
@@ -152,7 +201,7 @@ public class CemModelRegistry{
 		if(this.file.getTexture() == null){
 			throw new NullPointerException("Trying to retrieve a null texture");
 		}
-		return new Identifier("dorianpb", this.file.getTexture());
+		return this.file.getTexture();
 	}
 	
 	/**
@@ -221,39 +270,6 @@ public class CemModelRegistry{
 	
 	private CemModelEntry findChild(String target){
 		return this.findChild(target, null);
-	}
-	
-	private String findParent(String name){
-		for(String key : this.familyTree.keySet()){
-			if(this.familyTree.get(key).contains(name)){
-				return key;
-			}
-		}
-		return null;
-	}
-	
-	private CemModelPart getParent(ModelPart root, String name){
-		ArrayList<String> names = new ArrayList<>();
-		while(true){
-			name = this.findParent(name);
-			if(name != null){
-				names.add(name);
-			}
-			else{
-				break;
-			}
-		}
-		if(names.size() == 0){
-			return (CemModelPart) root;
-		}
-		else{
-			ModelPart part = root;
-			for(int i = names.size() - 1; i >= 0; i--){
-				part = part.getChild(names.get(i));
-			}
-			return (CemModelPart) part;
-		}
-		
 	}
 	
 	private static class CemAnimation{
