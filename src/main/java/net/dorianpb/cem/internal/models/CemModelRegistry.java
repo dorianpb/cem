@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.dorianpb.cem.internal.CemStringParser;
 import net.dorianpb.cem.internal.CemStringParser.ParsedExpression;
+import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
@@ -71,11 +72,14 @@ public class CemModelRegistry{
 		if(inflate != null){
 			part.inflate(inflate);
 		}
-		for(String key : part.children.keySet()){
-			try{
-				TransparentCemModelPart replacement = new TransparentCemModelPart(part.getChild(key), vanillaModel.getChild(key).getTransform());
-				part.addChild(key, replacement);
-			} catch(Exception ignored){
+		//new model creation fix!
+		if(CemConfigFairy.getConfig().useTransparentParts()){
+			for(String key : part.children.keySet()){
+				try{
+					TransparentCemModelPart replacement = new TransparentCemModelPart(part.getChild(key), vanillaModel.getChild(key).getTransform());
+					part.addChild(key, replacement);
+				} catch(Exception ignored){
+				}
 			}
 		}
 		return part;

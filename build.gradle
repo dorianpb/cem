@@ -1,3 +1,5 @@
+//file:noinspection GroovyAssignabilityCheck
+//file:noinspection GroovyAccessibility
 plugins {
     id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
@@ -11,6 +13,19 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/releases'
+    }
+    maven {
+        name = 'Shedaniel'
+        url "https://maven.shedaniel.me/"
+    }
+    maven {
+        name = 'JitPack'
+        url 'https://jitpack.io'
+    }
+
 }
 
 dependencies {
@@ -18,6 +33,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}+${project.minecraft_version}"
+    modImplementation "com.gitlab.Lortseam:completeconfig:${project.complete_config_version}"
 }
 
 loom {

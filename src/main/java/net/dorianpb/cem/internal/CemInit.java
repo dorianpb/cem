@@ -1,6 +1,7 @@
 package net.dorianpb.cem.internal;
 
 import net.dorianpb.cem.internal.api.CemEntityInitializer;
+import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.dorianpb.cem.mixins.BlockEntityRendererAccessor;
 import net.dorianpb.cem.mixins.EntityRendererAccessor;
@@ -13,6 +14,7 @@ public class CemInit implements ClientModInitializer{
 	@Override
 	@SuppressWarnings({"unchecked", "RedundantSuppression"})
 	public void onInitializeClient(){
+		CemConfigFairy.loadConfig();
 		FabricLoader.getInstance().getEntrypointContainers("cem", CemEntityInitializer.class).forEach((container) -> {
 			ModMetadata provider = container.getProvider().getMetadata();
 			CemEntityInitializer entrypoint = container.getEntrypoint();

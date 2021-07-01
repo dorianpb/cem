@@ -32,6 +32,10 @@
 	"fabric": "*",
 	"minecraft": ">=1.17"
   },
+  "recommends": {
+	"completeconfig": "*",
+	"cloth-config2": "*"
+  },
   "conflicts": {
 	"optifabric": "*"
   }

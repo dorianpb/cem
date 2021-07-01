@@ -1,0 +1,16 @@
+{
+  "config.cem.use_optifine_folder": "Use \"assets/minecraft/optifine/cem\"?",
+  "config.cem.use_optifine_folder.tooltip.0": "This will load CEM models from  ",
+  "config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
+  "config.cem.use_optifine_folder.tooltip.2": "which is exactly what optifine does.",
+  "config.cem.use_optifine_folder.tooltip.3": "Reload resources (F3 + T) for",
+  "config.cem.use_optifine_folder.tooltip.4": "this to take effect!",
+  "config.cem.use_new_model_creation_fix": "Use model creation fix?",
+  "config.cem.use_new_model_creation_fix.tooltip.0": "This prevents minecraft from",
+  "config.cem.use_new_model_creation_fix.tooltip.1": "directly moving your model parts",
+  "config.cem.use_new_model_creation_fix.tooltip.2": "around when animating. This breaks",
+  "config.cem.use_new_model_creation_fix.tooltip.3": "a few models but fixes other ones.",
+  "config.cem.use_new_model_creation_fix.tooltip.4": "Please use if possible.",
+  "config.cem.use_new_model_creation_fix.tooltip.5": "Reload resources (F3 + T) for",
+  "config.cem.use_new_model_creation_fix.tooltip.6": "this to take effect!"
+}
