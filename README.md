@@ -46,6 +46,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Magma Cubes
 	* Mooshrooms
 	* Ocelots
+	* Rabbits
 	* Sheep
 	* Skeletons and their variants (Wither Skeletons and Strays)
 	* Slimes
@@ -54,7 +55,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	* Villagers (and Zombie Villagers)
 	* Wandering Traders
-	* Zombies and their variants (Husks and Drowned)
+	* Zombies and their variants (Husks, Drowned, and Giants)
 
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
 * Sprites are not supported.
