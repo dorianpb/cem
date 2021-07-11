@@ -1,12 +1,13 @@
 package net.dorianpb.cem.external.models;
 
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.OcelotEntityModel;
 import net.minecraft.entity.passive.OcelotEntity;
 
-public class CemOcelotModel extends OcelotEntityModel<OcelotEntity>{
+public class CemOcelotModel extends OcelotEntityModel<OcelotEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemOcelotModel(ModelPart root, CemModelRegistry registry){

@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CatEntityModel;
 import net.minecraft.entity.passive.CatEntity;
 
-public class CemCatModel extends CatEntityModel<CatEntity>{
+public class CemCatModel extends CatEntityModel<CatEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemCatModel(ModelPart root, CemModelRegistry registry){

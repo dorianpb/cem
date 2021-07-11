@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
 import net.minecraft.entity.mob.IllagerEntity;
 
-public class CemIllagerModel<T extends IllagerEntity> extends IllagerEntityModel<T>{
+public class CemIllagerModel<T extends IllagerEntity> extends IllagerEntityModel<T> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemIllagerModel(ModelPart root, CemModelRegistry registry){

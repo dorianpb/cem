@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.SlimeEntityModel;
 import net.minecraft.entity.mob.SlimeEntity;
 
-public class CemSlimeModel extends SlimeEntityModel<SlimeEntity>{
+public class CemSlimeModel extends SlimeEntityModel<SlimeEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemSlimeModel(ModelPart root, CemModelRegistry registry){

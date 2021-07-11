@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 
-public class CemSkeletonModel extends SkeletonEntityModel<AbstractSkeletonEntity>{
+public class CemSkeletonModel extends SkeletonEntityModel<AbstractSkeletonEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemSkeletonModel(ModelPart root, CemModelRegistry registry){

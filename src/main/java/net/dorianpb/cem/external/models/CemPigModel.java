@@ -1,20 +1,18 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.PigEntityModel;
 import net.minecraft.entity.passive.PigEntity;
 
-public class CemPigModel extends PigEntityModel<PigEntity>{
+public class CemPigModel extends PigEntityModel<PigEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemPigModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		var body = this.registry.getEntryByPartName("body");
-		if(body != null && body.getModel() != null){
-			body.getModel().setRotation('x', (float) (body.getModel().getRotation('x') + Math.toRadians(90)));
-		}
+		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90, false);
 	}
 	
 	@Override

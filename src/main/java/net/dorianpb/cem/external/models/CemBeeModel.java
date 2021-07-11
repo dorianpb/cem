@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BeeEntityModel;
 import net.minecraft.entity.passive.BeeEntity;
 
-public class CemBeeModel extends BeeEntityModel<BeeEntity>{
+public class CemBeeModel extends BeeEntityModel<BeeEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemBeeModel(ModelPart root, CemModelRegistry registry){

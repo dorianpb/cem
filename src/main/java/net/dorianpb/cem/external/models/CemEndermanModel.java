@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.entity.mob.EndermanEntity;
 
-public class CemEndermanModel extends EndermanEntityModel<EndermanEntity>{
+public class CemEndermanModel extends EndermanEntityModel<EndermanEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemEndermanModel(ModelPart root, CemModelRegistry registry){

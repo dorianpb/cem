@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.MagmaCubeEntityModel;
 import net.minecraft.entity.mob.MagmaCubeEntity;
 
-public class CemMagmaCubeModel extends MagmaCubeEntityModel<MagmaCubeEntity>{
+public class CemMagmaCubeModel extends MagmaCubeEntityModel<MagmaCubeEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemMagmaCubeModel(ModelPart root, CemModelRegistry registry){

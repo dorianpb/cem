@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.DrownedEntityModel;
 import net.minecraft.entity.mob.DrownedEntity;
 
-public class CemDrownedZombieModel extends DrownedEntityModel<DrownedEntity>{
+public class CemDrownedZombieModel extends DrownedEntityModel<DrownedEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemDrownedZombieModel(ModelPart root, CemModelRegistry registry){

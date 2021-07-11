@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.PiglinEntityModel;
 import net.minecraft.entity.mob.MobEntity;
 
-public class CemPiglinModel extends PiglinEntityModel<MobEntity>{
+public class CemPiglinModel extends PiglinEntityModel<MobEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemPiglinModel(ModelPart root, CemModelRegistry registry){

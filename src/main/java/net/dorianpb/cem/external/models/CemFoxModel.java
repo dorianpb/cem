@@ -1,11 +1,12 @@
 package net.dorianpb.cem.external.models;
 
+import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.FoxEntityModel;
 import net.minecraft.entity.passive.FoxEntity;
 
-public class CemFoxModel extends FoxEntityModel<FoxEntity>{
+public class CemFoxModel extends FoxEntityModel<FoxEntity> implements CemModel{
 	private final CemModelRegistry registry;
 	
 	public CemFoxModel(ModelPart root, CemModelRegistry registry){
