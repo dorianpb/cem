@@ -55,6 +55,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	* Villagers (and Zombie Villagers)
 	* Wandering Traders
+	* Wolves
 	* Zombies and their variants (Husks, Drowned, and Giants)
 
 * Individual part textures are not supported (you can only specify texture and texture size in the .jem file).
