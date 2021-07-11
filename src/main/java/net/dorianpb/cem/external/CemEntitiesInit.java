@@ -50,5 +50,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.ZOMBIE_VILLAGER, CemZombieVillagerRenderer.class);
 		register(EntityType.RABBIT, CemRabbitRenderer.class);
 		register(EntityType.GIANT, CemGiantZombieRenderer.class);
+		register(EntityType.WOLF, CemWolfRenderer.class);
 	}
 }
