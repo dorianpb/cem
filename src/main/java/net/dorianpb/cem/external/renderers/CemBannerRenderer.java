@@ -15,18 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames;
-	private static final Map<String, List<String>> parentChildPairs;
+	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	
 	static{
-		partNames = new LinkedHashMap<>();
 		partNames.put("slate", "flag");
 		partNames.put("stand", "pole"); //jojo reference?
 		partNames.put("top", "bar");
-	}
-	
-	static{
-		parentChildPairs = new LinkedHashMap<>();
 	}
 	
 	public CemBannerRenderer(BlockEntityRendererFactory.Context context){
