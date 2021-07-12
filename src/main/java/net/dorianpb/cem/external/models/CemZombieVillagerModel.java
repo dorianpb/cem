@@ -12,7 +12,7 @@ public class CemZombieVillagerModel<T extends ZombieEntity> extends ZombieVillag
 	public CemZombieVillagerModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90, false);
+		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90);
 	}
 	
 	@Override

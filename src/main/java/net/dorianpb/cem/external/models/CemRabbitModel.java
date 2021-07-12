@@ -12,7 +12,7 @@ public class CemRabbitModel extends RabbitEntityModel<RabbitEntity> implements C
 	public CemRabbitModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', -19.999F, true);
+		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', -19.999F);
 	}
 	
 	@Override

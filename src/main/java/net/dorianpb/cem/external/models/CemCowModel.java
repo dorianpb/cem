@@ -12,7 +12,7 @@ public class CemCowModel<T extends CowEntity> extends CowEntityModel<T> implemen
 	public CemCowModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90, false);
+		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90);
 	}
 	
 	@Override

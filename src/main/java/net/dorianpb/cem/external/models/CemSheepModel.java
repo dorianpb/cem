@@ -13,7 +13,6 @@ public class CemSheepModel extends SheepEntityModel<SheepEntity> implements CemM
 	public CemSheepModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90, false);
 	}
 	
 	@Override

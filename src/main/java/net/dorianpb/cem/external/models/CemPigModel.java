@@ -12,7 +12,6 @@ public class CemPigModel extends PigEntityModel<PigEntity> implements CemModel{
 	public CemPigModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90, false);
 	}
 	
 	@Override
