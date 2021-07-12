@@ -51,5 +51,12 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.RABBIT, CemRabbitRenderer.class);
 		register(EntityType.GIANT, CemGiantZombieRenderer.class);
 		register(EntityType.WOLF, CemWolfRenderer.class);
+		register(EntityType.MINECART, CemMinecartRenderer.class, EntityType.MINECART);
+		register(EntityType.CHEST_MINECART, CemMinecartRenderer.class, EntityType.CHEST_MINECART);
+		register(EntityType.COMMAND_BLOCK_MINECART, CemMinecartRenderer.class, EntityType.COMMAND_BLOCK_MINECART);
+		register(EntityType.FURNACE_MINECART, CemMinecartRenderer.class, EntityType.FURNACE_MINECART);
+		register(EntityType.HOPPER_MINECART, CemMinecartRenderer.class, EntityType.HOPPER_MINECART);
+		register(EntityType.SPAWNER_MINECART, CemMinecartRenderer.class, EntityType.SPAWNER_MINECART);
+		register(EntityType.TNT_MINECART, CemTntMinecartRenderer.class);
 	}
 }

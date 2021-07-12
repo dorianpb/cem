@@ -44,6 +44,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Foxes
 	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
 	* Magma Cubes
+	* Minecarts (all variants)
 	* Mooshrooms
 	* Ocelots
 	* Rabbits
