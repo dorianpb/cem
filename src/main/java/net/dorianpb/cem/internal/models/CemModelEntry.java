@@ -345,7 +345,16 @@ public class CemModelEntry{
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha){
+			var rotations = this.getTransform();
+			this.part.pitch = rotations.pitch;
+			this.part.yaw = rotations.yaw;
+			this.part.roll = rotations.roll;
+			this.pitch = 0;
+			this.yaw = 0;
+			this.roll = 0;
 			super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+			this.setTransform(rotations);
+			
 		}
 	}
 	
