@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -97,6 +98,40 @@ public class CemFairy{
 	//logger
 	public static Logger getLogger(){
 		return LOGGER;
+	}
+	
+	//json
+	public static Float JSONparseFloat(Object obj){
+		String val = JSONparseString(obj);
+		return val == null? null : Float.valueOf(val);
+	}
+	
+	public static String JSONparseString(Object obj){
+		return obj == null? null : obj.toString();
+	}
+	
+	public static Boolean JSONparseBool(Object obj){
+		String val = JSONparseString(obj);
+		return val == null? null : Boolean.valueOf(val);
+	}
+	
+	public static ArrayList<Double> JSONparseDoubleList(Object object){
+		try{
+			@SuppressWarnings("unchecked")
+			ArrayList<Object> obj = (ArrayList<Object>) object;
+			ArrayList<Double> val = new ArrayList<>();
+			if(obj != null){
+				obj.forEach((value) -> val.add(JSONparseDouble(value)));
+			}
+			return (val.size() == 0)? null : val;
+		} catch(Exception e){
+			return null;
+		}
+	}
+	
+	public static Double JSONparseDouble(Object obj){
+		String val = JSONparseString(obj);
+		return val == null? null : Double.valueOf(val);
 	}
 	
 }

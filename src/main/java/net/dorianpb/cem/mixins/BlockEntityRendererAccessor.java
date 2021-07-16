@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @SuppressWarnings("unused")
 public interface BlockEntityRendererAccessor{
 	@Invoker
-	static <T extends BlockEntity> void callRegister(BlockEntityType<? extends T> type, BlockEntityRendererFactory<T> factory){
+	static void callRegister(BlockEntityType<? extends BlockEntity> type, BlockEntityRendererFactory<? extends BlockEntity> factory){
 		throw new UnsupportedOperationException();
 	}
 }

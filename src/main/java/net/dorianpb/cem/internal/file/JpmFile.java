@@ -1,10 +1,12 @@
 package net.dorianpb.cem.internal.file;
 
 import com.google.gson.internal.LinkedTreeMap;
+import net.dorianpb.cem.internal.util.CemFairy;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class JpmFile{
 	private final String               id;
@@ -21,20 +23,21 @@ public class JpmFile{
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public JpmFile(LinkedTreeMap json){
-		this.id = (String) json.get("id");
-		this.texture = (String) json.get("texture");
-		this.textureSize = (ArrayList<Double>) json.get("textureSize");
+		this.id = CemFairy.JSONparseString(json.get("id"));
+		this.texture = CemFairy.JSONparseString(json.get("texture"));
+		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
 		
-		String axes = (String) json.getOrDefault("invertAxis", "");
+		String axes = CemFairy.JSONparseString(json.getOrDefault("invertAxis", ""));
 		this.invertAxis = new boolean[]{axes.contains("x"), axes.contains("y"), axes.contains("z")};
 		
-		this.translate = (ArrayList<Double>) json.getOrDefault("translate", new ArrayList<>(Arrays.asList(0D, 0D, 0D)));
-		this.rotate = (ArrayList<Double>) json.getOrDefault("rotate", new ArrayList<>(Arrays.asList(0D, 0D, 0D)));
-		for(int i = 0; i < this.rotate.size(); i++){
+		this.translate = CemFairy.JSONparseDoubleList(json.getOrDefault("translate", new ArrayList<>(Arrays.asList(0D, 0D, 0D))));
+		
+		this.rotate = CemFairy.JSONparseDoubleList(json.getOrDefault("translate", new ArrayList<>(Arrays.asList(0D, 0D, 0D))));
+		for(int i = 0; i < Objects.requireNonNull(this.rotate).size(); i++){
 			this.rotate.set(i, -Math.toRadians(this.rotate.get(i)));
 		}
 		
-		String mirror = (String) json.getOrDefault("mirrorTexture", "");
+		String mirror = CemFairy.JSONparseString(json.getOrDefault("mirrorTexture", ""));
 		this.mirrorTexture = new Boolean[]{mirror.contains("u"), mirror.contains("v")};
 		
 		if(json.containsKey("boxes")){
@@ -112,15 +115,14 @@ public class JpmFile{
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		JpmBox(LinkedTreeMap json){
-			ArrayList<Double> zeroes = new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D));
-			this.textureOffset = (ArrayList<Double>) json.get("textureOffset");
-			this.uvUp = (ArrayList<Double>) json.getOrDefault("uvUp", zeroes);
-			this.uvDown = (ArrayList<Double>) json.getOrDefault("uvDown", zeroes);
-			this.uvFront = (ArrayList<Double>) json.getOrDefault("uvFront", json.getOrDefault("uvNorth", zeroes));
-			this.uvBack = (ArrayList<Double>) json.getOrDefault("uvBack", json.getOrDefault("uvSouth", zeroes));
-			this.uvLeft = (ArrayList<Double>) json.getOrDefault("uvLeft", json.getOrDefault("uvWest", zeroes));
-			this.uvRight = (ArrayList<Double>) json.getOrDefault("uvRight", json.getOrDefault("uvEast", zeroes));
-			this.coordinates = (ArrayList<Double>) json.get("coordinates");
+			this.textureOffset = CemFairy.JSONparseDoubleList(json.get("textureOffset"));
+			this.uvUp = CemFairy.JSONparseDoubleList(json.getOrDefault("uvUp", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D))));
+			this.uvDown = CemFairy.JSONparseDoubleList(json.getOrDefault("uvDown", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D))));
+			this.uvFront = CemFairy.JSONparseDoubleList(json.getOrDefault("uvFront", json.getOrDefault("uvNorth", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
+			this.uvBack = CemFairy.JSONparseDoubleList(json.getOrDefault("uvBack", json.getOrDefault("uvSouth", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
+			this.uvLeft = CemFairy.JSONparseDoubleList(json.getOrDefault("uvLeft", json.getOrDefault("uvWest", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
+			this.uvRight = CemFairy.JSONparseDoubleList(json.getOrDefault("uvRight", json.getOrDefault("uvEast", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
+			this.coordinates = CemFairy.JSONparseDoubleList(json.get("coordinates"));
 			this.sizeAdd = (Double) json.getOrDefault("sizeAdd", 0D);
 			this.validate();
 		}

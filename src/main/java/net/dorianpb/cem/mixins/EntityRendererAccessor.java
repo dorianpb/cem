@@ -5,13 +5,21 @@ import net.minecraft.client.render.entity.EntityRenderers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
+
+import java.util.Map;
 
 @Mixin(EntityRenderers.class)
 @SuppressWarnings("unused")
 public interface EntityRendererAccessor{
 	@Invoker
-	static <T extends Entity> void callRegister(EntityType<? extends T> type, EntityRendererFactory<T> factory){
+	static void callRegister(EntityType<? extends Entity> type, EntityRendererFactory<? extends Entity> factory){
+		throw new UnsupportedOperationException();
+	}
+	
+	@Accessor
+	static Map<EntityType<?>, EntityRendererFactory<?>> getRendererFactories(){
 		throw new UnsupportedOperationException();
 	}
 }

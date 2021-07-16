@@ -16,15 +16,21 @@ public class CemRegistryManager{
 	
 	
 	public static void addRegistry(EntityType<? extends Entity> entityType, JemFile file){
-		EntityTypeRegistries.put(entityType, file);
+		if(file != null){
+			EntityTypeRegistries.put(entityType, file);
+		}
 	}
 	
 	public static void addRegistry(BlockEntityType<? extends BlockEntity> entityType, JemFile file){
-		BlockEntityTypeRegistries.put(entityType, file);
+		if(file != null){
+			BlockEntityTypeRegistries.put(entityType, file);
+		}
 	}
 	
 	public static void addRegistry(String entityType, JemFile file){
-		OtherRegistries.put(entityType, file);
+		if(file != null){
+			OtherRegistries.put(entityType, file);
+		}
 	}
 	
 	public static boolean hasEntity(EntityType<? extends Entity> entityType){

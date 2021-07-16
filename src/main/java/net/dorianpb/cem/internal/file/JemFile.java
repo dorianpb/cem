@@ -23,10 +23,10 @@ public class JemFile{
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager){
-		this.texture = (String) json.get("texture");
-		this.textureSize = (ArrayList<Double>) json.get("textureSize");
-		this.shadowsize = (Float) json.get("shadowSize");
+	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws Exception{
+		this.texture = CemFairy.JSONparseString(json.get("texture"));
+		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
+		this.shadowsize = CemFairy.JSONparseFloat(json.get("shadowSize"));
 		this.path = path;
 		models = new HashMap<>();
 		for(LinkedTreeMap model : (ArrayList<LinkedTreeMap>) json.get("models")){
@@ -83,16 +83,16 @@ public class JemFile{
 		
 		
 		@SuppressWarnings({"rawtypes", "unchecked"})
-		JemModel(LinkedTreeMap json, Identifier path, ResourceManager resourceManager){
-			this.baseId = (String) json.get("baseId");
-			this.model = (String) json.get("model");
-			this.part = (String) json.get("part");
-			this.attach = (Boolean) json.get("attach");
-			this.scale = (Double) json.getOrDefault("scale", 1D);
+		JemModel(LinkedTreeMap json, Identifier path, ResourceManager resourceManager) throws Exception{
+			this.baseId = CemFairy.JSONparseString(json.get("baseId"));
+			this.model = CemFairy.JSONparseString(json.get("model"));
+			this.part = CemFairy.JSONparseString(json.get("part"));
+			this.attach = CemFairy.JSONparseBool(json.get("attach"));
+			this.scale = CemFairy.JSONparseDouble(json.getOrDefault("scale", 1D));
 			var yeah = ((ArrayList<LinkedTreeMap<String, Object>>) json.getOrDefault("animations", new ArrayList<>(Collections.singletonList(new LinkedTreeMap())))).get(0);
 			this.animations = new LinkedTreeMap<>();
 			yeah.forEach((key, value) -> this.animations.put(key, value.toString()));
-			JpmFile temp = null;
+			JpmFile temp;
 			if(this.model != null){
 				Identifier id = CemFairy.transformPath(this.model, path);
 				try(InputStream stream = resourceManager.getResource(id).getInputStream()){
@@ -104,6 +104,7 @@ public class JemFile{
 					temp = new JpmFile(file);
 				} catch(Exception exception){
 					CemFairy.postReadError(exception, id);
+					throw new Exception("Error loading dependent file: " + id);
 				}
 			}
 			else{

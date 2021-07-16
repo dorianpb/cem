@@ -23,11 +23,11 @@ public class CemInit implements ClientModInitializer{
 			CemFairy.getLogger().info("Loading " + entrypoint.getSize() + " entities from " + provider.getName() + " " + provider.getVersion());
 			entrypoint.getCemEntityFactories().forEach((type, factory) -> {
 				CemFairy.addSupport(type);
-				EntityRendererAccessor.callRegister(type, factory::create);
+				EntityRendererAccessor.callRegister(type, factory);
 			});
 			entrypoint.getCemBlockEntityFactories().forEach((type, factory) -> {
 				CemFairy.addSupport(type);
-				BlockEntityRendererAccessor.callRegister(type, factory::create);
+				BlockEntityRendererAccessor.callRegister(type, factory);
 			});
 			entrypoint.getCemOthers().forEach(CemFairy::addSupport);
 		});
