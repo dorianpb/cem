@@ -8,12 +8,12 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 public interface CemBlockEntityRenderFactory{
 	@SuppressWarnings("unchecked")
 	default BlockEntityRenderer<BlockEntity> create(BlockEntityRendererFactory.Context ctx){
-		var renderer = create1(ctx);
+		CemRenderer renderer = create1(ctx);
 		if(BlockEntityRenderer.class.isAssignableFrom(renderer.getClass())){
 			return (BlockEntityRenderer<BlockEntity>) renderer;
 		}
 		else{
-			throw new IllegalArgumentException(renderer.getId() + " needs to extend EntityRender!");
+			throw new IllegalArgumentException(renderer.getId() + " needs to extend BlockEntityRenderer!");
 		}
 	}
 	

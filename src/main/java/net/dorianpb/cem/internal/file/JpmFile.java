@@ -32,7 +32,7 @@ public class JpmFile{
 		
 		this.translate = CemFairy.JSONparseDoubleList(json.getOrDefault("translate", new ArrayList<>(Arrays.asList(0D, 0D, 0D))));
 		
-		this.rotate = CemFairy.JSONparseDoubleList(json.getOrDefault("translate", new ArrayList<>(Arrays.asList(0D, 0D, 0D))));
+		this.rotate = CemFairy.JSONparseDoubleList(json.getOrDefault("rotate", new ArrayList<>(Arrays.asList(0D, 0D, 0D))));
 		for(int i = 0; i < Objects.requireNonNull(this.rotate).size(); i++){
 			this.rotate.set(i, -Math.toRadians(this.rotate.get(i)));
 		}

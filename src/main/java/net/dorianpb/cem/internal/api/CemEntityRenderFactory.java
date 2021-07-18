@@ -8,12 +8,12 @@ import net.minecraft.entity.Entity;
 public interface CemEntityRenderFactory{
 	@SuppressWarnings("unchecked")
 	default EntityRenderer<Entity> create(EntityRendererFactory.Context ctx){
-		var renderer = create1(ctx);
+		CemRenderer renderer = create1(ctx);
 		if(EntityRenderer.class.isAssignableFrom(renderer.getClass())){
 			return (EntityRenderer<Entity>) renderer;
 		}
 		else{
-			throw new IllegalArgumentException(renderer.getId() + " needs to extend EntityRender!");
+			throw new IllegalArgumentException(renderer.getId() + " needs to extend EntityRenderer!");
 		}
 	}
 	
