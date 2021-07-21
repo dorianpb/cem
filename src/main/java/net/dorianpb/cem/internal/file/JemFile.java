@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class JemFile{
+	public static Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
 	private final String                    texture;
 	private final ArrayList<Double>         textureSize;
 	private final Float                     shadowsize;
@@ -42,6 +44,9 @@ public class JemFile{
 		}
 		if(this.textureSize == null){
 			throw new InvalidParameterException("Element \"textureSize\" is required");
+		}
+		if(texture != null && !allowTextureChars.matcher(texture).find()){
+			throw new InvalidParameterException("Non [a-z0-9/._-] character in path of location: " + texture);
 		}
 	}
 	

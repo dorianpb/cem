@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
 public class CemStringParser{
 	
 	public static ParsedExpression parse(String expr, CemModelRegistry registry, CemModelEntry parent){
+		DexEnvironment.setRegistry(registry);
 		Token token = initParseLoop(expr);
 		ParsedFunction matched = matchToken(token);
-		DexEnvironment.setRegistry(registry);
 		ParsedVar.parent = parent;
 		if(matched.getType() == ParsedFunctionType.FLOAT){
 			return new ParsedExpressionFloat(token);

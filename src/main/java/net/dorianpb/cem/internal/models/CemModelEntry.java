@@ -248,9 +248,18 @@ public class CemModelEntry{
 		
 		public void setRotation(char axis, float rot){
 			switch(axis){
-				case 'x' -> this.rotation[0] = rot;
-				case 'y' -> this.rotation[1] = rot;
-				case 'z' -> this.rotation[2] = rot;
+				case 'x' -> {
+					this.rotation[0] = rot;
+					this.pitch = 0;
+				}
+				case 'y' -> {
+					this.rotation[1] = rot;
+					this.yaw = 0;
+				}
+				case 'z' -> {
+					this.rotation[2] = rot;
+					this.roll = 0;
+				}
 				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
 			}
 		}
