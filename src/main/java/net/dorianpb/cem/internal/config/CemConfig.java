@@ -10,9 +10,9 @@ import net.fabricmc.loader.api.FabricLoader;
 @SuppressWarnings({"FieldMayBeFinal"})
 public final class CemConfig extends Config implements ConfigContainer, CemOptions{
 	@ConfigEntry
-	private boolean use_optifine_folder        = false;
+	private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();
 	@ConfigEntry
-	private boolean use_new_model_creation_fix = true;
+	private boolean use_new_model_creation_fix = CemOptions.instance.useTransparentParts();
 	
 	private CemConfig(){
 		super("cem");
