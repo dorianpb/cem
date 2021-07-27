@@ -7,7 +7,7 @@ import me.lortseam.completeconfig.gui.ConfigScreenBuilder;
 import me.lortseam.completeconfig.gui.cloth.ClothConfigScreenBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
-@SuppressWarnings({"FieldMayBeFinal"})
+@SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"})
 public final class CemConfig extends Config implements ConfigContainer, CemOptions{
 	@ConfigEntry
 	private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();

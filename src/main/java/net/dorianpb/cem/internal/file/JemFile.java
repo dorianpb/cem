@@ -16,12 +16,12 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class JemFile{
-	public static Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
-	private final String                    texture;
-	private final ArrayList<Double>         textureSize;
-	private final Float                     shadowsize;
-	private final HashMap<String, JemModel> models;
-	private final Identifier                path;
+	public static final Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
+	private final       String                    texture;
+	private final       ArrayList<Double>         textureSize;
+	private final       Float                     shadowsize;
+	private final       HashMap<String, JemModel> models;
+	private final       Identifier                path;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})

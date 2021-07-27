@@ -341,9 +341,9 @@ public class CemModelEntry{
 			}
 			this.setTransform(modelTransform);
 			addChild("my_precious", part);
-			this.part.pivotX = (pivotX - part.pivotX) * -1;
-			this.part.pivotY = (pivotY - part.pivotY) * -1;
-			this.part.pivotZ = (pivotZ - part.pivotZ) * -1;
+			this.part.pivotX = part.pivotX - pivotX;
+			this.part.pivotY = part.pivotY - pivotY;
+			this.part.pivotZ = part.pivotZ - pivotZ;
 			this.part.setParent(this);
 		}
 		
@@ -371,7 +371,10 @@ public class CemModelEntry{
 		private final CemCuboidParams params;
 		
 		public CemCuboid(CemCuboidParams cemCuboidParams){
-			super(cemCuboidParams.getU(), cemCuboidParams.getV(), cemCuboidParams.getX(), cemCuboidParams.getY(),
+			super(cemCuboidParams.getU(),
+			      cemCuboidParams.getV(),
+			      cemCuboidParams.getX(),
+			      cemCuboidParams.getY(),
 			      cemCuboidParams.getZ(),
 			      cemCuboidParams.getSizeX(),
 			      cemCuboidParams.getSizeY(),
