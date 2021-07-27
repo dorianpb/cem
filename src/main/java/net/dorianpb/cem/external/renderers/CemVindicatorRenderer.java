@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class CemVindicatorRenderer extends VindicatorEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -28,8 +28,7 @@ public class CemVindicatorRenderer extends VindicatorEntityRenderer implements C
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemIllagerModel<>(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
+				this.model = new CemIllagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

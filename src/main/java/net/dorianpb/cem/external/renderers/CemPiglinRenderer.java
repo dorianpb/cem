@@ -14,13 +14,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRenderer{
-	private static final Map<String, String>          partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>          partNames        = new HashMap<>();
 	private static final Map<String, List<String>>    parentChildPairs = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity> entityType;
 	private              CemModelRegistry             registry;
@@ -39,7 +36,6 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		if(CemRegistryManager.hasEntity(entityType)){
 			this.registry = CemRegistryManager.getRegistry(entityType);
 			try{
-				this.registry.setChildren(parentChildPairs);
 				this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), context);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
@@ -81,7 +77,9 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	}
 	
 	private CemPiglinModel getCemPiglinModel(CemModelRegistry registry, boolean zombie, Context context){
-		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry.prepRootPart(partNames, context.getPart(getLayer(this.entityType, "main")), null), registry);
+		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry.prepRootPart(partNames, parentChildPairs, context.getPart(getLayer(this.entityType, "main"))),
+		                                                      registry
+		);
 		if(zombie){
 			piglinEntityModel.rightEar.visible = false;
 		}

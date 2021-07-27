@@ -14,12 +14,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -35,8 +36,7 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.PIG));
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG));
 				this.model = new CemPigModel(rootPart, registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
@@ -44,8 +44,7 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 				this.features.replaceAll((feature) -> {
 					if(feature instanceof SaddleFeatureRenderer){
 						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
-						saddleRegistry.setChildren(parentChildPairs);
-						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, context.getPart(EntityModelLayers.PIG), 0.5F);
+						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG), 0.5F);
 						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
 					}
 					else{

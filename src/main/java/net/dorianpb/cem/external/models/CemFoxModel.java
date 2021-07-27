@@ -12,6 +12,7 @@ public class CemFoxModel extends FoxEntityModel<FoxEntity> implements CemModel{
 	public CemFoxModel(ModelPart root, CemModelRegistry registry){
 		super(root);
 		this.registry = registry;
+		root.getChild("body").getChild("tail").setPivot(-4.0F, 15.0F, -2.0F);
 	}
 	
 	@Override

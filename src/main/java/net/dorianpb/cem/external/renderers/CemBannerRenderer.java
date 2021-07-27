@@ -10,12 +10,13 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	
 	static{
@@ -29,8 +30,7 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 		if(CemRegistryManager.hasEntity(this.getType())){
 			CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
 			try{
-				registry.setChildren(parentChildPairs);
-				CemModelPart root = registry.prepRootPart(partNames, context.getLayerModelPart(EntityModelLayers.BANNER));
+				CemModelPart root = registry.prepRootPart(partNames, parentChildPairs, context.getLayerModelPart(EntityModelLayers.BANNER));
 				this.banner = root.getChild("flag");
 				this.pillar = root.getChild("pole"); //haha demon slayer reference lol
 				this.crossbar = root.getChild("bar");
@@ -42,12 +42,12 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 		}
 	}
 	
+	private BlockEntityType<? extends BlockEntity> getType(){
+		return BlockEntityType.BANNER;
+	}
+	
 	@Override
 	public String getId(){
 		return this.getType().toString();
-	}
-	
-	private BlockEntityType<? extends BlockEntity> getType(){
-		return BlockEntityType.BANNER;
 	}
 }

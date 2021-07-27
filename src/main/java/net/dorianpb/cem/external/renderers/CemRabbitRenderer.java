@@ -12,12 +12,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemRabbitRenderer extends RabbitEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -35,8 +36,7 @@ public class CemRabbitRenderer extends RabbitEntityRenderer implements CemRender
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemRabbitModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.RABBIT)), registry);
+				this.model = new CemRabbitModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.RABBIT)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

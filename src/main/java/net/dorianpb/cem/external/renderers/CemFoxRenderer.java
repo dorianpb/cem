@@ -4,6 +4,7 @@ import net.dorianpb.cem.external.models.CemFoxModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
+import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.FoxEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
@@ -15,9 +16,10 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class CemFoxRenderer extends FoxEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private static final Map<String, String>         partNames           = new HashMap<>();
+	private static final Map<String, List<String>>   parentChildPairs    = new LinkedHashMap<>();
+	private static final Map<String, ModelTransform> modelTransformFixes = new HashMap<>();
+	private              CemModelRegistry            registry;
 	
 	static{
 		partNames.put("leg1", "right_hind_leg");
@@ -31,17 +33,22 @@ public class CemFoxRenderer extends FoxEntityRenderer implements CemRenderer{
 		parentChildPairs.put("body", Collections.singletonList("tail"));
 	}
 	
+	static{
+		modelTransformFixes.put("body", ModelTransform.pivot(0.0F, 7.5F, 3.5F));
+		modelTransformFixes.put("tail", ModelTransform.pivot(-4.0F, 5.5F, 6.0F));
+	}
+	
 	public CemFoxRenderer(EntityRendererFactory.Context context){
 		super(context);
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemFoxModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.FOX)), registry);
+				this.model = new CemFoxModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.FOX), null, modelTransformFixes),
+				                             registry
+				);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
-				this.registry.getEntryByPartName("tail").getModel().setPivot(-4.0F, 15.0F, -2.0F); //workaround for now
 			} catch(Exception e){
 				modelError(e);
 			}

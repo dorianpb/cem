@@ -12,13 +12,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -37,8 +34,7 @@ public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemBeeModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.BEE)), registry);
+				this.model = new CemBeeModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.BEE)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

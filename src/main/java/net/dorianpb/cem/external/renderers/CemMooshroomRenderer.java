@@ -12,13 +12,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MooshroomEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CemMooshroomRenderer extends MooshroomEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -38,8 +35,7 @@ public class CemMooshroomRenderer extends MooshroomEntityRenderer implements Cem
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.MOOSHROOM)), registry);
+				this.model = new CemCowModel<>(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.MOOSHROOM)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

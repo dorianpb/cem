@@ -14,12 +14,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecartEntity> implements CemRenderer{
-	private static final Map<String, String>                                                 partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>                                                 partNames        = new HashMap<>();
 	private static final Map<String, List<String>>                                           parentChildPairs = new LinkedHashMap<>();
 	private static final Map<EntityType<? extends AbstractMinecartEntity>, EntityModelLayer> layers           = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity>                                        entityType;
@@ -44,10 +45,10 @@ public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecart
 		if(CemRegistryManager.hasEntity(entityType)){
 			this.registry = CemRegistryManager.getRegistry(entityType);
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames, ((MinecartEntityModel<? extends AbstractMinecartEntity>) model).getPart()),
-				                                    registry
-				);
+				this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames,
+				                                                               parentChildPairs,
+				                                                               ((MinecartEntityModel<? extends AbstractMinecartEntity>) model).getPart()
+				                                                              ), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

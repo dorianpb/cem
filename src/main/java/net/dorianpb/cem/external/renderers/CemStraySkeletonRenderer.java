@@ -16,12 +16,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemStraySkeletonRenderer extends StrayEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -34,8 +35,7 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemSkeletonModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.STRAY)), registry);
+				this.model = new CemSkeletonModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.STRAY)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -92,8 +92,7 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 				SKIN = origSKIN;
 			}
 			try{
-				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, modelLoader.getModelPart(EntityModelLayers.STRAY_OUTER), 0.25F);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, modelLoader.getModelPart(EntityModelLayers.STRAY_OUTER), 0.25F);
 				this.model = new CemSkeletonModel(rootPart, registry);
 				
 			} catch(Exception e){

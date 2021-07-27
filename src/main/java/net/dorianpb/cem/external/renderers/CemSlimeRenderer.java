@@ -14,12 +14,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -32,8 +33,7 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
+				this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -78,8 +78,7 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 			if(CemRegistryManager.hasEntity(this.getId())){
 				this.registry = CemRegistryManager.getRegistry(this.getId());
 				try{
-					this.registry.setChildren(parentChildPairs);
-					CemModelPart rootPart = this.registry.prepRootPart(partNames, this.getContextModel().getPart());
+					CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, this.getContextModel().getPart());
 					this.model = new CemSlimeModel(rootPart, registry);
 					
 				} catch(Exception e){

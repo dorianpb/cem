@@ -14,12 +14,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -35,8 +36,7 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames, this.model.getPart()), registry);
+				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -95,10 +95,9 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 				inflate = true;
 			}
 			try{
-				this.registry.setChildren(parentChildPairs);
 				CemModelPart rootPart = inflate
-				                        ? this.registry.prepRootPart(partNames, this.model.getPart(), 2.00F)
-				                        : this.registry.prepRootPart(partNames, this.model.getPart());
+				                        ? this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart(), 2.00F)
+				                        : this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart());
 				this.model = new CemCreeperModel(rootPart, registry);
 				
 			} catch(Exception e){

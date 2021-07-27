@@ -16,12 +16,13 @@ import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -34,8 +35,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.DROWNED)), registry);
+				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.DROWNED)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
@@ -92,8 +92,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				SKIN = origSKIN;
 			}
 			try{
-				this.registry.setChildren(parentChildPairs);
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, modelLoader.getModelPart(EntityModelLayers.DROWNED_OUTER), 0.25F);
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, modelLoader.getModelPart(EntityModelLayers.DROWNED_OUTER), 0.25F);
 				this.model = new CemDrownedZombieModel(rootPart, registry);
 				
 			} catch(Exception e){

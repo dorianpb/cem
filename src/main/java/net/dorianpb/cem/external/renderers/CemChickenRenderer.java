@@ -12,12 +12,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemChickenRenderer extends ChickenEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -31,8 +32,7 @@ public class CemChickenRenderer extends ChickenEntityRenderer implements CemRend
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemChickenModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.CHICKEN)), registry);
+				this.model = new CemChickenModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.CHICKEN)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

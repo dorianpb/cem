@@ -12,12 +12,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -34,8 +35,7 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames, context.getPart(EntityModelLayers.ARMOR_STAND)), registry);
+				this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ARMOR_STAND)), registry);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}

@@ -12,12 +12,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CemTntMinecartRenderer extends TntMinecartEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private              CemModelRegistry          registry;
 	
@@ -30,8 +31,9 @@ public class CemTntMinecartRenderer extends TntMinecartEntityRenderer implements
 		if(CemRegistryManager.hasEntity(getType())){
 			this.registry = CemRegistryManager.getRegistry(getType());
 			try{
-				this.registry.setChildren(parentChildPairs);
-				this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames, ((MinecartEntityModel<TntMinecartEntity>) model).getPart()), registry);
+				this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames, parentChildPairs, ((MinecartEntityModel<TntMinecartEntity>) model).getPart()),
+				                                    registry
+				);
 				if(registry.hasShadowRadius()){
 					this.shadowRadius = registry.getShadowRadius();
 				}
