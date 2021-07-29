@@ -27,16 +27,16 @@ public class CemFairy{
 	}
 	
 	//renderer stuff
-	public static void addSupport(EntityType<? extends Entity> entityType){
-		supportedEntities.add(entityType);
+	public static boolean addSupport(EntityType<? extends Entity> entityType){
+		return supportedEntities.add(entityType);
 	}
 	
-	public static void addSupport(BlockEntityType<? extends BlockEntity> entityType){
-		supportedBlockEntities.add(entityType);
+	public static boolean addSupport(BlockEntityType<? extends BlockEntity> entityType){
+		return supportedBlockEntities.add(entityType);
 	}
 	
-	public static void addSupport(String entityType){
-		supportedOthers.add(entityType);
+	public static boolean addSupport(String entityType){
+		return supportedOthers.add(entityType);
 	}
 	
 	public static boolean isUnsupported(EntityType<? extends Entity> entityType){
