@@ -37,7 +37,7 @@ dependencies {
 }
 
 loom {
-    accessWidener "src/main/resources/cem.accesswidener"
+    accessWidenerPath = file("src/main/resources/cem.accesswidener")
 }
 
 processResources {
