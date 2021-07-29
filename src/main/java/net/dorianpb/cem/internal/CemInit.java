@@ -22,14 +22,26 @@ public class CemInit implements ClientModInitializer{
 			entrypoint.onInit();
 			CemFairy.getLogger().info("Loading " + entrypoint.getSize() + " entities from " + provider.getName() + " " + provider.getVersion());
 			entrypoint.getCemEntityFactories().forEach((type, factory) -> {
-				CemFairy.addSupport(type);
-				EntityRendererAccessor.callRegister(type, factory);
+				if(CemFairy.addSupport(type)){
+					EntityRendererAccessor.callRegister(type, factory);
+				}
+				else{
+					CemFairy.getLogger().error("Entity type " + type + " already present!");
+				}
 			});
 			entrypoint.getCemBlockEntityFactories().forEach((type, factory) -> {
-				CemFairy.addSupport(type);
-				BlockEntityRendererAccessor.callRegister(type, factory);
+				if(CemFairy.addSupport(type)){
+					BlockEntityRendererAccessor.callRegister(type, factory);
+				}
+				else{
+					CemFairy.getLogger().error("Entity type " + type + " already present!");
+				}
 			});
-			entrypoint.getCemOthers().forEach(CemFairy::addSupport);
+			entrypoint.getCemOthers().forEach((type) -> {
+				if(!CemFairy.addSupport(type)){
+					CemFairy.getLogger().error("Entity type " + type + " already present!");
+				}
+			});
 		});
 	}
 }

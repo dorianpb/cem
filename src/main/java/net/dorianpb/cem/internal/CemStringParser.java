@@ -713,8 +713,6 @@ public class CemStringParser{
 	}
 	
 	public interface ParsedExpression{
-		String getName();
-		
 		default void checkArgs(ArrayList<ParsedExpression> args, int paramNum){
 			if(args == null && paramNum != -2){
 				throw new IllegalArgumentException("Function \"" + this.getName().toLowerCase() + "\" should be be followed with \"()\", as it is not a " + "parameter!");
@@ -735,6 +733,8 @@ public class CemStringParser{
 				                                   "given!");
 			}
 		}
+		
+		String getName();
 		
 		default float eval(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity, CemModelRegistry registry){
 			if(this.getClass() == ParsedExpressionBool.class){

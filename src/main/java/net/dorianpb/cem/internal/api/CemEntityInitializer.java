@@ -1,5 +1,7 @@
 package net.dorianpb.cem.internal.api;
 
+import net.dorianpb.cem.mixins.BlockEntityRendererAccessor;
+import net.dorianpb.cem.mixins.EntityRendererAccessor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -36,11 +38,13 @@ public abstract class CemEntityInitializer{
 	}
 	
 	public final <T extends Entity> void register(EntityType<? extends T> type, CemEntityRenderFactory factory){
-		this.cemEntityFactories.put(type, factory::create);
+		var vanilla = EntityRendererAccessor.getRendererFactories().get(type);
+		this.cemEntityFactories.put(type, (ctx) -> factory.create(ctx, type, vanilla));
 	}
 	
 	public final <T extends BlockEntity> void register(BlockEntityType<? extends T> type, CemBlockEntityRenderFactory factory){
-		this.cemBlockEntityFactories.put(type, factory::create);
+		var vanilla = BlockEntityRendererAccessor.getFACTORIES().get(type);
+		this.cemBlockEntityFactories.put(type, (ctx) -> factory.create(ctx, type, vanilla));
 	}
 	
 	public final int getSize(){
