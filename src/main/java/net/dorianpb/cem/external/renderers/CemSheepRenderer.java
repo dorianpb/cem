@@ -23,7 +23,7 @@ import java.util.Map;
 public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("leg1", "right_hind_leg");
@@ -34,24 +34,22 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 	
 	public CemSheepRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemSheepModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.SHEEP)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof SheepWoolFeatureRenderer){
-						return new CemSheepWoolFeatureRenderer(this, context.getModelLoader());
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemSheepModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.SHEEP)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof SheepWoolFeatureRenderer && CemRegistryManager.hasEntity("sheep_wool")){
+					return new CemSheepWoolFeatureRenderer(this, context.getModelLoader());
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	
@@ -76,25 +74,21 @@ public class CemSheepRenderer extends SheepEntityRenderer implements CemRenderer
 		private static final Map<String, String>       partNames        = CemSheepRenderer.partNames;
 		private static final Map<String, List<String>> parentChildPairs = CemSheepRenderer.parentChildPairs;
 		private static final Identifier                origSKIN         = SKIN;
-		private              CemModelRegistry          registry;
+		private final        CemModelRegistry          registry;
 		
 		public CemSheepWoolFeatureRenderer(CemSheepRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);
-			if(CemRegistryManager.hasEntity(this.getId())){
-				this.registry = CemRegistryManager.getRegistry(this.getId());
-				try{
-					this.model = new CemSheepWoolModel(this.registry.prepRootPart(partNames, parentChildPairs, modelLoader.getModelPart(EntityModelLayers.SHEEP_FUR)),
-					                                   registry
-					);
-					if(this.registry != null && this.registry.hasTexture()){
-						SKIN = this.registry.getTexture();
-					}
-					else{
-						SKIN = origSKIN;
-					}
-				} catch(Exception e){
-					modelError(e);
+			this.registry = CemRegistryManager.getRegistry(this.getId());
+			try{
+				this.model = new CemSheepWoolModel(this.registry.prepRootPart(partNames, parentChildPairs, modelLoader.getModelPart(EntityModelLayers.SHEEP_FUR)), registry);
+				if(this.registry.hasTexture()){
+					SKIN = this.registry.getTexture();
 				}
+				else{
+					SKIN = origSKIN;
+				}
+			} catch(Exception e){
+				modelError(e);
 			}
 		}
 		

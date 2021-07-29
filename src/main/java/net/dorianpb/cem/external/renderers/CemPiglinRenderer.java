@@ -20,7 +20,7 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	private static final Map<String, String>          partNames        = new HashMap<>();
 	private static final Map<String, List<String>>    parentChildPairs = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity> entityType;
-	private              CemModelRegistry             registry;
+	private final        CemModelRegistry             registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -33,16 +33,14 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	public CemPiglinRenderer(EntityRendererFactory.Context context, EntityType<? extends Entity> entityType){
 		super(context, getLayer(entityType, "main"), getLayer(entityType, "inner"), getLayer(entityType, "outer"), entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
 		this.entityType = entityType;
-		if(CemRegistryManager.hasEntity(entityType)){
-			this.registry = CemRegistryManager.getRegistry(entityType);
-			try{
-				this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), context);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(entityType);
+		try{
+			this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), context);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

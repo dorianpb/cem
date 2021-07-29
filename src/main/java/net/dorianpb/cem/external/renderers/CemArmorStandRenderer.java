@@ -20,7 +20,7 @@ import java.util.Map;
 public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -32,16 +32,14 @@ public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements C
 	
 	public CemArmorStandRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ARMOR_STAND)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ARMOR_STAND)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

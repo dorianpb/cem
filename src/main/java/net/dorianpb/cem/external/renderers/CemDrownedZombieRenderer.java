@@ -24,7 +24,7 @@ import java.util.Map;
 public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -32,24 +32,22 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 	
 	public CemDrownedZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.DROWNED)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof DrownedOverlayFeatureRenderer<DrownedEntity>){
-						return new CemDrownedOverlayRenderer(this, context.getModelLoader());
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.DROWNED)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof DrownedOverlayFeatureRenderer<DrownedEntity>){
+					return new CemDrownedOverlayRenderer(this, context.getModelLoader());
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

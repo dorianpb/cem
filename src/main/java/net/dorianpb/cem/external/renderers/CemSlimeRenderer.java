@@ -22,7 +22,7 @@ import java.util.Map;
 public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("body", "cube");
@@ -30,24 +30,22 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 	
 	public CemSlimeRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof SlimeOverlayFeatureRenderer<SlimeEntity>){
-						return new CemSlimeOverlayFeatureRenderer(this, context.getModelLoader());
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof SlimeOverlayFeatureRenderer<SlimeEntity> && CemRegistryManager.hasEntity("slime_gel")){
+					return new CemSlimeOverlayFeatureRenderer(this, context.getModelLoader());
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	
@@ -71,19 +69,17 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 	public static class CemSlimeOverlayFeatureRenderer extends SlimeOverlayFeatureRenderer<SlimeEntity> implements CemRenderer{
 		private static final Map<String, String>       partNames        = CemSlimeRenderer.partNames;
 		private static final Map<String, List<String>> parentChildPairs = CemSlimeRenderer.parentChildPairs;
-		private              CemModelRegistry          registry;
+		private final        CemModelRegistry          registry;
 		
 		public CemSlimeOverlayFeatureRenderer(CemSlimeRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);
-			if(CemRegistryManager.hasEntity(this.getId())){
-				this.registry = CemRegistryManager.getRegistry(this.getId());
-				try{
-					CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, this.getContextModel().getPart());
-					this.model = new CemSlimeModel(rootPart, registry);
-					
-				} catch(Exception e){
-					modelError(e);
-				}
+			this.registry = CemRegistryManager.getRegistry(this.getId());
+			try{
+				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, this.getContextModel().getPart());
+				this.model = new CemSlimeModel(rootPart, registry);
+				
+			} catch(Exception e){
+				modelError(e);
 			}
 		}
 		

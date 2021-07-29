@@ -24,7 +24,7 @@ public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecart
 	private static final Map<String, List<String>>                                           parentChildPairs = new LinkedHashMap<>();
 	private static final Map<EntityType<? extends AbstractMinecartEntity>, EntityModelLayer> layers           = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity>                                        entityType;
-	private              CemModelRegistry                                                    registry;
+	private final        CemModelRegistry                                                    registry;
 	
 	static{
 		partNames.put("dirt", "contents");
@@ -42,19 +42,17 @@ public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecart
 	public CemMinecartRenderer(Context context, EntityType<? extends AbstractMinecartEntity> entityType){
 		super(context, layers.get(entityType));
 		this.entityType = entityType;
-		if(CemRegistryManager.hasEntity(entityType)){
-			this.registry = CemRegistryManager.getRegistry(entityType);
-			try{
-				this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames,
-				                                                               parentChildPairs,
-				                                                               ((MinecartEntityModel<? extends AbstractMinecartEntity>) model).getPart()
-				                                                              ), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(entityType);
+		try{
+			this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames,
+			                                                               parentChildPairs,
+			                                                               ((MinecartEntityModel<? extends AbstractMinecartEntity>) model).getPart()
+			                                                              ), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

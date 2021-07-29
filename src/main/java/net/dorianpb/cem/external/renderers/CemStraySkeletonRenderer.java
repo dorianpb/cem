@@ -24,7 +24,7 @@ import java.util.Map;
 public class CemStraySkeletonRenderer extends StrayEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -32,24 +32,22 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 	
 	public CemStraySkeletonRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemSkeletonModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.STRAY)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof StrayOverlayFeatureRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>>){
-						return new CemStrayOverlayRenderer(this, context.getModelLoader());
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemSkeletonModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.STRAY)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof StrayOverlayFeatureRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>>){
+					return new CemStrayOverlayRenderer(this, context.getModelLoader());
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

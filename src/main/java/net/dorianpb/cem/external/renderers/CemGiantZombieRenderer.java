@@ -20,7 +20,7 @@ import java.util.Map;
 public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -28,16 +28,14 @@ public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRe
 	
 	public CemGiantZombieRenderer(EntityRendererFactory.Context context){
 		super(context, 6F);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemGiantZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.GIANT)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemGiantZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.GIANT)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

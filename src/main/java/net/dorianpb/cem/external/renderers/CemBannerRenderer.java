@@ -27,18 +27,16 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 	
 	public CemBannerRenderer(BlockEntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(this.getType())){
-			CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
-			try{
-				CemModelPart root = registry.prepRootPart(partNames, parentChildPairs, context.getLayerModelPart(EntityModelLayers.BANNER));
-				this.banner = root.getChild("flag");
-				this.pillar = root.getChild("pole"); //haha demon slayer reference lol
-				this.crossbar = root.getChild("bar");
-				this.pillar.pivotY -= 12;
-				this.crossbar.pivotY -= 12;
-			} catch(Exception e){
-				modelError(e);
-			}
+		CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
+		try{
+			CemModelPart root = registry.prepRootPart(partNames, parentChildPairs, context.getLayerModelPart(EntityModelLayers.BANNER));
+			this.banner = root.getChild("flag");
+			this.pillar = root.getChild("pole"); //haha demon slayer reference lol
+			this.crossbar = root.getChild("bar");
+			this.pillar.pivotY -= 12;
+			this.crossbar.pivotY -= 12;
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

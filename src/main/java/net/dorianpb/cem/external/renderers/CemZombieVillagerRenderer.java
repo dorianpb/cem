@@ -17,7 +17,7 @@ import java.util.*;
 public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -32,18 +32,14 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 	
 	public CemZombieVillagerRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemZombieVillagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ZOMBIE_VILLAGER)),
-				                                          registry
-				);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemZombieVillagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ZOMBIE_VILLAGER)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

@@ -22,7 +22,7 @@ import java.util.Map;
 public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("leg1", "left_hind_leg");
@@ -33,27 +33,25 @@ public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
 	
 	public CemPigRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG));
-				this.model = new CemPigModel(rootPart, registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof SaddleFeatureRenderer){
-						CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
-						CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG), 0.5F);
-						return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG));
+			this.model = new CemPigModel(rootPart, registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof SaddleFeatureRenderer){
+					CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
+					CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG), 0.5F);
+					return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

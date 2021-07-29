@@ -16,7 +16,7 @@ import java.util.*;
 public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("outer_left_wing", "left_wing_tip");
@@ -31,16 +31,14 @@ public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
 	
 	public CemBatRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemBatModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemBatModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

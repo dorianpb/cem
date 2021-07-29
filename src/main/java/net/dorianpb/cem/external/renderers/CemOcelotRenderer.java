@@ -20,7 +20,7 @@ import java.util.Map;
 public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("front_right_leg", "right_front_leg");
@@ -32,16 +32,14 @@ public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRender
 	
 	public CemOcelotRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemOcelotModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.OCELOT)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemOcelotModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.OCELOT)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

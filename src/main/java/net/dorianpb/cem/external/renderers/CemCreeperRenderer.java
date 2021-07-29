@@ -22,7 +22,7 @@ import java.util.Map;
 public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("leg1", "right_hind_leg");
@@ -33,24 +33,22 @@ public class CemCreeperRenderer extends CreeperEntityRenderer implements CemRend
 	
 	public CemCreeperRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemCreeperModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-				this.features.replaceAll((feature) -> {
-					if(feature instanceof CreeperChargeFeatureRenderer){
-						return new CemCreeperChargeFeatureRenderer(this, context.getModelLoader());
-					}
-					else{
-						return feature;
-					}
-				});
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemCreeperModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof CreeperChargeFeatureRenderer){
+					return new CemCreeperChargeFeatureRenderer(this, context.getModelLoader());
+				}
+				else{
+					return feature;
+				}
+			});
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	

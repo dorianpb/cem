@@ -20,7 +20,7 @@ import java.util.Map;
 public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRenderer{
 	private static final Map<String, String>       partNames        = new HashMap<>();
 	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private              CemModelRegistry          registry;
+	private final        CemModelRegistry          registry;
 	
 	static{
 		partNames.put("headwear", "hat");
@@ -28,16 +28,14 @@ public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRe
 	
 	public CemEndermanRenderer(EntityRendererFactory.Context context){
 		super(context);
-		if(CemRegistryManager.hasEntity(getType())){
-			this.registry = CemRegistryManager.getRegistry(getType());
-			try{
-				this.model = new CemEndermanModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ENDERMAN)), registry);
-				if(registry.hasShadowRadius()){
-					this.shadowRadius = registry.getShadowRadius();
-				}
-			} catch(Exception e){
-				modelError(e);
+		this.registry = CemRegistryManager.getRegistry(getType());
+		try{
+			this.model = new CemEndermanModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ENDERMAN)), registry);
+			if(registry.hasShadowRadius()){
+				this.shadowRadius = registry.getShadowRadius();
 			}
+		} catch(Exception e){
+			modelError(e);
 		}
 	}
 	
