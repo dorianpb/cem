@@ -18,13 +18,11 @@ public interface CemRenderer{
 	@SuppressWarnings("unused")
 	default void modelError(Exception e){
 		CemFairy.getLogger().error("Error applying model for " + getId());
+		CemFairy.getLogger().error(e);
 		if(e.getMessage() == null || e.getMessage().trim().equals("")){
 			CemFairy.getLogger().error(e.getStackTrace()[0]);
 			CemFairy.getLogger().error(e.getStackTrace()[1]);
 			CemFairy.getLogger().error(e.getStackTrace()[2]);
-		}
-		else{
-			CemFairy.getLogger().error(e.getMessage());
 		}
 	}
 }

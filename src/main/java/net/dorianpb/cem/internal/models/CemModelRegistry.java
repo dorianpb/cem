@@ -104,7 +104,7 @@ public class CemModelRegistry{
 		//new model creation fix!
 		if(CemConfigFairy.getConfig().useTransparentParts()){
 			if(fixes != null){
-				for(String key : fixes.keySet()){
+				for(String key : new HashSet<>(fixes.keySet())){
 					if(partNameMap.containsKey(key)){
 						ModelTransform value = fixes.remove(key);
 						fixes.put(partNameMap.getOrDefault(key, key), value);
@@ -158,7 +158,14 @@ public class CemModelRegistry{
 				if(target.children.containsKey(key) && vanillaModel.children.containsKey(key)){
 					TransparentCemModelPart replacement;
 					if(fixes != null && fixes.containsKey(key)){
-						replacement = new TransparentCemModelPart(target.getChild(key), fixes.get(key));
+						var correctTransform = ModelTransform.of(fixes.get(key).pivotX,
+						                                         fixes.get(key).pivotY,
+						                                         fixes.get(key).pivotZ,
+						                                         vanillaModel.getChild(key).getTransform().pitch,
+						                                         vanillaModel.getChild(key).getTransform().yaw,
+						                                         vanillaModel.getChild(key).getTransform().roll
+						                                        );
+						replacement = new TransparentCemModelPart(target.getChild(key), correctTransform);
 					}
 					else{
 						replacement = new TransparentCemModelPart(target.getChild(key), vanillaModel.getChild(key).getTransform());
