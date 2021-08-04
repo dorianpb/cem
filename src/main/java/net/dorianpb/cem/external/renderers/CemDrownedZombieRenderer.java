@@ -2,13 +2,11 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemDrownedZombieModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.DrownedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -16,25 +14,14 @@ import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-	}
 	
 	public CemDrownedZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemDrownedZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.DROWNED)), registry);
+			this.model = new CemDrownedZombieModel(registry, null);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
@@ -69,8 +56,6 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 	}
 	
 	public static class CemDrownedOverlayRenderer extends DrownedOverlayFeatureRenderer<DrownedEntity> implements CemRenderer{
-		private static final Map<String, String>       partNames        = CemDrownedZombieRenderer.partNames;
-		private static final Map<String, List<String>> parentChildPairs = CemDrownedZombieRenderer.parentChildPairs;
 		private static final Identifier                origSKIN         = SKIN;
 		private final        CemModelRegistry          registry;
 		
@@ -90,8 +75,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				SKIN = origSKIN;
 			}
 			try{
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, modelLoader.getModelPart(EntityModelLayers.DROWNED_OUTER), 0.25F);
-				this.model = new CemDrownedZombieModel(rootPart, registry);
+				this.model = new CemDrownedZombieModel(registry, 0.25F);
 				
 			} catch(Exception e){
 				modelError(e);

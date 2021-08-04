@@ -2,15 +2,29 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.entity.passive.CowEntity;
 
+import java.util.*;
+
 public class CemCowModel<T extends CowEntity> extends CowEntityModel<T> implements CemModel{
-	private final CemModelRegistry registry;
+	private static final Map<String, String>       partNames  = new HashMap<>();
+	private static final Map<String, List<String>> familyTree = new LinkedHashMap<>();
+	private final        CemModelRegistry          registry;
 	
-	public CemCowModel(ModelPart root, CemModelRegistry registry){
-		super(root);
+	static{
+		partNames.put("leg1", "right_hind_leg");
+		partNames.put("leg2", "left_hind_leg");
+		partNames.put("leg3", "right_front_leg");
+		partNames.put("leg4", "left_front_leg");
+	}
+	
+	static{
+		familyTree.put("head", Arrays.asList("right_horn", "left_horn"));
+	}
+	
+	public CemCowModel(CemModelRegistry registry){
+		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), null, null));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90);
 	}

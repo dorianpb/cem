@@ -11,30 +11,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemWanderingTraderRenderer extends WanderingTraderEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-		partNames.put("headwear2", "hat_rim");
-		partNames.put("bodywear", "jacket");
-	}
-	
-	static{
-		parentChildPairs.put("headwear", Collections.singletonList("headwear2"));
-		parentChildPairs.put("head", Arrays.asList("headwear", "nose"));
-		parentChildPairs.put("body", Collections.singletonList("bodywear"));
-	}
 	
 	public CemWanderingTraderRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemVillagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemVillagerModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

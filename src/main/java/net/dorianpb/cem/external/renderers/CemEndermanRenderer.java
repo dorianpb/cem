@@ -6,31 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EndermanEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemEndermanRenderer extends EndermanEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-	}
+	private final CemModelRegistry registry;
 	
 	public CemEndermanRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemEndermanModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ENDERMAN)), registry);
+			this.model = new CemEndermanModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

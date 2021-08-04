@@ -11,29 +11,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemBatRenderer extends BatEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("outer_left_wing", "left_wing_tip");
-		partNames.put("outer_right_wing", "right_wing_tip");
-	}
-	
-	static{
-		parentChildPairs.put("right_wing", Collections.singletonList("outer_right_wing"));
-		parentChildPairs.put("left_wing", Collections.singletonList("outer_left_wing"));
-		parentChildPairs.put("body", Arrays.asList("left_wing", "right_wing"));
-	}
+	private final CemModelRegistry registry;
 	
 	public CemBatRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemBatModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemBatModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

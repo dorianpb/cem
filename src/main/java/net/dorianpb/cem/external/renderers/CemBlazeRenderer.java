@@ -11,27 +11,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		for(int i = 0; i < 12; i++){
-			partNames.put("stick" + (i + 1), "part" + i);
-		}
-	}
 	
 	public CemBlazeRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemBlazeModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemBlazeModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

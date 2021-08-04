@@ -2,49 +2,31 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemPigModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PigEntityRenderer;
 import net.minecraft.client.render.entity.feature.SaddleFeatureRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("leg1", "left_hind_leg");
-		partNames.put("leg2", "right_hind_leg");
-		partNames.put("leg3", "left_front_leg");
-		partNames.put("leg4", "right_front_leg");
-	}
 	
 	public CemPigRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG));
-			this.model = new CemPigModel(rootPart, registry);
+			this.model = new CemPigModel(registry, null);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof SaddleFeatureRenderer){
 					CemModelRegistry saddleRegistry = CemRegistryManager.getRegistry(getType());
-					CemModelPart saddlePart = saddleRegistry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.PIG), 0.5F);
-					return new SaddleFeatureRenderer<>(this, new CemPigModel(saddlePart, saddleRegistry), new Identifier("textures/entity/pig/pig_saddle.png"));
+					return new SaddleFeatureRenderer<>(this, new CemPigModel(saddleRegistry, 0.5F), new Identifier("textures/entity/pig/pig_saddle.png"));
 				}
 				else{
 					return feature;

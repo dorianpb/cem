@@ -2,15 +2,22 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.MinecartEntityModel;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CemMinecartModel<T extends AbstractMinecartEntity> extends MinecartEntityModel<T> implements CemModel{
-	private final CemModelRegistry registry;
+	private static final Map<String, String> partNames = new HashMap<>();
+	private final        CemModelRegistry    registry;
 	
-	public CemMinecartModel(ModelPart root, CemModelRegistry registry){
-		super(root);
+	static{
+		partNames.put("dirt", "contents");
+	}
+	
+	public CemMinecartModel(CemModelRegistry registry){
+		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
 		this.registry = registry;
 		for(String key : new String[]{"front", "back", "left", "right", "bottom"}){
 			var entry = this.registry.getEntryByPartName(key);

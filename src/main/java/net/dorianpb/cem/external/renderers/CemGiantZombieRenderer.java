@@ -6,31 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.GiantEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.GiantEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-	}
 	
 	public CemGiantZombieRenderer(EntityRendererFactory.Context context){
 		super(context, 6F);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemGiantZombieModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.GIANT)), registry);
+			this.model = new CemGiantZombieModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

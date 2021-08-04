@@ -6,34 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.BeeEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("body", "bone");
-		partNames.put("torso", "body");
-	}
-	
-	static{
-		parentChildPairs.put("torso", Arrays.asList("stinger", "left_antenna", "right_antenna"));
-		parentChildPairs.put("body", Arrays.asList("torso", "right_wing", "left_wing", "front_legs", "middle_legs", "back_legs"));
-	}
 	
 	public CemBeeRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemBeeModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.BEE)), registry);
+			this.model = new CemBeeModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

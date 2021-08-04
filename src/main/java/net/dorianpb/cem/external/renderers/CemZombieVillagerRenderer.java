@@ -6,35 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieVillagerEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-		partNames.put("headwear2", "hat_rim");
-		partNames.put("bodywear", "jacket");
-	}
-	
-	static{
-		parentChildPairs.put("headwear", Collections.singletonList("headwear2"));
-		parentChildPairs.put("head", Arrays.asList("headwear", "nose"));
-	}
 	
 	public CemZombieVillagerRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemZombieVillagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ZOMBIE_VILLAGER)), registry);
+			this.model = new CemZombieVillagerModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

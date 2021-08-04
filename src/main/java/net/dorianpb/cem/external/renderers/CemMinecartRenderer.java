@@ -8,27 +8,18 @@ import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.MinecartEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.MinecartEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecartEntity> implements CemRenderer{
-	private static final Map<String, String>                                                 partNames        = new HashMap<>();
-	private static final Map<String, List<String>>                                           parentChildPairs = new LinkedHashMap<>();
 	private static final Map<EntityType<? extends AbstractMinecartEntity>, EntityModelLayer> layers           = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity>                                        entityType;
 	private final        CemModelRegistry                                                    registry;
-	
-	static{
-		partNames.put("dirt", "contents");
-	}
 	
 	static{
 		layers.put(EntityType.CHEST_MINECART, EntityModelLayers.CHEST_MINECART);
@@ -44,10 +35,7 @@ public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecart
 		this.entityType = entityType;
 		this.registry = CemRegistryManager.getRegistry(entityType);
 		try{
-			this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames,
-			                                                               parentChildPairs,
-			                                                               ((MinecartEntityModel<? extends AbstractMinecartEntity>) model).getPart()
-			                                                              ), registry);
+			this.model = new CemMinecartModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

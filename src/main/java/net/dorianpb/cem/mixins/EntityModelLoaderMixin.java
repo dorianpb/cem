@@ -1,6 +1,5 @@
 package net.dorianpb.cem.mixins;
 
-
 import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;

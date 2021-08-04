@@ -6,32 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.TntMinecartEntityRenderer;
-import net.minecraft.client.render.entity.model.MinecartEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemTntMinecartRenderer extends TntMinecartEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("dirt", "contents");
-	}
+	private final CemModelRegistry registry;
 	
 	public CemTntMinecartRenderer(Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemMinecartModel<>(this.registry.prepRootPart(partNames, parentChildPairs, ((MinecartEntityModel<TntMinecartEntity>) model).getPart()),
-			                                    registry);
+			this.model = new CemMinecartModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

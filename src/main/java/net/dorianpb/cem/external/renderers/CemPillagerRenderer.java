@@ -11,23 +11,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemPillagerRenderer extends PillagerEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		parentChildPairs.put("head", Arrays.asList("hat", "nose"));
-		parentChildPairs.put("arms", Collections.singletonList("left_shoulder"));
-	}
 	
 	public CemPillagerRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemIllagerModel<>(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemIllagerModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

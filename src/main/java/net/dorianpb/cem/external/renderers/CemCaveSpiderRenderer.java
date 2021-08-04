@@ -11,34 +11,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemCaveSpiderRenderer extends CaveSpiderEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
 	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("neck", "body0");
-		partNames.put("body", "body1");
-		partNames.put("leg1", "right_hind_leg");
-		partNames.put("leg2", "left_hind_leg");
-		partNames.put("leg3", "right_middle_hind_leg");
-		partNames.put("leg4", "left_middle_hind_leg");
-		partNames.put("leg5", "right_middle_front_leg");
-		partNames.put("leg6", "left_middle_front_leg");
-		partNames.put("leg7", "right_front_leg");
-		partNames.put("leg8", "left_front_leg");
-	}
 	
 	public CemCaveSpiderRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemSpiderModel<>(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemSpiderModel<>(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

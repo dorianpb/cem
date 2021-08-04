@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
+	private static final Map<String, String>       partNames  = new HashMap<>();
+	private static final Map<String, List<String>> familyTree = new LinkedHashMap<>();
 	
 	static{
 		partNames.put("slate", "flag");
@@ -29,7 +29,7 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 		super(context);
 		CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
 		try{
-			CemModelPart root = registry.prepRootPart(partNames, parentChildPairs, context.getLayerModelPart(EntityModelLayers.BANNER));
+			CemModelPart root = registry.prepRootPart(partNames, familyTree, context.getLayerModelPart(EntityModelLayers.BANNER));
 			this.banner = root.getChild("flag");
 			this.pillar = root.getChild("pole"); //haha demon slayer reference lol
 			this.crossbar = root.getChild("bar");

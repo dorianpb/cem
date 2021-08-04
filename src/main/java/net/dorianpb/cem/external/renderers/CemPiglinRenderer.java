@@ -5,7 +5,6 @@ import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.render.entity.PiglinEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
@@ -14,28 +13,16 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
-
 public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRenderer{
-	private static final Map<String, String>          partNames        = new HashMap<>();
-	private static final Map<String, List<String>>    parentChildPairs = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity> entityType;
 	private final        CemModelRegistry             registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-	}
-	
-	static{
-		parentChildPairs.put("head", Arrays.asList("left_ear", "right_ear"));
-	}
 	
 	public CemPiglinRenderer(EntityRendererFactory.Context context, EntityType<? extends Entity> entityType){
 		super(context, getLayer(entityType, "main"), getLayer(entityType, "inner"), getLayer(entityType, "outer"), entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
 		this.entityType = entityType;
 		this.registry = CemRegistryManager.getRegistry(entityType);
 		try{
-			this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN), context);
+			this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
@@ -74,10 +61,8 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		}
 	}
 	
-	private CemPiglinModel getCemPiglinModel(CemModelRegistry registry, boolean zombie, Context context){
-		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry.prepRootPart(partNames, parentChildPairs, context.getPart(getLayer(this.entityType, "main"))),
-		                                                      registry
-		);
+	private CemPiglinModel getCemPiglinModel(CemModelRegistry registry, boolean zombie){
+		CemPiglinModel piglinEntityModel = new CemPiglinModel(registry);
 		if(zombie){
 			piglinEntityModel.rightEar.visible = false;
 		}

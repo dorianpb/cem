@@ -2,15 +2,27 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.entity.mob.CreeperEntity;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CemCreeperModel extends CreeperEntityModel<CreeperEntity> implements CemModel{
-	private final CemModelRegistry registry;
+	private static final Map<String, String> partNames = new HashMap<>();
+	private final        CemModelRegistry    registry;
 	
-	public CemCreeperModel(ModelPart root, CemModelRegistry registry){
-		super(root);
+	static{
+		partNames.put("leg1", "right_hind_leg");
+		partNames.put("leg2", "left_hind_leg");
+		partNames.put("leg3", "right_front_leg");
+		partNames.put("leg4", "left_front_leg");
+	}
+	
+	public CemCreeperModel(CemModelRegistry registry, @Nullable Float inflate){
+		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData(Dilation.NONE).createModel(), null, inflate));
 		this.registry = registry;
 	}
 	

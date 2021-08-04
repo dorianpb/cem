@@ -6,35 +6,19 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemArmorStandRenderer extends ArmorStandEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("headwear", "hat");
-		partNames.put("right", "right_body_stick");
-		partNames.put("left", "left_body_stick");
-		partNames.put("waist", "shoulder_stick");
-		partNames.put("base", "base_plate");
-	}
+	private final CemModelRegistry registry;
 	
 	public CemArmorStandRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemArmorStandModel(this.registry.prepRootPart(partNames, parentChildPairs, context.getPart(EntityModelLayers.ARMOR_STAND)), registry);
+			this.model = new CemArmorStandModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}

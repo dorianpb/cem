@@ -2,15 +2,27 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.RabbitEntityModel;
 import net.minecraft.entity.passive.RabbitEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CemRabbitModel extends RabbitEntityModel<RabbitEntity> implements CemModel{
-	private final CemModelRegistry registry;
+	private static final Map<String, String> partNames = new HashMap<>();
+	private final        CemModelRegistry    registry;
 	
-	public CemRabbitModel(ModelPart root, CemModelRegistry registry){
-		super(root);
+	static{
+		partNames.put("left_foot", "left_hind_foot");
+		partNames.put("right_foot", "right_hind_foot");
+		partNames.put("left_thigh", "left_haunch");
+		partNames.put("right_thigh", "right_haunch");
+		partNames.put("left_arm", "left_front_leg");
+		partNames.put("right_arm", "right_front_leg");
+	}
+	
+	public CemRabbitModel(CemModelRegistry registry){
+		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', -19.999F);
 	}

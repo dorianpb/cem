@@ -2,7 +2,6 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemSlimeModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -14,25 +13,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer{
-	private static final Map<String, String>       partNames        = new HashMap<>();
-	private static final Map<String, List<String>> parentChildPairs = new LinkedHashMap<>();
-	private final        CemModelRegistry          registry;
-	
-	static{
-		partNames.put("body", "cube");
-	}
+	private final CemModelRegistry registry;
 	
 	public CemSlimeRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemSlimeModel(this.registry.prepRootPart(partNames, parentChildPairs, this.model.getPart()), registry);
+			this.model = new CemSlimeModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
@@ -67,16 +55,13 @@ public class CemSlimeRenderer extends SlimeEntityRenderer implements CemRenderer
 	}
 	
 	public static class CemSlimeOverlayFeatureRenderer extends SlimeOverlayFeatureRenderer<SlimeEntity> implements CemRenderer{
-		private static final Map<String, String>       partNames        = CemSlimeRenderer.partNames;
-		private static final Map<String, List<String>> parentChildPairs = CemSlimeRenderer.parentChildPairs;
-		private final        CemModelRegistry          registry;
+		private final CemModelRegistry registry;
 		
 		public CemSlimeOverlayFeatureRenderer(CemSlimeRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);
 			this.registry = CemRegistryManager.getRegistry(this.getId());
 			try{
-				CemModelPart rootPart = this.registry.prepRootPart(partNames, parentChildPairs, this.getContextModel().getPart());
-				this.model = new CemSlimeModel(rootPart, registry);
+				this.model = new CemSlimeModel(registry);
 				
 			} catch(Exception e){
 				modelError(e);
