@@ -60,5 +60,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.TNT_MINECART, CemTntMinecartRenderer::new);
 		register(EntityType.GUARDIAN, CemGuardianRenderer::new);
 		register(EntityType.ELDER_GUARDIAN, CemElderGuardianRenderer::new);
+		register(EntityType.ENDER_DRAGON, CemEnderDragonRenderer::new);
 	}
 }

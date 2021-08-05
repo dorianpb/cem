@@ -43,9 +43,13 @@ mutable     field   net/minecraft/client/render/entity/feature/StrayOverlayFeatu
 accessible  field   net/minecraft/client/render/entity/feature/StrayOverlayFeatureRenderer      SKIN            Lnet/minecraft/util/Identifier;
 
 #Slime Outer Layer
-mutable     field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer     model            Lnet/minecraft/client/render/entity/model/EntityModel;
-accessible  field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer     model            Lnet/minecraft/client/render/entity/model/EntityModel;
+mutable     field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer      model            Lnet/minecraft/client/render/entity/model/EntityModel;
+accessible  field   net/minecraft/client/render/entity/feature/SlimeOverlayFeatureRenderer      model            Lnet/minecraft/client/render/entity/model/EntityModel;
 
 #Minecart
 mutable     field   net/minecraft/client/render/entity/MinecartEntityRenderer                   model           Lnet/minecraft/client/render/entity/model/EntityModel;
 accessible  field   net/minecraft/client/render/entity/MinecartEntityRenderer                   model           Lnet/minecraft/client/render/entity/model/EntityModel;
+
+#Ender Dragon
+mutable     field   net/minecraft/client/render/entity/EnderDragonEntityRenderer                model           Lnet/minecraft/client/render/entity/EnderDragonEntityRenderer$DragonEntityModel;
+accessible  field   net/minecraft/client/render/entity/EnderDragonEntityRenderer                model           Lnet/minecraft/client/render/entity/EnderDragonEntityRenderer$DragonEntityModel;
