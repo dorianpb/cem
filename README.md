@@ -18,7 +18,8 @@ are also required.
 ## How to use
 
 This mod loads .jem and .jpm files from  "assets/dorianpb/cem" folder in resource packs. For resource packs intended to be used with Optifine, renaming "
-assets/minecraft/optifine/cem" to "assets/dorianpb/cem" should work fine.
+assets/minecraft/optifine/cem" to "assets/dorianpb/cem" should work fine. If you install the optional dependencies, this isn't necessary as there is an option within the
+config to just load from optifine's folder structure.
 
 ## For resource pack devs
 
@@ -40,6 +41,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Cows
 	* Chicken
 	* Creepers
+	* Ender Dragon (must be ender_dragon.jem, not dragon.jem)
 	* Endermen
 	* Foxes
 	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
@@ -77,10 +79,9 @@ This project is licensed with LGPL v3.0. Please don't repost this project anywhe
 ## Goals
 
 * Implement the rest of the entities
-* Maybe support custom animation translation the same way as optifine?
+* Make animations perfect
 * `attach` support
 * A better icon! This one succs
-* Port to 1.17 for various reasons
 
 ## For mod devs
 
