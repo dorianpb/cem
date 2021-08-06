@@ -1,6 +1,7 @@
 package net.dorianpb.cem.internal;
 
-import net.dorianpb.cem.internal.CemStringParser.ParsedExpression;
+import net.dorianpb.cem.internal.util.CemStringParser;
+import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
 
 
 /***/

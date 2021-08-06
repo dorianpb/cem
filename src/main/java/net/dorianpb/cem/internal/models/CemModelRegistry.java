@@ -1,13 +1,13 @@
 package net.dorianpb.cem.internal.models;
 
-import net.dorianpb.cem.internal.CemStringParser;
-import net.dorianpb.cem.internal.CemStringParser.ParsedExpression;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
 import net.dorianpb.cem.internal.util.CemFairy;
+import net.dorianpb.cem.internal.util.CemStringParser;
+import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.entity.LivingEntity;

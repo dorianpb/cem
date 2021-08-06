@@ -94,9 +94,9 @@ public class JemFile{
 			this.part = CemFairy.JSONparseString(json.get("part"));
 			this.attach = CemFairy.JSONparseBool(json.get("attach"));
 			this.scale = CemFairy.JSONparseDouble(json.getOrDefault("scale", 1D));
-			var yeah = ((ArrayList<LinkedTreeMap<String, Object>>) json.getOrDefault("animations", new ArrayList<>(Collections.singletonList(new LinkedTreeMap())))).get(0);
+			var yeah = ((ArrayList<LinkedTreeMap<String, Object>>) json.getOrDefault("animations", new ArrayList<>(Collections.singletonList(new LinkedTreeMap()))));
 			this.animations = new LinkedTreeMap<>();
-			yeah.forEach((key, value) -> this.animations.put(key, value.toString()));
+			yeah.forEach((value) -> value.forEach((key, value1) -> this.animations.put(key, value1.toString())));
 			JpmFile temp;
 			if(this.model != null){
 				Identifier id = CemFairy.transformPath(this.model, path);

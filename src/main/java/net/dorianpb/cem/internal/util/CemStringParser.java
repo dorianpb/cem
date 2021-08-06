@@ -1,10 +1,10 @@
-package net.dorianpb.cem.internal;
+package net.dorianpb.cem.internal.util;
 
-import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionBool;
-import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionFloat;
-import net.dorianpb.cem.internal.CemStringParser.ParsedFunction.ParsedFunctionType;
 import net.dorianpb.cem.internal.models.CemModelEntry;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.util.CemStringParser.ParsedFunction.ParsedFunctionBool;
+import net.dorianpb.cem.internal.util.CemStringParser.ParsedFunction.ParsedFunctionFloat;
+import net.dorianpb.cem.internal.util.CemStringParser.ParsedFunction.ParsedFunctionType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
