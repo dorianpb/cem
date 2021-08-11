@@ -14,10 +14,10 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Identifier;
 
 public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRenderer{
-	private final        EntityType<? extends Entity> entityType;
-	private final        CemModelRegistry             registry;
+	private final EntityType<? extends MobEntity> entityType;
+	private final CemModelRegistry                registry;
 	
-	public CemPiglinRenderer(EntityRendererFactory.Context context, EntityType<? extends Entity> entityType){
+	public CemPiglinRenderer(EntityRendererFactory.Context context, EntityType<? extends MobEntity> entityType){
 		super(context, getLayer(entityType, "main"), getLayer(entityType, "inner"), getLayer(entityType, "outer"), entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
 		this.entityType = entityType;
 		this.registry = CemRegistryManager.getRegistry(entityType);
