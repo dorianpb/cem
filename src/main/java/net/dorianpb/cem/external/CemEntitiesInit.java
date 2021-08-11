@@ -61,5 +61,8 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.GUARDIAN, CemGuardianRenderer::new);
 		register(EntityType.ELDER_GUARDIAN, CemElderGuardianRenderer::new);
 		register(EntityType.ENDER_DRAGON, CemEnderDragonRenderer::new);
+		register(EntityType.HORSE, CemHorseRenderer::new);
+		register(EntityType.ZOMBIE_HORSE, (ctx) -> new CemUndeadHorseRenderer(ctx, EntityType.ZOMBIE_HORSE));
+		register(EntityType.SKELETON_HORSE, (ctx) -> new CemUndeadHorseRenderer(ctx, EntityType.SKELETON_HORSE));
 	}
 }

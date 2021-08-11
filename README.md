@@ -46,6 +46,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Foxes
 	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
 	* Guardians and Elder Guardians
+	* Horses and their undead variants
 	* Magma Cubes
 	* Minecarts (all variants)
 	* Mooshrooms
