@@ -32,7 +32,7 @@ public class CemFoxModel extends FoxEntityModel<FoxEntity> implements CemModel{
 	}
 	
 	public CemFoxModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes));
 		this.registry = registry;
 		this.registry.getPrePreparedPart().getChild("body").getChild("tail").setPivot(-4.0F, 15.0F, -2.0F);
 	}

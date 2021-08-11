@@ -19,7 +19,7 @@ public class CemBlazeModel extends BlazeEntityModel<BlazeEntity> implements CemM
 	}
 	
 	public CemBlazeModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

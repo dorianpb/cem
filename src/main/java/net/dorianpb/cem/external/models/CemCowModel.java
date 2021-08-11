@@ -24,7 +24,7 @@ public class CemCowModel<T extends CowEntity> extends CowEntityModel<T> implemen
 	}
 	
 	public CemCowModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90);
 	}

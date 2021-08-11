@@ -21,7 +21,7 @@ public class CemSheepModel extends SheepEntityModel<SheepEntity> implements CemM
 	}
 	
 	public CemSheepModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	
@@ -35,7 +35,7 @@ public class CemSheepModel extends SheepEntityModel<SheepEntity> implements CemM
 		private final CemModelRegistry registry;
 		
 		public CemSheepWoolModel(CemModelRegistry registry){
-			super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+			super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 			this.registry = registry;
 		}
 		

@@ -18,7 +18,7 @@ public class CemSkeletonModel extends SkeletonEntityModel<AbstractSkeletonEntity
 	}
 	
 	public CemSkeletonModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, inflate));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), null, inflate));
 		this.registry = registry;
 	}
 	

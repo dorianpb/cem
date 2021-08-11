@@ -18,7 +18,7 @@ public class CemChickenModel extends ChickenEntityModel<ChickenEntity> implement
 	}
 	
 	public CemChickenModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

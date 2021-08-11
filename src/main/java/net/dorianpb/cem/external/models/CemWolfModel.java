@@ -28,7 +28,7 @@ public class CemWolfModel extends WolfEntityModel<WolfEntity> implements CemMode
 	}
 	
 	public CemWolfModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
 		this.registry = registry;
 	}
 	

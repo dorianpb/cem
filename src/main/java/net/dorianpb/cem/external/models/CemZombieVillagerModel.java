@@ -24,7 +24,7 @@ public class CemZombieVillagerModel<T extends ZombieEntity> extends ZombieVillag
 	}
 	
 	public CemZombieVillagerModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90);
 	}

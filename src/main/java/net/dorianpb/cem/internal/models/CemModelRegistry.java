@@ -1,5 +1,6 @@
 package net.dorianpb.cem.internal.models;
 
+import net.dorianpb.cem.internal.api.CemModel.VanillaReferenceModelFactory;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
@@ -41,8 +42,7 @@ public class CemModelRegistry{
 				try{
 					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf(".")), this.findChild(part)),
 					                                data.getAnimations().get(key),
-					                                key.substring(key.indexOf(".") + 1),
-					                                this
+					                                key.substring(key.indexOf(".") + 1), this
 					));
 				} catch(Exception e){
 					CemFairy.getLogger().error("Error applying animation:");
@@ -52,56 +52,57 @@ public class CemModelRegistry{
 		}
 	}
 	
-	/** Retrieves the model part created by the last invocation of {@link CemModelRegistry#prepRootPart(Map, Map, ModelPart, Map, Float)} */
+	/** Retrieves the model part created by the last invocation of {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory, Map, Float)} */
 	public CemModelPart getPrePreparedPart(){
 		return prePreparedPart;
 	}
 	
 	/**
-	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, ModelPart)}; passes {@code partNameMap} and {@code familyTree} as {@code null}.
+	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory)}; passes {@code partNameMap} and {@code familyTree} as {@code null}.
 	 */
-	public CemModelPart prepRootPart(ModelPart vanillaModel){
-		return this.prepRootPart(null, null, vanillaModel);
+	public CemModelPart prepRootPart(VanillaReferenceModelFactory vanillaReferenceModelFactory){
+		return this.prepRootPart(null, null, vanillaReferenceModelFactory);
 	}
 	
 	/**
-	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, ModelPart, Float)}; passes {@code inflate} as {@code null}.
-	 */
-	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap, @Nullable Map<String, List<String>> familyTree, ModelPart vanillaModel){
-		return this.prepRootPart(partNameMap, familyTree, vanillaModel, null);
-	}
-	
-	/**
-	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, ModelPart, Map, Float)}; passes {@code fixes} as {@code null}.
+	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory, Map)}; passes {@code fixes} as {@code null}.
 	 */
 	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap,
 	                                 @Nullable Map<String, List<String>> familyTree,
-	                                 ModelPart vanillaModel,
-	                                 @Nullable Float inflate){
-		return this.prepRootPart(partNameMap, familyTree, vanillaModel, null, inflate);
+	                                 VanillaReferenceModelFactory vanillaReferenceModelFactory){
+		return this.prepRootPart(partNameMap == null? new HashMap<>() : partNameMap, familyTree == null? new HashMap<>() : familyTree, vanillaReferenceModelFactory, null);
+	}
+	
+	/**
+	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory, Map, Float)}; passes {@code fixes} as {@code null}.
+	 */
+	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap,
+	                                 @Nullable Map<String, List<String>> familyTree,
+	                                 VanillaReferenceModelFactory vanillaReferenceModelFactory,
+	                                 @Nullable Map<String, ModelTransform> fixes){
+		return this.prepRootPart(partNameMap == null? new HashMap<>() : partNameMap,
+		                         familyTree == null? new HashMap<>() : familyTree,
+		                         vanillaReferenceModelFactory,
+		                         fixes,
+		                         null
+		                        );
 	}
 	
 	/**
 	 * Constructs a CemModelPart to use when creating an (Block)EntityModel.
-	 * @param partNameMap  Part names to translate from optifine to vanilla. Pass an empty list for custom models.
-	 * @param familyTree   Used to establish which parts are children of others. Please pass lowest to highest order (child, then parent, then grandparent).
-	 * @param vanillaModel Used for creating transparent model parts with the correct pivots.
-	 * @param fixes        Used to manually override vanilla pivots of parts, use only for debugging!
-	 * @param inflate      Used for inflation. Pass null instead of 0, as 0 inflation is not no inflation.
+	 * @param partNameMap                  Part names to translate from optifine to vanilla. Pass an empty list for custom models.
+	 * @param familyTree                   Used to establish which parts are children of others. Please pass lowest to highest order (child, then parent, then grandparent).
+	 * @param vanillaReferenceModelFactory Used for creating transparent model parts with the correct pivots.
+	 * @param fixes                        Used to manually override vanilla pivots of parts, use only for debugging!
+	 * @param inflate                      Used for inflation. Pass null instead of 0, as 0 inflation is not no inflation.
 	 *
 	 * @return ModelPart used to create a (Block)EntityModel.
 	 */
-	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap,
-	                                 @Nullable Map<String, List<String>> familyTree,
-	                                 ModelPart vanillaModel,
+	public CemModelPart prepRootPart(Map<String, String> partNameMap,
+	                                 Map<String, List<String>> familyTree,
+	                                 VanillaReferenceModelFactory vanillaReferenceModelFactory,
 	                                 @Nullable Map<String, ModelTransform> fixes,
 	                                 @Nullable Float inflate){
-		if(partNameMap == null){
-			partNameMap = new HashMap<>();
-		}
-		if(familyTree == null){
-			familyTree = new HashMap<>();
-		}
 		for(String parent : familyTree.keySet()){
 			for(String child : familyTree.get(parent)){
 				this.prepChild(parent, child);
@@ -132,17 +133,27 @@ public class CemModelRegistry{
 					}
 				}
 			}
-			this.makePartTransparent(newRoot, vanillaModel, fixes);
+			this.makePartTransparent(newRoot, vanillaReferenceModelFactory.get(), fixes);
 		}
 		this.prePreparedPart = newRoot;
 		return newRoot;
 	}
 	
 	/**
-	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, ModelPart)}; passes {@code familyTree} as {@code null}.
+	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory)}; passes {@code familyTree} as {@code null}.
 	 */
-	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap, ModelPart vanillaModel){
-		return this.prepRootPart(partNameMap, null, vanillaModel);
+	public CemModelPart prepRootPart(@Nullable Map<String, String> partNameMap, VanillaReferenceModelFactory vanillaReferenceModelFactory){
+		return this.prepRootPart(partNameMap == null? new HashMap<>() : partNameMap, null, vanillaReferenceModelFactory);
+	}
+	
+	/**
+	 * Same as {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory, Map, Float)}; passes {@code familyTree} as an empty list.
+	 */
+	public CemModelPart prepRootPart(Map<String, String> partNameMap,
+	                                 VanillaReferenceModelFactory vanillaReferenceModelFactory,
+	                                 @Nullable Map<String, ModelTransform> fixes,
+	                                 @Nullable Float inflate){
+		return this.prepRootPart(partNameMap, new HashMap<>(), vanillaReferenceModelFactory, fixes, inflate);
 	}
 	
 	private CemModelPart getParent(Map<String, String> partNameMap, Map<String, List<String>> familyTree, ModelPart root, String name){

@@ -23,7 +23,7 @@ public class CemPiglinModel extends PiglinEntityModel<MobEntity> implements CemM
 	}
 	
 	public CemPiglinModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> TexturedModelData.of(getTexturedModelData(Dilation.NONE, false), 0, 0).createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> TexturedModelData.of(getTexturedModelData(Dilation.NONE, false), 0, 0).createModel()));
 		this.registry = registry;
 	}
 	

@@ -24,7 +24,7 @@ public class CemMinecartModel<T extends AbstractMinecartEntity> extends Minecart
 	}
 	
 	public CemMinecartModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
 		this.registry = registry;
 		this.registry.getPrePreparedPart().getChild("front").setPivot(-9.0F, 23.0F, 0.0F);
 		for(String key : new String[]{"front", "back", "left", "right", "bottom"}){

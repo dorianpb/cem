@@ -17,7 +17,7 @@ public class CemEndermanModel extends EndermanEntityModel<EndermanEntity> implem
 	}
 	
 	public CemEndermanModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

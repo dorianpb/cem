@@ -21,7 +21,7 @@ public class CemArmorStandModel extends ArmorStandEntityModel implements CemMode
 	}
 	
 	public CemArmorStandModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

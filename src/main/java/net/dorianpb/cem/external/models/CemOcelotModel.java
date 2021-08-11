@@ -32,7 +32,7 @@ public class CemOcelotModel extends OcelotEntityModel<OcelotEntity> implements C
 	}
 	
 	public CemOcelotModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, null));
 		this.registry = registry;
 	}
 	

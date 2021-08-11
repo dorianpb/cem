@@ -19,7 +19,7 @@ public class CemGiantZombieModel extends GiantEntityModel implements CemModel{
 	}
 	
 	public CemGiantZombieModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> TexturedModelData.of(getModelData(Dilation.NONE, 0), 0, 0).createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> TexturedModelData.of(getModelData(Dilation.NONE, 0), 0, 0).createModel()));
 		this.registry = registry;
 	}
 	

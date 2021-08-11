@@ -19,7 +19,7 @@ public class CemDrownedZombieModel extends DrownedEntityModel<DrownedEntity> imp
 	}
 	
 	public CemDrownedZombieModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData(Dilation.NONE).createModel(), null, inflate));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData(Dilation.NONE).createModel(), null, inflate));
 		this.registry = registry;
 	}
 	

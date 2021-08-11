@@ -17,7 +17,7 @@ public class CemIllagerModel<T extends IllagerEntity> extends IllagerEntityModel
 	}
 	
 	public CemIllagerModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, null, familyTree, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(null, familyTree, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

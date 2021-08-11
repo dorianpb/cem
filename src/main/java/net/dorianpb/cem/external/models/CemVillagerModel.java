@@ -26,7 +26,7 @@ public class CemVillagerModel<T extends LivingEntity> extends VillagerResembling
 	}
 	
 	public CemVillagerModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> TexturedModelData.of(getModelData(), 0, 0).createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> TexturedModelData.of(getModelData(), 0, 0).createModel()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90);
 		this.rotatePart(this.registry.getEntryByPartName("arms"), 'x', -43);

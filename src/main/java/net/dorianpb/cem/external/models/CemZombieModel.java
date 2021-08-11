@@ -19,7 +19,7 @@ public class CemZombieModel extends ZombieEntityModel<ZombieEntity> implements C
 	}
 	
 	public CemZombieModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> TexturedModelData.of(getModelData(Dilation.NONE, 0), 0, 0).createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> TexturedModelData.of(getModelData(Dilation.NONE, 0), 0, 0).createModel()));
 		this.registry = registry;
 	}
 	

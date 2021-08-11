@@ -8,7 +8,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,7 +28,7 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 		super(context);
 		CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
 		try{
-			CemModelPart root = registry.prepRootPart(partNames, familyTree, context.getLayerModelPart(EntityModelLayers.BANNER));
+			CemModelPart root = registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel());
 			this.banner = root.getChild("flag");
 			this.pillar = root.getChild("pole"); //haha demon slayer reference lol
 			this.crossbar = root.getChild("bar");

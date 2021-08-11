@@ -24,7 +24,7 @@ public class CemBatModel extends BatEntityModel implements CemModel{
 	}
 	
 	public CemBatModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

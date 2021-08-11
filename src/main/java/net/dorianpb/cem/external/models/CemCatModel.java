@@ -33,7 +33,7 @@ public class CemCatModel extends CatEntityModel<CatEntity> implements CemModel{
 	}
 	
 	public CemCatModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(CemModel.prepare(registry, partNames, null, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, inflate));
+		super(registry.prepRootPart(partNames, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, inflate));
 		this.registry = registry;
 	}
 	

@@ -50,7 +50,7 @@ public class CemGuardianModel extends GuardianEntityModel implements CemModel{
 	}
 	
 	public CemGuardianModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes));
 		this.registry = registry;
 	}
 	

@@ -17,7 +17,7 @@ public class CemSlimeModel extends SlimeEntityModel<SlimeEntity> implements CemM
 	}
 	
 	public CemSlimeModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getInnerTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getInnerTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	

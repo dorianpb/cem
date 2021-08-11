@@ -51,7 +51,7 @@ public class CemEnderDragonModel extends DragonEntityModel implements CemModel{
 	}
 	
 	public CemEnderDragonModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> EnderDragonEntityRenderer.getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> EnderDragonEntityRenderer.getTexturedModelData().createModel(), modelTransformFixes));
 		this.registry = registry;
 	}
 	

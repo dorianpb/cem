@@ -22,7 +22,7 @@ public class CemRabbitModel extends RabbitEntityModel<RabbitEntity> implements C
 	}
 	
 	public CemRabbitModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, null, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', -19.999F);
 	}

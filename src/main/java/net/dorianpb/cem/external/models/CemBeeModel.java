@@ -23,7 +23,7 @@ public class CemBeeModel extends BeeEntityModel<BeeEntity> implements CemModel{
 	}
 	
 	public CemBeeModel(CemModelRegistry registry){
-		super(CemModel.prepare(registry, partNames, familyTree, () -> getTexturedModelData().createModel(), null, null));
+		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
 		this.registry = registry;
 	}
 	
