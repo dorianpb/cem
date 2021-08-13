@@ -116,21 +116,32 @@ public class JpmFile{
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		JpmBox(LinkedTreeMap json){
 			this.textureOffset = CemFairy.JSONparseDoubleList(json.get("textureOffset"));
-			this.uvUp = CemFairy.JSONparseDoubleList(json.getOrDefault("uvUp", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D))));
-			this.uvDown = CemFairy.JSONparseDoubleList(json.getOrDefault("uvDown", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D))));
-			this.uvFront = CemFairy.JSONparseDoubleList(json.getOrDefault("uvFront", json.getOrDefault("uvNorth", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
-			this.uvBack = CemFairy.JSONparseDoubleList(json.getOrDefault("uvBack", json.getOrDefault("uvSouth", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
-			this.uvLeft = CemFairy.JSONparseDoubleList(json.getOrDefault("uvLeft", json.getOrDefault("uvWest", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
-			this.uvRight = CemFairy.JSONparseDoubleList(json.getOrDefault("uvRight", json.getOrDefault("uvEast", new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D)))));
+			this.uvUp = CemFairy.JSONparseDoubleList(json.get("uvUp"));
+			this.uvDown = CemFairy.JSONparseDoubleList(json.get("uvDown"));
+			this.uvFront = CemFairy.JSONparseDoubleList(json.getOrDefault("uvFront", json.get("uvNorth")));
+			this.uvBack = CemFairy.JSONparseDoubleList(json.getOrDefault("uvBack", json.get("uvSouth")));
+			this.uvLeft = CemFairy.JSONparseDoubleList(json.getOrDefault("uvLeft", json.get("uvWest")));
+			this.uvRight = CemFairy.JSONparseDoubleList(json.getOrDefault("uvRight", json.get("uvEast")));
 			this.coordinates = CemFairy.JSONparseDoubleList(json.get("coordinates"));
 			this.sizeAdd = (Double) json.getOrDefault("sizeAdd", 0D);
 			this.validate();
 		}
 		
+		@SuppressWarnings("unchecked")
 		private void validate(){
-			if(this.textureOffset == null &&
-			   (this.uvUp == null || this.uvDown == null || this.uvFront == null || this.uvBack == null || this.uvLeft == null || this.uvRight == null)){
-				throw new InvalidParameterException("Either \"textureOffset\" or all of the uv directions are required!");
+			if(this.textureOffset == null){
+				boolean triedToUseUV = false;
+				boolean correctlyUsedUV = true;
+				for(ArrayList<Double> uvCoords : new ArrayList[]{uvUp, uvDown, uvFront, uvBack, uvLeft, uvRight}){
+					triedToUseUV = triedToUseUV || uvCoords != null;
+					correctlyUsedUV = correctlyUsedUV && uvCoords != null;
+				}
+				if(triedToUseUV && !correctlyUsedUV){
+					throw new InvalidParameterException("Make sure to specify all 6 directions when using UV!");
+				}
+				else if(!correctlyUsedUV){
+					throw new InvalidParameterException("Either \"textureOffset\" or all of the uv directions are required!");
+				}
 			}
 			if(this.coordinates == null){
 				throw new InvalidParameterException("Element \"coordinates\" is required");
