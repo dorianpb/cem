@@ -67,7 +67,6 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 * Sprites are not supported.
 * Mirroring textures over the 'v' axis is not supported.
 * The `attach` option is not supported.
-* Texture offsets must be specified using `textureOffset`, using individual `uvDown`, `uvUp`, etc. is not supported.
 * This mod will auto create features like the charge aura around a creeper, and the pig's saddle model so that it fits with your custom model, which Optifine doesn't do
 	* Mobs like Drowned support customization of their outer layers (drowned_outer.jem would work here).
 * Currently, all translation in custom animations is relative to the parent
