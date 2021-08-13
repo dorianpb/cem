@@ -1,7 +1,6 @@
 package net.dorianpb.cem.mixins;
 
 import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid.CemCuboidParams;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelCuboidData;
 import net.minecraft.client.model.ModelPart.Cuboid;
@@ -34,21 +33,21 @@ public class ModelCuboidDataMixin{
 	
 	@Inject(method = "createCuboid", at = @At("RETURN"), cancellable = true)
 	private void injectCuboid(int textureWidth, int textureHeight, CallbackInfoReturnable<Cuboid> cir){
-		cir.setReturnValue(new CemCuboid(new CemCuboidParams((int) this.textureUV.getX(),
-		                                                     (int) this.textureUV.getY(),
-		                                                     this.offset.getX(),
-		                                                     this.offset.getY(),
-		                                                     this.offset.getZ(),
-		                                                     this.dimensions.getX(),
-		                                                     this.dimensions.getY(),
-		                                                     this.dimensions.getZ(),
-		                                                     ((DilationAccessor) this.extraSize).getRadiusX(),
-		                                                     ((DilationAccessor) this.extraSize).getRadiusY(),
-		                                                     ((DilationAccessor) this.extraSize).getRadiusZ(),
-		                                                     this.mirror,
-		                                                     (float) textureWidth * this.textureScale.getX(),
-		                                                     (float) textureHeight * this.textureScale.getY()
-		)));
+		cir.setReturnValue(new CemCuboid(this.offset.getX(),
+		                                 this.offset.getY(),
+		                                 this.offset.getZ(),
+		                                 this.dimensions.getX(),
+		                                 this.dimensions.getY(),
+		                                 this.dimensions.getZ(),
+		                                 ((DilationAccessor) this.extraSize).getRadiusX(),
+		                                 ((DilationAccessor) this.extraSize).getRadiusY(),
+		                                 ((DilationAccessor) this.extraSize).getRadiusZ(),
+		                                 this.mirror,
+		                                 (int) (textureWidth * this.textureScale.getX()),
+		                                 (int) (textureHeight * this.textureScale.getY()),
+		                                 (int) this.textureUV.getX(),
+		                                 (int) this.textureUV.getY()
+		));
 	}
 	
 }

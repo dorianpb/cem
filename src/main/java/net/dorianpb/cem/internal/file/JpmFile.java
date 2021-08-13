@@ -128,18 +128,17 @@ public class JpmFile{
 		}
 		
 		private void validate(){
-			if(this.textureOffset == null){
-				String str = "Element \"textureOffset\" is required";
-				throw new InvalidParameterException((this.uvUp != null ||
-				                                     this.uvDown != null ||
-				                                     this.uvFront != null ||
-				                                     this.uvBack != null ||
-				                                     this.uvLeft != null ||
-				                                     this.uvRight != null)? str + "; Specifying texture using uv coordinates is not supported" : str);
+			if(this.textureOffset == null &&
+			   (this.uvUp == null || this.uvDown == null || this.uvFront == null || this.uvBack == null || this.uvLeft == null || this.uvRight == null)){
+				throw new InvalidParameterException("Either \"textureOffset\" or all of the uv directions are required!");
 			}
 			if(this.coordinates == null){
 				throw new InvalidParameterException("Element \"coordinates\" is required");
 			}
+		}
+		
+		public boolean useUvMap(){
+			return this.textureOffset == null;
 		}
 		
 		public ArrayList<Double> getTextureOffset(){
@@ -152,6 +151,18 @@ public class JpmFile{
 		
 		public Double getSizeAdd(){
 			return sizeAdd;
+		}
+		
+		public float[] getUv(String direction){
+			return switch(direction.toLowerCase()){
+				case "down" -> new float[]{uvUp.get(0).floatValue(), uvUp.get(1).floatValue(), uvUp.get(2).floatValue(), uvUp.get(3).floatValue()};
+				case "up" -> new float[]{uvDown.get(0).floatValue(), uvDown.get(1).floatValue(), uvDown.get(2).floatValue(), uvDown.get(3).floatValue()};
+				case "front", "north" -> new float[]{uvFront.get(0).floatValue(), uvFront.get(1).floatValue(), uvFront.get(2).floatValue(), uvFront.get(3).floatValue()};
+				case "back", "south" -> new float[]{uvBack.get(0).floatValue(), uvBack.get(1).floatValue(), uvBack.get(2).floatValue(), uvBack.get(3).floatValue()};
+				case "right", "east" -> new float[]{uvLeft.get(0).floatValue(), uvLeft.get(1).floatValue(), uvLeft.get(2).floatValue(), uvLeft.get(3).floatValue()};
+				case "left", "west" -> new float[]{uvRight.get(0).floatValue(), uvRight.get(1).floatValue(), uvRight.get(2).floatValue(), uvRight.get(3).floatValue()};
+				default -> throw new IllegalStateException("Unexpected value: " + direction);
+			};
 		}
 		
 	}

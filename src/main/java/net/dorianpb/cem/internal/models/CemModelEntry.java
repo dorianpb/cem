@@ -5,9 +5,11 @@ import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelPart.Cuboid;
+import net.minecraft.client.model.ModelPart.Quad;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Direction;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -89,22 +91,46 @@ public class CemModelEntry{
 				//apply translates first, then ?invert pos, then ?subtract pos by size so that it is drawn correctly
 				//top level model pivots need to translated up by 24, then 1st gen children need to work off of that rather than the translate values provided by the jpmFile
 				//only top level models need translates applied, others are relative to parent (even gen1)
-				this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
-				                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
-				
-				                     ((box.getCoordinates().get(1).floatValue() + ((gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
-				                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
-				
-				                     ((box.getCoordinates().get(2).floatValue() + ((gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
-				                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
-				                     box.getCoordinates().get(3).intValue(),
-				                     box.getCoordinates().get(4).intValue(),
-				                     box.getCoordinates().get(5).intValue(),
-				                     box.getSizeAdd().floatValue(),
-				                     box.getTextureOffset().get(0).intValue(),
-				                     box.getTextureOffset().get(1).intValue(),
-				                     data.getMirrorTexture()[0]
-				                    );
+				if(box.useUvMap()){
+					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					
+					                     ((box.getCoordinates().get(1).floatValue() + ((gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					
+					                     ((box.getCoordinates().get(2).floatValue() + ((gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                     box.getCoordinates().get(3).intValue(),
+					                     box.getCoordinates().get(4).intValue(),
+					                     box.getCoordinates().get(5).intValue(),
+					                     box.getSizeAdd().floatValue(),
+					                     data.getMirrorTexture()[0],
+					                     box.getUv("north"),
+					                     box.getUv("south"),
+					                     box.getUv("east"),
+					                     box.getUv("west"),
+					                     box.getUv("up"),
+					                     box.getUv("down")
+					                    );
+				}
+				else{
+					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					
+					                     ((box.getCoordinates().get(1).floatValue() + ((gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					
+					                     ((box.getCoordinates().get(2).floatValue() + ((gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                     box.getCoordinates().get(3).intValue(),
+					                     box.getCoordinates().get(4).intValue(),
+					                     box.getCoordinates().get(5).intValue(),
+					                     box.getSizeAdd().floatValue(),
+					                     data.getMirrorTexture()[0],
+					                     box.getTextureOffset().get(0).intValue(),
+					                     box.getTextureOffset().get(1).intValue()
+					                    );
+				}
 			}
 		}
 		//pivot point is relative to parent, so 0,0,0 means "same as parent"
@@ -207,22 +233,57 @@ public class CemModelEntry{
 			return yeet;
 		}
 		
-		public void addCuboid(float x, float y, float z, int sizeX, int sizeY, int sizeZ, float extra, int textureOffsetU, int textureOffsetV, boolean mirror){
-			this.cuboids.add(new CemCuboid(new CemCuboid.CemCuboidParams(textureOffsetU,
-			                                                             textureOffsetV,
-			                                                             x,
-			                                                             y,
-			                                                             z,
-			                                                             (float) sizeX,
-			                                                             (float) sizeY,
-			                                                             (float) sizeZ,
-			                                                             extra,
-			                                                             extra,
-			                                                             extra,
-			                                                             mirror,
-			                                                             this.textureWidth,
-			                                                             this.textureHeight
-			)));
+		public void addCuboid(float x, float y, float z, int sizeX, int sizeY, int sizeZ, float extra, boolean mirror, int textureOffsetU, int textureOffsetV){
+			this.cuboids.add(new CemCuboid(x,
+			                               y,
+			                               z,
+			                               (float) sizeX,
+			                               (float) sizeY,
+			                               (float) sizeZ,
+			                               extra,
+			                               extra,
+			                               extra,
+			                               mirror,
+			                               this.textureWidth,
+			                               this.textureHeight,
+			                               textureOffsetU,
+			                               textureOffsetV
+			));
+		}
+		
+		public void addCuboid(float x,
+		                      float y,
+		                      float z,
+		                      int sizeX,
+		                      int sizeY,
+		                      int sizeZ,
+		                      float extra,
+		                      boolean mirror,
+		                      float[] uvNorth,
+		                      float[] uvSouth,
+		                      float[] uvEast,
+		                      float[] uvWest,
+		                      float[] uvUp,
+		                      float[] uvDown){
+			this.cuboids.add(new CemCuboid(x,
+			                               y,
+			                               z,
+			                               (float) sizeX,
+			                               (float) sizeY,
+			                               (float) sizeZ,
+			                               extra,
+			                               extra,
+			                               extra,
+			                               mirror,
+			                               this.textureWidth,
+			                               this.textureHeight,
+			                               uvNorth,
+			                               uvSouth,
+			                               uvEast,
+			                               uvWest,
+			                               uvUp,
+			                               uvDown
+			));
 		}
 		
 		public void setScale(float scaleX, float scaleY, float scaleZ){
@@ -370,64 +431,137 @@ public class CemModelEntry{
 	public static class CemCuboid extends Cuboid{
 		private final CemCuboidParams params;
 		
-		public CemCuboid(CemCuboidParams cemCuboidParams){
-			super(cemCuboidParams.getU(),
-			      cemCuboidParams.getV(),
-			      cemCuboidParams.getX(),
-			      cemCuboidParams.getY(),
-			      cemCuboidParams.getZ(),
-			      cemCuboidParams.getSizeX(),
-			      cemCuboidParams.getSizeY(),
-			      cemCuboidParams.getSizeZ(),
-			      cemCuboidParams.getExtraX(),
-			      cemCuboidParams.getExtraY(),
-			      cemCuboidParams.getExtraZ(),
-			      cemCuboidParams.isMirror(),
-			      cemCuboidParams.getTextureWidth(),
-			      cemCuboidParams.getTextureHeight()
-			     );
-			this.params = cemCuboidParams;
+		public CemCuboid(float x,
+		                 float y,
+		                 float z,
+		                 float sizeX,
+		                 float sizeY,
+		                 float sizeZ,
+		                 float extraX,
+		                 float extraY,
+		                 float extraZ,
+		                 boolean mirror,
+		                 int textureWidth,
+		                 int textureHeight,
+		                 float[] uvNorth,
+		                 float[] uvSouth,
+		                 float[] uvEast,
+		                 float[] uvWest,
+		                 float[] uvUp,
+		                 float[] uvDown){
+			super(0, 0, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight);
+			this.params = new CemCuboidUvParams(x,
+			                                    y,
+			                                    z,
+			                                    sizeX,
+			                                    sizeY,
+			                                    sizeZ,
+			                                    extraX,
+			                                    extraY,
+			                                    extraZ,
+			                                    mirror,
+			                                    textureWidth,
+			                                    textureHeight,
+			                                    uvNorth,
+			                                    uvSouth,
+			                                    uvEast,
+			                                    uvWest,
+			                                    uvDown,
+			                                    uvUp
+			);
+			this.sides[4] = new Quad(this.sides[4].vertices, uvNorth[0], uvNorth[1], uvNorth[2], uvNorth[3], textureWidth, textureHeight, mirror, Direction.NORTH);
+			this.sides[5] = new Quad(this.sides[5].vertices, uvSouth[0], uvSouth[1], uvSouth[2], uvSouth[3], textureWidth, textureHeight, mirror, Direction.SOUTH);
+			this.sides[0] = new Quad(this.sides[0].vertices, uvEast[0], uvEast[1], uvEast[2], uvEast[3], textureWidth, textureHeight, mirror, Direction.EAST);
+			this.sides[1] = new Quad(this.sides[1].vertices, uvWest[0], uvWest[1], uvWest[2], uvWest[3], textureWidth, textureHeight, mirror, Direction.WEST);
+			this.sides[2] = new Quad(this.sides[2].vertices, uvDown[0], uvDown[1], uvDown[2], uvDown[3], textureWidth, textureHeight, mirror, Direction.DOWN);
+			this.sides[3] = new Quad(this.sides[3].vertices, uvUp[0], uvUp[1], uvUp[2], uvUp[3], textureWidth, textureHeight, mirror, Direction.UP);
+		}
+		
+		public CemCuboid(float x,
+		                 float y,
+		                 float z,
+		                 float sizeX,
+		                 float sizeY,
+		                 float sizeZ,
+		                 float extraX,
+		                 float extraY,
+		                 float extraZ,
+		                 boolean mirror,
+		                 int textureWidth,
+		                 int textureHeight,
+		                 int u,
+		                 int v){
+			super(u, v, x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight);
+			this.params = new CemCuboidTexOffsetParams(x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight, u, v);
 		}
 		
 		public CemCuboid inflate(float scale){
-			return new CemCuboid(new CemCuboidParams(this.params.getU(),
-			                                         this.params.getV(),
-			                                         this.params.getX(),
-			                                         this.params.getY(),
-			                                         this.params.getZ(),
-			                                         this.params.getSizeX(),
-			                                         this.params.getSizeY(),
-			                                         this.params.getSizeZ(),
-			                                         scale + this.params.getExtraX(),
-			                                         scale + this.params.getExtraY(),
-			                                         scale + this.params.getExtraZ(),
-			                                         this.params.isMirror(),
-			                                         this.params.getTextureWidth(),
-			                                         this.params.getTextureHeight()
-			));
+			return (this.params instanceof CemCuboidTexOffsetParams)
+			       ? new CemCuboid(this.params.getX(),
+			                       this.params.getY(),
+			                       this.params.getZ(),
+			                       this.params.getSizeX(),
+			                       this.params.getSizeY(),
+			                       this.params.getSizeZ(),
+			                       scale + this.params.getExtraX(),
+			                       scale + this.params.getExtraY(),
+			                       scale + this.params.getExtraZ(),
+			                       this.params.isMirror(),
+			                       this.params.getTextureWidth(),
+			                       this.params.getTextureHeight(),
+			                       ((CemCuboidTexOffsetParams) this.params).getU(),
+			                       ((CemCuboidTexOffsetParams) this.params).getV()
+			)
+			       : new CemCuboid(this.params.getX(),
+			                       this.params.getY(),
+			                       this.params.getZ(),
+			                       this.params.getSizeX(),
+			                       this.params.getSizeY(),
+			                       this.params.getSizeZ(),
+			                       scale + this.params.getExtraX(),
+			                       scale + this.params.getExtraY(),
+			                       scale + this.params.getExtraZ(),
+			                       this.params.isMirror(),
+			                       this.params.getTextureWidth(),
+			                       this.params.getTextureHeight(),
+			                       ((CemCuboidUvParams) this.params).getUvNorth(),
+			                       ((CemCuboidUvParams) this.params).getUvSouth(),
+			                       ((CemCuboidUvParams) this.params).getUvEast(),
+			                       ((CemCuboidUvParams) this.params).getUvWest(),
+			                       ((CemCuboidUvParams) this.params).getUvUp(),
+			                       ((CemCuboidUvParams) this.params).getUvDown()
+			       );
 		}
 		
-		public record CemCuboidParams(int u,
-		                              int v,
-		                              float x,
-		                              float y,
-		                              float z,
-		                              float sizeX,
-		                              float sizeY,
-		                              float sizeZ,
-		                              float extraX,
-		                              float extraY,
-		                              float extraZ,
-		                              boolean mirror,
-		                              float textureWidth,
-		                              float textureHeight){
+		private abstract static class CemCuboidParams{
+			private final float x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ;
+			private final boolean mirror;
+			private final int     textureWidth, textureHeight;
 			
-			private int getU(){
-				return u;
-			}
-			
-			private int getV(){
-				return v;
+			private CemCuboidParams(float x,
+			                        float y,
+			                        float z,
+			                        float sizeX,
+			                        float sizeY,
+			                        float sizeZ,
+			                        float extraX,
+			                        float extraY,
+			                        float extraZ,
+			                        boolean mirror,
+			                        int textureWidth,
+			                        int textureHeight){
+				this.x = x;
+				this.y = y;
+				this.z = z;
+				this.sizeX = sizeX;
+				this.sizeY = sizeY;
+				this.sizeZ = sizeZ;
+				this.extraX = extraX;
+				this.extraY = extraY;
+				this.extraZ = extraZ;
+				this.mirror = mirror;
+				this.textureWidth = textureWidth;
+				this.textureHeight = textureHeight;
 			}
 			
 			private float getX(){
@@ -470,12 +604,98 @@ public class CemModelEntry{
 				return mirror;
 			}
 			
-			private float getTextureWidth(){
+			protected int getTextureWidth(){
 				return textureWidth;
 			}
 			
-			private float getTextureHeight(){
+			protected int getTextureHeight(){
 				return textureHeight;
+			}
+		}
+		
+		private static class CemCuboidTexOffsetParams extends CemCuboidParams{
+			private final int u, v;
+			
+			private CemCuboidTexOffsetParams(float x,
+			                                 float y,
+			                                 float z,
+			                                 float sizeX,
+			                                 float sizeY,
+			                                 float sizeZ,
+			                                 float extraX,
+			                                 float extraY,
+			                                 float extraZ,
+			                                 boolean mirror,
+			                                 int textureWidth,
+			                                 int textureHeight,
+			                                 int u,
+			                                 int v){
+				super(x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight);
+				this.u = u;
+				this.v = v;
+			}
+			
+			private int getU(){
+				return u;
+			}
+			
+			private int getV(){
+				return v;
+			}
+		}
+		
+		private static class CemCuboidUvParams extends CemCuboidParams{
+			private final float[] uvNorth, uvSouth, uvEast, uvWest, uvDown, uvUp;
+			
+			private CemCuboidUvParams(float x,
+			                          float y,
+			                          float z,
+			                          float sizeX,
+			                          float sizeY,
+			                          float sizeZ,
+			                          float extraX,
+			                          float extraY,
+			                          float extraZ,
+			                          boolean mirror,
+			                          int textureWidth,
+			                          int textureHeight,
+			                          float[] uvNorth,
+			                          float[] uvSouth,
+			                          float[] uvEast,
+			                          float[] uvWest,
+			                          float[] uvDown,
+			                          float[] uvUp){
+				super(x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirror, textureWidth, textureHeight);
+				this.uvNorth = uvNorth;
+				this.uvSouth = uvSouth;
+				this.uvEast = uvEast;
+				this.uvWest = uvWest;
+				this.uvDown = uvDown;
+				this.uvUp = uvUp;
+			}
+			
+			private float[] getUvNorth(){
+				return uvNorth;
+			}
+			
+			private float[] getUvSouth(){
+				return uvSouth;
+			}
+			
+			private float[] getUvEast(){
+				return uvEast;
+			}
+			
+			private float[] getUvWest(){
+				return uvWest;
+			}
+			
+			private float[] getUvDown(){
+				return uvDown;
+			}
+			
+			private float[] getUvUp(){
+				return uvUp;
 			}
 		}
 	}
