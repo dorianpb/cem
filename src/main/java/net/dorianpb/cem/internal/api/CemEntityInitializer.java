@@ -38,7 +38,7 @@ public abstract class CemEntityInitializer{
 	}
 	
 	public final <T extends Entity> void register(EntityType<? extends T> type, CemEntityRenderFactory factory){
-		var vanilla = EntityRendererAccessor.getRendererFactories().get(type);
+		var vanilla = EntityRendererAccessor.getRENDERER_FACTORIES().get(type);
 		this.cemEntityFactories.put(type, (ctx) -> factory.create(ctx, type, vanilla));
 	}
 	

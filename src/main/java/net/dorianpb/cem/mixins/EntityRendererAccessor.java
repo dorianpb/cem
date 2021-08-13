@@ -19,7 +19,7 @@ public interface EntityRendererAccessor{
 	}
 	
 	@Accessor
-	static Map<EntityType<?>, EntityRendererFactory<?>> getRendererFactories(){
+	static Map<EntityType<?>, EntityRendererFactory<?>> getRENDERER_FACTORIES(){
 		throw new UnsupportedOperationException();
 	}
 }
