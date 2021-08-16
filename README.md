@@ -60,6 +60,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Piglins (including Piglin Brutes and Zombified Piglins)
 	* Villagers (and Zombie Villagers)
 	* Wandering Traders
+	* Witches
 	* Wolves
 	* Zombies and their variants (Husks, Drowned, and Giants)
 

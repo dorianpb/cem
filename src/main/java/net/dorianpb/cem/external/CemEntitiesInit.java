@@ -64,5 +64,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.HORSE, CemHorseRenderer::new);
 		register(EntityType.ZOMBIE_HORSE, (ctx) -> new CemUndeadHorseRenderer(ctx, EntityType.ZOMBIE_HORSE));
 		register(EntityType.SKELETON_HORSE, (ctx) -> new CemUndeadHorseRenderer(ctx, EntityType.SKELETON_HORSE));
+		register(EntityType.WITCH, CemWitchRenderer::new);
 	}
 }
