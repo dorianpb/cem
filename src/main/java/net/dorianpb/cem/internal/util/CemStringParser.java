@@ -114,160 +114,181 @@ public class CemStringParser{
 	private static Token parseLoop(ArrayList<String> input, ArrayList<Token> tokens){
 		//REMEMBER P E M D A S
 		ArrayList<String> work = new ArrayList<>(input);
-		//convert functions to tokens
-		while(true){
-			int i = regIndexOf(work, "^\\{$");
-			if(i >= 0){
-				int k = indexOfEndOfArgs(work, i);
-				tokens.add(new Token(work.get(i - 1), parseArgs(work, tokens, i, k)));
-				for(int j = (k - i + 2); j > 0; j--){
-					work.remove(i - 1);
-				}
-				work.add(i - 1, "§" + (tokens.size() - 1));
-				
-			}
-			else{
-				break;
-			}
-		}
-		//parentheses
-		while(true){
-			int i = regIndexOf(work, "^\\($");
-			if(i >= 0){
-				ArrayList<String> sub = takeParen(work, i);
-				if(sub.size() == 0){
-					throw new IllegalArgumentException("Invalid Syntax: " + (i > 0? work.get(i - 1) : "") + work.get(i) + (i < work.size() - 1? work.get(i + 1) : ""));
-				}
-				else{ //otherwise treat it normally
-					for(int j = sub.size() + 2; j > 0; j--){
-						work.remove(i);
+		int i = -1; //used to remember position in case of failure
+		try{
+			//convert functions to tokens
+			while(true){
+				i = regIndexOf(work, "^\\{$");
+				if(i >= 0){
+					int k = indexOfEndOfArgs(work, i);
+					tokens.add(new Token(work.get(i - 1), parseArgs(work, tokens, i, k)));
+					for(int j = (k - i + 2); j > 0; j--){
+						work.remove(i - 1);
 					}
-					tokens.add(parseLoop(sub, tokens));
-					work.add(i, "§" + (tokens.size() - 1)); //placeholder for evaluated parentheses expression
+					work.add(i - 1, "§" + (tokens.size() - 1));
 					
 				}
+				else{
+					break;
+				}
 			}
-			else{
-				break;
+			//parentheses
+			while(true){
+				i = regIndexOf(work, "^\\($");
+				if(i >= 0){
+					ArrayList<String> sub = takeParen(work, i);
+					if(sub.size() == 0){
+						throw new IllegalArgumentException("Invalid Syntax: " + (i > 0? work.get(i - 1) : "") + work.get(i) + (i < work.size() - 1? work.get(i + 1) : ""));
+					}
+					else{ //otherwise treat it normally
+						for(int j = sub.size() + 2; j > 0; j--){
+							work.remove(i);
+						}
+						tokens.add(parseLoop(sub, tokens));
+						work.add(i, "§" + (tokens.size() - 1)); //placeholder for evaluated parentheses expression
+						
+					}
+				}
+				else{
+					break;
+				}
 			}
-		}
-		//convert raw numbers to tokens
-		while(true){
-			int i = regIndexOf(work, "^(\\d+)([.]\\d+)?$");
-			if(i >= 0){
-				tokens.add(new NumToken(Float.parseFloat(work.set(i, "§" + tokens.size()))));
+			//convert raw numbers to tokens
+			while(true){
+				i = regIndexOf(work, "^(\\d+)([.]\\d+)?$");
+				if(i >= 0){
+					tokens.add(new NumToken(Float.parseFloat(work.set(i, "§" + tokens.size()))));
+				}
+				else{
+					break;
+				}
 			}
-			else{
-				break;
+			//convert variable names to tokens
+			while(true){
+				i = regIndexOf(work, "^\\w(\\w\\d?:?)+([.]\\w\\w)?$");
+				if(i >= 0){
+					tokens.add(new Token(work.set(i, "§" + tokens.size())));
+				}
+				else{
+					break;
+				}
 			}
-		}
-		//convert variable names to tokens
-		while(true){
-			int i = regIndexOf(work, "^\\w(\\w\\d?:?)+([.]\\w\\w)?$");
-			if(i >= 0){
-				tokens.add(new Token(work.set(i, "§" + tokens.size())));
-			}
-			else{
-				break;
-			}
-		}
-		//exponents aren't a thing, so we go to multiplication and division(including modulo)
-		while(true){
-			int i = regIndexOf(work, "^[*/%]$");
-			if(i >= 0){
-				ArrayList<Token> args = new ArrayList<>();
-				args.add(getToken(work.get(i - 1), tokens));
-				args.add(getToken(work.get(i + 1), tokens));
-				String name = switch(work.get(i)){
-					case "*" -> "MULT";
-					case "/" -> "DIV";
-					case "%" -> "MOD";
-					default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
-				};
-				tokens.add(new Token(name, args));
-				work.remove(i);
-				work.remove(i);
-				work.set(i - 1, "§" + (tokens.size() - 1));
-			}
-			else{
-				break;
-			}
-		}
-		//addition & subtraction
-		while(true){
-			int i = regIndexOf(work, "^[+-]$");
-			if(i >= 0){
-				if(i == 0 || !work.get(i - 1).startsWith("§")){
+			//handle negative numbers here
+			while(true){
+				i = regIndexOf(work, "^[-]$");
+				if(i >= 0 && (i == 0 || !work.get(i - 1).startsWith("§"))){
 					tokens.add(new NumToken(0));
 					work.add(i, "§" + (tokens.size() - 1));
+					ArrayList<Token> args = new ArrayList<>();
 					i++;
+					args.add(getToken(work.get(i - 1), tokens));
+					args.add(getToken(work.get(i + 1), tokens));
+					tokens.add(new Token("SUB", args));
+					work.remove(i);
+					work.remove(i);
+					work.set(i - 1, "§" + (tokens.size() - 1));
 				}
-				ArrayList<Token> args = new ArrayList<>();
-				args.add(getToken(work.get(i - 1), tokens));
-				args.add(getToken(work.get(i + 1), tokens));
-				tokens.add(new Token(work.get(i).equals("+")? "ADD" : "SUB", args));
-				work.remove(i);
-				work.remove(i);
-				work.set(i - 1, "§" + (tokens.size() - 1));
+				else{
+					break;
+				}
 			}
-			else{
-				break;
+			//exponents aren't a thing, so we go to multiplication and division(including modulo)
+			while(true){
+				i = regIndexOf(work, "^[*/%]$");
+				if(i >= 0){
+					ArrayList<Token> args = new ArrayList<>();
+					args.add(getToken(work.get(i - 1), tokens));
+					args.add(getToken(work.get(i + 1), tokens));
+					String name = switch(work.get(i)){
+						case "*" -> "MULT";
+						case "/" -> "DIV";
+						case "%" -> "MOD";
+						default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
+					};
+					tokens.add(new Token(name, args));
+					work.remove(i);
+					work.remove(i);
+					work.set(i - 1, "§" + (tokens.size() - 1));
+				}
+				else{
+					break;
+				}
 			}
-		}
-		//not
-		while(true){
-			int i = regIndexOf(work, "^!$");
-			if(i >= 0){
-				ArrayList<Token> args = new ArrayList<>();
-				args.add(getToken(work.get(i + 1), tokens));
-				work.remove(i + 1);
-				tokens.add(new Token("NOT", args));
-				work.set(i, "§" + (tokens.size() - 1));
+			//addition & subtraction
+			while(true){
+				i = regIndexOf(work, "^[+-]$");
+				if(i >= 0){
+					ArrayList<Token> args = new ArrayList<>();
+					args.add(getToken(work.get(i - 1), tokens));
+					args.add(getToken(work.get(i + 1), tokens));
+					tokens.add(new Token(work.get(i).equals("+")? "ADD" : "SUB", args));
+					work.remove(i);
+					work.remove(i);
+					work.set(i - 1, "§" + (tokens.size() - 1));
+				}
+				else{
+					break;
+				}
 			}
-			else{
-				break;
+			//not
+			while(true){
+				i = regIndexOf(work, "^!$");
+				if(i >= 0){
+					ArrayList<Token> args = new ArrayList<>();
+					args.add(getToken(work.get(i + 1), tokens));
+					work.remove(i + 1);
+					tokens.add(new Token("NOT", args));
+					work.set(i, "§" + (tokens.size() - 1));
+				}
+				else{
+					break;
+				}
 			}
-		}
-		//equality
-		while(true){
-			int i = regIndexOf(work, "^==|!=|<=|>=|<|>$");
-			if(i >= 0){
-				ArrayList<Token> args = new ArrayList<>();
-				args.add(getToken(work.get(i - 1), tokens));
-				args.add(getToken(work.get(i + 1), tokens));
-				String name = switch(work.get(i)){
-					case "==" -> "EQ";
-					case "!=" -> "NOTEQ";
-					case "<=" -> "LESSEQ";
-					case ">=" -> "GREATEREQ";
-					case "<" -> "LESS";
-					case ">" -> "GREATER";
-					default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
-				};
-				tokens.add(new Token(name, args));
-				work.remove(i);
-				work.remove(i);
-				work.set(i - 1, "§" + (tokens.size() - 1));
+			//equality
+			while(true){
+				i = regIndexOf(work, "^==|!=|<=|>=|<|>$");
+				if(i >= 0){
+					ArrayList<Token> args = new ArrayList<>();
+					args.add(getToken(work.get(i - 1), tokens));
+					args.add(getToken(work.get(i + 1), tokens));
+					String name = switch(work.get(i)){
+						case "==" -> "EQ";
+						case "!=" -> "NOTEQ";
+						case "<=" -> "LESSEQ";
+						case ">=" -> "GREATEREQ";
+						case "<" -> "LESS";
+						case ">" -> "GREATER";
+						default -> throw new IllegalStateException("Unexpected value: " + work.get(i));
+					};
+					tokens.add(new Token(name, args));
+					work.remove(i);
+					work.remove(i);
+					work.set(i - 1, "§" + (tokens.size() - 1));
+				}
+				else{
+					break;
+				}
 			}
-			else{
-				break;
+			//AND/OR
+			while(true){
+				i = regIndexOf(work, "^&&|\\|\\|$");
+				if(i >= 0){
+					ArrayList<Token> args = new ArrayList<>();
+					args.add(getToken(work.get(i - 1), tokens));
+					args.add(getToken(work.get(i + 1), tokens));
+					tokens.add(new Token(work.get(i).equals("+")? "ADD" : "SUB", args));
+					work.remove(i);
+					work.remove(i);
+					work.set(i - 1, "§" + (tokens.size() - 1));
+				}
+				else{
+					break;
+				}
 			}
-		}
-		//AND/OR
-		while(true){
-			int i = regIndexOf(work, "^&&|\\|\\|$");
-			if(i >= 0){
-				ArrayList<Token> args = new ArrayList<>();
-				args.add(getToken(work.get(i - 1), tokens));
-				args.add(getToken(work.get(i + 1), tokens));
-				tokens.add(new Token(work.get(i).equals("+")? "ADD" : "SUB", args));
-				work.remove(i);
-				work.remove(i);
-				work.set(i - 1, "§" + (tokens.size() - 1));
-			}
-			else{
-				break;
-			}
+		} catch(Exception e){
+			StringBuilder expr = new StringBuilder();
+			input.forEach(expr::append);
+			throw new IllegalArgumentException("\"" + e + "\" occurred when trying to parse animation at index " + i + "!");
 		}
 		if(work.size() != 1){
 			//attempt to find problem symbol

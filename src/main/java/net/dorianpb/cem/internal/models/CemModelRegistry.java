@@ -42,10 +42,11 @@ public class CemModelRegistry{
 				try{
 					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf(".")), this.findChild(part)),
 					                                data.getAnimations().get(key),
-					                                key.substring(key.indexOf(".") + 1), this
+					                                key.substring(key.indexOf(".") + 1),
+					                                this
 					));
 				} catch(Exception e){
-					CemFairy.getLogger().error("Error applying animation:");
+					CemFairy.getLogger().error("Error applying animation \"" + data.getAnimations().get(key) + "\" in \"" + file.getPath() + "\":");
 					CemFairy.getLogger().error(e.getMessage());
 				}
 			}
