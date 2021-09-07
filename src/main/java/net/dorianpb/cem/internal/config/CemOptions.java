@@ -12,4 +12,8 @@ public interface CemOptions{
 	default boolean useTransparentParts(){
 		return true;
 	}
+	
+	default boolean useRelativeAnimations(){
+		return false;
+	}
 }

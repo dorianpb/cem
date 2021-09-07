@@ -9,10 +9,9 @@ import net.fabricmc.loader.api.FabricLoader;
 
 @SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"})
 public final class CemConfig extends Config implements ConfigContainer, CemOptions{
-	@ConfigEntry
-	private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();
-	@ConfigEntry
-	private boolean use_new_model_creation_fix = CemOptions.instance.useTransparentParts();
+	@ConfigEntry private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();
+	@ConfigEntry private boolean use_new_model_creation_fix = CemOptions.instance.useTransparentParts();
+	@ConfigEntry private boolean use_relative_animations    = CemOptions.instance.useRelativeAnimations();
 	
 	private CemConfig(){
 		super("cem");
@@ -38,5 +37,10 @@ public final class CemConfig extends Config implements ConfigContainer, CemOptio
 	@Override
 	public boolean useTransparentParts(){
 		return this.use_new_model_creation_fix;
+	}
+	
+	@Override
+	public boolean useRelativeAnimations(){
+		return this.use_relative_animations;
 	}
 }

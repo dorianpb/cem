@@ -13,8 +13,7 @@ public class CemConfigFairy{
 		}
 		else{
 			CemFairy.getLogger().warn("Unable to set up config due to missing dependencies; using defaults!");
-			config = new CemOptions(){
-			};
+			config = CemOptions.instance;
 		}
 	}
 	
