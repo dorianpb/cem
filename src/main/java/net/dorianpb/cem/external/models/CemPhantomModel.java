@@ -36,8 +36,6 @@ public class CemPhantomModel extends PhantomEntityModel<PhantomEntity> implement
 	public CemPhantomModel(CemModelRegistry registry){
 		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes));
 		this.registry = registry;
-		this.registry.getPrePreparedPart().getChild("body").setPivot(0.0F, 0.0F, 0.0F);
-		this.registry.getPrePreparedPart().getChild("body").getChild("head").setPivot(0.0F, 1.0F, -7.0F);
 	}
 	
 	@Override

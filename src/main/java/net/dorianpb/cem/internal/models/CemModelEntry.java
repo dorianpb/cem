@@ -392,7 +392,7 @@ public class CemModelEntry{
 	public static class TransparentCemModelPart extends CemModelPart{
 		private final CemModelPart part;
 		
-		public TransparentCemModelPart(ModelPart part, ModelTransform modelTransform){
+		public TransparentCemModelPart(ModelPart part, ModelTransform fakeTransform, ModelTransform realTransform){
 			super();
 			if(!(part instanceof CemModelPart)){
 				this.part = CemModelPart.of(part);
@@ -400,11 +400,11 @@ public class CemModelEntry{
 			else{
 				this.part = (CemModelPart) part;
 			}
-			this.setTransform(modelTransform);
+			this.setTransform(realTransform);
 			addChild("my_precious", part);
-			this.part.pivotX = part.pivotX - pivotX;
-			this.part.pivotY = part.pivotY - pivotY;
-			this.part.pivotZ = part.pivotZ - pivotZ;
+			this.part.pivotX = part.pivotX - fakeTransform.pivotX;
+			this.part.pivotY = part.pivotY - fakeTransform.pivotY;
+			this.part.pivotZ = part.pivotZ - fakeTransform.pivotZ;
 			this.part.setParent(this);
 		}
 		

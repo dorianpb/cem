@@ -202,10 +202,10 @@ public class CemModelRegistry{
 						                                         vanillaModel.getChild(key).getTransform().yaw,
 						                                         vanillaModel.getChild(key).getTransform().roll
 						                                        );
-						replacement = new TransparentCemModelPart(target.getChild(key), correctTransform);
+						replacement = new TransparentCemModelPart(target.getChild(key), correctTransform, vanillaModel.getChild(key).getTransform());
 					}
 					else{
-						replacement = new TransparentCemModelPart(target.getChild(key), vanillaModel.getChild(key).getTransform());
+						replacement = new TransparentCemModelPart(target.getChild(key), vanillaModel.getChild(key).getTransform(), vanillaModel.getChild(key).getTransform());
 					}
 					this.makePartTransparent((CemModelPart) target.getChild(key), vanillaModel.getChild(key), fixes);
 					target.addChild(key, replacement);
