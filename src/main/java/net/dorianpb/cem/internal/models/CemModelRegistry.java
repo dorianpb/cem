@@ -126,15 +126,11 @@ public class CemModelRegistry{
 		}
 		//new model creation fix!
 		if(CemConfigFairy.getConfig().useTransparentParts()){
+			Map<String, ModelTransform> newFixes = new HashMap<>();
 			if(fixes != null){
-				for(String key : new HashSet<>(fixes.keySet())){
-					if(partNameMap.containsKey(key)){
-						ModelTransform value = fixes.remove(key);
-						fixes.put(partNameMap.getOrDefault(key, key), value);
-					}
-				}
+				fixes.forEach(((key, modelTransform) -> newFixes.put(partNameMap.getOrDefault(key, key), modelTransform)));
 			}
-			this.makePartTransparent(newRoot, vanillaReferenceModelFactory.get(), fixes);
+			this.makePartTransparent(newRoot, vanillaReferenceModelFactory.get(), newFixes);
 		}
 		this.prePreparedPart = newRoot;
 		return newRoot;
