@@ -44,6 +44,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Ender Dragon (must be ender_dragon.jem, not dragon.jem)
 	* Endermen
 	* Foxes
+	* Ghasts
 	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
 	* Guardians and Elder Guardians
 	* Horses and their undead variants
