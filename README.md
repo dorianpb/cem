@@ -43,6 +43,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Creepers
 	* Ender Dragon (must be ender_dragon.jem, not dragon.jem)
 	* Endermen
+	* Fish (just salmon for now)
 	* Foxes
 	* Ghasts
 	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
