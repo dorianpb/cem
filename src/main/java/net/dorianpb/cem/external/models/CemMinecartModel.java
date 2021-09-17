@@ -19,21 +19,17 @@ public class CemMinecartModel<T extends AbstractMinecartEntity> extends Minecart
 	}
 	
 	static{
+		modelTransformFixes.put("left", ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+		modelTransformFixes.put("dirt", ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+		modelTransformFixes.put("bottom", ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+		modelTransformFixes.put("back", ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 		modelTransformFixes.put("front", ModelTransform.pivot(0.0F, 23.0F, 9.0F));
-		
+		modelTransformFixes.put("right", ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 	}
 	
 	public CemMinecartModel(CemModelRegistry registry){
 		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
 		this.registry = registry;
-		this.registry.getPrePreparedPart().getChild("front").setPivot(-9.0F, 23.0F, 0.0F);
-		for(String key : new String[]{"front", "back", "left", "right", "bottom"}){
-			var entry = this.registry.getEntryByPartName(key);
-			if(entry != null){
-				entry.getModel().pivotY += -19;
-				this.rotatePart(entry, 'y', 90);
-			}
-		}
 	}
 	
 	@Override
