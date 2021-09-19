@@ -140,7 +140,7 @@ public class CemStringParser{
 					if(sub.size() == 0){
 						throw new IllegalArgumentException("Invalid Syntax: " + (i > 0? work.get(i - 1) : "") + work.get(i) + (i < work.size() - 1? work.get(i + 1) : ""));
 					}
-					else{ //otherwise treat it normally
+					else{ //otherwise, treat it normally
 						for(int j = sub.size() + 2; j > 0; j--){
 							work.remove(i);
 						}
@@ -173,23 +173,34 @@ public class CemStringParser{
 					break;
 				}
 			}
-			//handle negative numbers here
+			//handle negative numbers and extraneous plus signs here
+			i = 0;
 			while(true){
-				i = regIndexOf(work, "^[-]$");
+				i = regIndexOf(work, "^[-+]$", i);
 				if(i >= 0 && (i == 0 || !work.get(i - 1).startsWith("§"))){
-					tokens.add(new NumToken(0));
-					work.add(i, "§" + (tokens.size() - 1));
-					ArrayList<Token> args = new ArrayList<>();
-					i++;
-					args.add(getToken(work.get(i - 1), tokens));
-					args.add(getToken(work.get(i + 1), tokens));
-					tokens.add(new Token("SUB", args));
-					work.remove(i);
-					work.remove(i);
-					work.set(i - 1, "§" + (tokens.size() - 1));
+					if(work.get(i).equals("-")){
+						tokens.add(new NumToken(0));
+						work.add(i, "§" + (tokens.size() - 1));
+						ArrayList<Token> args = new ArrayList<>();
+						i++;
+						args.add(getToken(work.get(i - 1), tokens));
+						args.add(getToken(work.get(i + 1), tokens));
+						tokens.add(new Token("SUB", args));
+						work.remove(i);
+						work.remove(i);
+						work.set(i - 1, "§" + (tokens.size() - 1));
+					}
+					else{
+						work.remove(i);
+					}
 				}
 				else{
-					break;
+					if(i == -1){
+						break;
+					}
+					else{
+						i++;
+					}
 				}
 			}
 			//exponents aren't a thing, so we go to multiplication and division(including modulo)
@@ -276,7 +287,7 @@ public class CemStringParser{
 					ArrayList<Token> args = new ArrayList<>();
 					args.add(getToken(work.get(i - 1), tokens));
 					args.add(getToken(work.get(i + 1), tokens));
-					tokens.add(new Token(work.get(i).equals("+")? "ADD" : "SUB", args));
+					tokens.add(new Token(work.get(i).equals("&&")? "AND" : "OR", args));
 					work.remove(i);
 					work.remove(i);
 					work.set(i - 1, "§" + (tokens.size() - 1));
