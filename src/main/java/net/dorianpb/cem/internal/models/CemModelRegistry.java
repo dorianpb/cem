@@ -23,7 +23,6 @@ public class CemModelRegistry{
 	private final ArrayList<CemAnimation>                   animations; //actual storage of all the cemAnimations
 	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
 	private final JemFile                                   file; //stores the jemFile
-	private       CemModelPart                              prePreparedPart; //stores output of prepRootPart
 	
 	public CemModelRegistry(JemFile file){
 		this.database = new HashMap<>();
@@ -51,11 +50,6 @@ public class CemModelRegistry{
 				}
 			}
 		}
-	}
-	
-	/** Retrieves the model part created by the last invocation of {@link CemModelRegistry#prepRootPart(Map, Map, VanillaReferenceModelFactory, Map, Float)} */
-	public CemModelPart getPrePreparedPart(){
-		return prePreparedPart;
 	}
 	
 	/**
@@ -132,7 +126,6 @@ public class CemModelRegistry{
 			}
 			this.makePartTransparent(newRoot, vanillaReferenceModelFactory.get(), newFixes);
 		}
-		this.prePreparedPart = newRoot;
 		return newRoot;
 	}
 	
