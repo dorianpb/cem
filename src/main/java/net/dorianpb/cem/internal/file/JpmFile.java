@@ -2,6 +2,7 @@ package net.dorianpb.cem.internal.file;
 
 import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.util.CemFairy;
+import org.jetbrains.annotations.Nullable;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -116,31 +117,43 @@ public class JpmFile{
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		JpmBox(LinkedTreeMap json){
 			this.textureOffset = CemFairy.JSONparseDoubleList(json.get("textureOffset"));
-			this.uvUp = CemFairy.JSONparseDoubleList(json.get("uvUp"));
-			this.uvDown = CemFairy.JSONparseDoubleList(json.get("uvDown"));
-			this.uvFront = CemFairy.JSONparseDoubleList(json.getOrDefault("uvFront", json.get("uvNorth")));
-			this.uvBack = CemFairy.JSONparseDoubleList(json.getOrDefault("uvBack", json.get("uvSouth")));
-			this.uvLeft = CemFairy.JSONparseDoubleList(json.getOrDefault("uvLeft", json.get("uvWest")));
-			this.uvRight = CemFairy.JSONparseDoubleList(json.getOrDefault("uvRight", json.get("uvEast")));
+			this.uvUp = getNull(CemFairy.JSONparseDoubleList(json.get("uvUp")));
+			this.uvDown = getNull(CemFairy.JSONparseDoubleList(json.get("uvDown")));
+			this.uvFront = getNull(CemFairy.JSONparseDoubleList(json.getOrDefault("uvFront", json.get("uvNorth"))));
+			this.uvBack = getNull(CemFairy.JSONparseDoubleList(json.getOrDefault("uvBack", json.get("uvSouth"))));
+			this.uvLeft = getNull(CemFairy.JSONparseDoubleList(json.getOrDefault("uvLeft", json.get("uvWest"))));
+			this.uvRight = getNull(CemFairy.JSONparseDoubleList(json.getOrDefault("uvRight", json.get("uvEast"))));
 			this.coordinates = CemFairy.JSONparseDoubleList(json.get("coordinates"));
 			this.sizeAdd = (Double) json.getOrDefault("sizeAdd", 0D);
 			this.validate();
+		}
+		
+		private ArrayList<Double> getNull(@Nullable ArrayList<Double> obj){
+			return obj == null? new ArrayList<>() : obj;
 		}
 		
 		@SuppressWarnings("unchecked")
 		private void validate(){
 			if(this.textureOffset == null){
 				boolean triedToUseUV = false;
-				boolean correctlyUsedUV = true;
 				for(ArrayList<Double> uvCoords : new ArrayList[]{uvUp, uvDown, uvFront, uvBack, uvLeft, uvRight}){
-					triedToUseUV = triedToUseUV || uvCoords != null;
-					correctlyUsedUV = correctlyUsedUV && uvCoords != null;
+					triedToUseUV = triedToUseUV || uvCoords.size() == 4;
 				}
-				if(triedToUseUV && !correctlyUsedUV){
-					throw new InvalidParameterException("Make sure to specify all 6 directions when using UV!");
+				if(!triedToUseUV){
+					throw new InvalidParameterException("Either \"textureOffset\" or at least one of the uv directions are required!");
 				}
-				else if(!correctlyUsedUV){
-					throw new InvalidParameterException("Either \"textureOffset\" or all of the uv directions are required!");
+				else{
+					ArrayList<Double> doubles = new ArrayList<>(Arrays.asList(0D, 0D, 0D, 0D));
+					boolean warn = false;
+					for(ArrayList<Double> uvCoords : new ArrayList[]{uvUp, uvDown, uvFront, uvBack, uvLeft, uvRight}){
+						if(uvCoords.size() == 0){
+							uvCoords.addAll(doubles);
+							warn = true;
+						}
+					}
+					if(warn){
+						CemFairy.getLogger().warn("\tthe above file didn't specify all uv directions!");
+					}
 				}
 			}
 			if(this.coordinates == null){
