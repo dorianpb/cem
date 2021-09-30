@@ -11,7 +11,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public final class CemConfig extends Config implements ConfigContainer, CemOptions{
 	@ConfigEntry private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();
 	@ConfigEntry private boolean use_new_model_creation_fix = CemOptions.instance.useTransparentParts();
-	@ConfigEntry private boolean use_relative_animations    = CemOptions.instance.useRelativeAnimations();
+	@ConfigEntry private boolean use_old_animations         = CemOptions.instance.useOldAnimations();
 	
 	private CemConfig(){
 		super("cem");
@@ -40,7 +40,7 @@ public final class CemConfig extends Config implements ConfigContainer, CemOptio
 	}
 	
 	@Override
-	public boolean useRelativeAnimations(){
-		return this.use_relative_animations;
+	public boolean useOldAnimations(){
+		return this.use_old_animations;
 	}
 }

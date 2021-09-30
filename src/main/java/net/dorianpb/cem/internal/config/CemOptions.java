@@ -13,7 +13,7 @@ public interface CemOptions{
 		return true;
 	}
 	
-	default boolean useRelativeAnimations(){
+	default boolean useOldAnimations(){
 		return false;
 	}
 }

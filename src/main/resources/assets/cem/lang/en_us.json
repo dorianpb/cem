@@ -12,5 +12,9 @@
   "config.cem.use_new_model_creation_fix.tooltip.3": "a few models but fixes other ones.",
   "config.cem.use_new_model_creation_fix.tooltip.4": "Please use if possible.",
   "config.cem.use_new_model_creation_fix.tooltip.5": "Reload resources (F3 + T) for",
-  "config.cem.use_new_model_creation_fix.tooltip.6": "this to take effect!"
+  "config.cem.use_new_model_creation_fix.tooltip.6": "this to take effect!",
+  "config.cem.use_old_animations": "Use older animation implementation?",
+  "config.cem.use_old_animations.tooltip.0": "This restores animation behavior",
+  "config.cem.use_old_animations.tooltip.1": "from CEM version <=0.6.2. You",
+  "config.cem.use_old_animations.tooltip.2": "probably want this off."
 }
