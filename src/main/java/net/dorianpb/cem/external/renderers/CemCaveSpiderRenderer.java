@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.util.Identifier;
 
 public class CemCaveSpiderRenderer extends CaveSpiderEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemCaveSpiderRenderer(EntityRendererFactory.Context context){
 		super(context);

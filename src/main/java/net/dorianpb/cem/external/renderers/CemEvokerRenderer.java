@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.SpellcastingIllagerEntity;
 import net.minecraft.util.Identifier;
 
 public class CemEvokerRenderer extends EvokerEntityRenderer<SpellcastingIllagerEntity> implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemEvokerRenderer(EntityRendererFactory.Context context){
 		super(context);

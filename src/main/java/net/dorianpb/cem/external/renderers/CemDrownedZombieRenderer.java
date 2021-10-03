@@ -15,7 +15,7 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 
 public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemDrownedZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
@@ -56,8 +56,8 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 	}
 	
 	public static class CemDrownedOverlayRenderer extends DrownedOverlayFeatureRenderer<DrownedEntity> implements CemRenderer{
-		private static final Identifier                origSKIN         = SKIN;
-		private final        CemModelRegistry          registry;
+		private static final Identifier       origSKIN = SKIN;
+		private final        CemModelRegistry registry;
 		
 		public CemDrownedOverlayRenderer(CemDrownedZombieRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);

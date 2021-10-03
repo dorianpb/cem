@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.util.Identifier;
 
 public class CemWanderingTraderRenderer extends WanderingTraderEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemWanderingTraderRenderer(EntityRendererFactory.Context context){
 		super(context);

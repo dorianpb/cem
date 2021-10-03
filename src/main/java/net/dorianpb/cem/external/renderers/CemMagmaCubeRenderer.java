@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.MagmaCubeEntity;
 import net.minecraft.util.Identifier;
 
 public class CemMagmaCubeRenderer extends MagmaCubeEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemMagmaCubeRenderer(EntityRendererFactory.Context context){
 		super(context);

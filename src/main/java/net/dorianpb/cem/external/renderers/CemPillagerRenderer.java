@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.util.Identifier;
 
 public class CemPillagerRenderer extends PillagerEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemPillagerRenderer(EntityRendererFactory.Context context){
 		super(context);

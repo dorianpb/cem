@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
 
 public class CemBeeRenderer extends BeeEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemBeeRenderer(EntityRendererFactory.Context context){
 		super(context);

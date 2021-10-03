@@ -12,8 +12,8 @@ import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.util.Identifier;
 
 public class CemOcelotRenderer extends OcelotEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
-
+	private final CemModelRegistry registry;
+	
 	public CemOcelotRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());

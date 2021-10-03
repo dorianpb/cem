@@ -14,7 +14,7 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.util.Identifier;
 
 public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry            registry;
+	private final CemModelRegistry registry;
 	
 	public CemCatRenderer(EntityRendererFactory.Context context){
 		super(context);
@@ -55,7 +55,7 @@ public class CemCatRenderer extends CatEntityRenderer implements CemRenderer{
 	}
 	
 	public static class CemCatCollarFeatureRenderer extends CatCollarFeatureRenderer implements CemRenderer{
-		private final        CemModelRegistry          registry;
+		private final CemModelRegistry registry;
 		
 		public CemCatCollarFeatureRenderer(CemCatRenderer featureRendererContext, EntityModelLoader modelLoader){
 			super(featureRendererContext, modelLoader);

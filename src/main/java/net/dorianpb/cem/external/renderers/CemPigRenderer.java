@@ -13,7 +13,7 @@ import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.Identifier;
 
 public class CemPigRenderer extends PigEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemPigRenderer(EntityRendererFactory.Context context){
 		super(context);

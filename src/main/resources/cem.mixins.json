@@ -3,7 +3,15 @@
   "minVersion": "0.8",
   "package": "net.dorianpb.cem.mixins",
   "compatibilityLevel": "JAVA_16",
-  "client": ["BlockEntityRendererAccessor", "DilationAccessor", "EntityModelLoaderMixin", "EntityRendererAccessor", "ModelCuboidDataMixin"],
+  "client": [
+	"ArmorFeatureRendererMixin",
+	"BlockEntityRendererAccessor",
+	"DilationAccessor",
+	"EntityModelLoaderMixin",
+	"EntityRendererAccessor",
+	"ModelCuboidDataMixin",
+	"ModelPartMixin"
+  ],
   "injectors": {
 	"defaultRequire": 1
   }

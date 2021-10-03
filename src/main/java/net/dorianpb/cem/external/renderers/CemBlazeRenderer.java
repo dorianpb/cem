@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.util.Identifier;
 
 public class CemBlazeRenderer extends BlazeEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemBlazeRenderer(EntityRendererFactory.Context context){
 		super(context);

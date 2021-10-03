@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.util.Identifier;
 
 public class CemFoxRenderer extends FoxEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry            registry;
+	private final CemModelRegistry registry;
 	
 	public CemFoxRenderer(EntityRendererFactory.Context context){
 		super(context);

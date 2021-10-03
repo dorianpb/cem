@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.util.Identifier;
 
 public class CemCowRenderer extends CowEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemCowRenderer(EntityRendererFactory.Context context){
 		super(context);

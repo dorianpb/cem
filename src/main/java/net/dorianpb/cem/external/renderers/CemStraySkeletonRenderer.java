@@ -29,6 +29,7 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 				if(feature instanceof StrayOverlayFeatureRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>>){
 					return new CemStrayOverlayRenderer(this, context.getModelLoader());
 				}
+				
 				else{
 					return feature;
 				}

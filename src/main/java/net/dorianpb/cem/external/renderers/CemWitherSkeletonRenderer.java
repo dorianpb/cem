@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.util.Identifier;
 
 public class CemWitherSkeletonRenderer extends WitherSkeletonEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemWitherSkeletonRenderer(EntityRendererFactory.Context context){
 		super(context);

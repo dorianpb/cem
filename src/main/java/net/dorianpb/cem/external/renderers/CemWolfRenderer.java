@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.Identifier;
 
 public class CemWolfRenderer extends WolfEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry            registry;
+	private final CemModelRegistry registry;
 	
 	public CemWolfRenderer(EntityRendererFactory.Context context){
 		super(context);

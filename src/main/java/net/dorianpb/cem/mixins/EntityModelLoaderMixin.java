@@ -26,7 +26,7 @@ import java.util.Optional;
 @Mixin(EntityModelLoader.class)
 public abstract class EntityModelLoaderMixin{
 	@Inject(method = "reload", at = @At(value = "HEAD"))
-	private void injectReload(ResourceManager manager, CallbackInfo ci){
+	private void cem$injectReload(ResourceManager manager, CallbackInfo ci){
 		CemRegistryManager.clearRegistries();
 		manager.findResources("cem", path -> path.endsWith(".jem")).forEach((id -> loadResourceFromId(manager, id, "dorianpb")));
 		if(CemConfigFairy.getConfig().useOptifineFolder()){

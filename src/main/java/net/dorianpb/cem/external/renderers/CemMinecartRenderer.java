@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CemMinecartRenderer extends MinecartEntityRenderer<AbstractMinecartEntity> implements CemRenderer{
-	private static final Map<EntityType<? extends AbstractMinecartEntity>, EntityModelLayer> layers           = new LinkedHashMap<>();
+	private static final Map<EntityType<? extends AbstractMinecartEntity>, EntityModelLayer> layers = new LinkedHashMap<>();
 	private final        EntityType<? extends Entity>                                        entityType;
 	private final        CemModelRegistry                                                    registry;
 	

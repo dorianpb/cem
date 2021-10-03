@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 
 public class CemHuskZombieRenderer extends HuskEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemHuskZombieRenderer(EntityRendererFactory.Context context){
 		super(context);

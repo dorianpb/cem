@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.util.Identifier;
 
 public class CemRabbitRenderer extends RabbitEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemRabbitRenderer(EntityRendererFactory.Context context){
 		super(context);

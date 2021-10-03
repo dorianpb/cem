@@ -12,8 +12,8 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
 
 public class CemZombieRenderer extends ZombieEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
-
+	private final CemModelRegistry registry;
+	
 	public CemZombieRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());

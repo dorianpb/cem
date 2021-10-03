@@ -32,7 +32,7 @@ public class ModelCuboidDataMixin{
 	private Vector2f textureUV, textureScale;
 	
 	@Inject(method = "createCuboid", at = @At("RETURN"), cancellable = true)
-	private void injectCuboid(int textureWidth, int textureHeight, CallbackInfoReturnable<Cuboid> cir){
+	private void cem$injectCuboid(int textureWidth, int textureHeight, CallbackInfoReturnable<Cuboid> cir){
 		cir.setReturnValue(new CemCuboid(this.offset.getX(),
 		                                 this.offset.getY(),
 		                                 this.offset.getZ(),

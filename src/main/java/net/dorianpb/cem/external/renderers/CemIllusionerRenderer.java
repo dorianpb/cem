@@ -12,8 +12,8 @@ import net.minecraft.entity.mob.IllusionerEntity;
 import net.minecraft.util.Identifier;
 
 public class CemIllusionerRenderer extends IllusionerEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
-
+	private final CemModelRegistry registry;
+	
 	public CemIllusionerRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());

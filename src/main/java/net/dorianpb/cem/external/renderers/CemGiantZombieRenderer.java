@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.GiantEntity;
 import net.minecraft.util.Identifier;
 
 public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemGiantZombieRenderer(EntityRendererFactory.Context context){
 		super(context, 6F);

@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.util.Identifier;
 
 public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemZombieVillagerRenderer(EntityRendererFactory.Context context){
 		super(context);

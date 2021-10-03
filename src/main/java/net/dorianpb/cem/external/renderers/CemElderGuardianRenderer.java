@@ -12,7 +12,7 @@ import net.minecraft.entity.mob.GuardianEntity;
 import net.minecraft.util.Identifier;
 
 public class CemElderGuardianRenderer extends ElderGuardianEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry            registry;
+	private final CemModelRegistry registry;
 	
 	public CemElderGuardianRenderer(EntityRendererFactory.Context context){
 		super(context);

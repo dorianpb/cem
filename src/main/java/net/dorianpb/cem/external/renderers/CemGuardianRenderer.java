@@ -12,8 +12,8 @@ import net.minecraft.entity.mob.GuardianEntity;
 import net.minecraft.util.Identifier;
 
 public class CemGuardianRenderer extends GuardianEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry            registry;
-
+	private final CemModelRegistry registry;
+	
 	public CemGuardianRenderer(EntityRendererFactory.Context context){
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());

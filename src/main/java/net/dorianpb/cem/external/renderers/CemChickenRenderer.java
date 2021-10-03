@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.util.Identifier;
 
 public class CemChickenRenderer extends ChickenEntityRenderer implements CemRenderer{
-	private final        CemModelRegistry          registry;
+	private final CemModelRegistry registry;
 	
 	public CemChickenRenderer(EntityRendererFactory.Context context){
 		super(context);
