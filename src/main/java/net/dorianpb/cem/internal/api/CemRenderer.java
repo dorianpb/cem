@@ -5,12 +5,6 @@ import net.dorianpb.cem.internal.util.CemFairy;
 public interface CemRenderer{
 	
 	/**
-	 * Returns string id of the entity represented by this cemRenderer
-	 * @return Name of entity
-	 */
-	String getId();
-	
-	/**
 	 * Used to return errors if applying the .jem file doesn't work
 	 * No need to overwrite this
 	 * @param e Exception to log
@@ -25,4 +19,10 @@ public interface CemRenderer{
 			CemFairy.getLogger().error(e.getStackTrace()[2]);
 		}
 	}
+	
+	/**
+	 * Returns string id of the entity represented by this cemRenderer
+	 * @return Name of entity
+	 */
+	String getId();
 }

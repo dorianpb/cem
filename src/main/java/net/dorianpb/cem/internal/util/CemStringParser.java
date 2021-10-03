@@ -297,8 +297,6 @@ public class CemStringParser{
 				}
 			}
 		} catch(Exception e){
-			StringBuilder expr = new StringBuilder();
-			input.forEach(expr::append);
 			throw new IllegalArgumentException("\"" + e + "\" occurred when trying to parse animation at index " + i + "!");
 		}
 		if(work.size() != 1){
