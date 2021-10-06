@@ -751,16 +751,8 @@ public class CemStringParser{
 				throw new IllegalArgumentException("Parameter \"" + this.getName().toLowerCase() + "\" does not take arguments and should not have any \"()" + "\"!");
 			}
 			else if(paramNum > -1 && args.size() != paramNum){
-				throw new IllegalArgumentException("Function \"" +
-				                                   this.getName().toLowerCase() +
-				                                   "\" needs exactly " +
-				                                   paramNum +
-				                                   " parameters, but " +
-				                                   args.size() +
-				                                   " " +
-				                                   ((args.size() == 1)? "was" : "were") +
-				                                   " " +
-				                                   "given!");
+				throw new IllegalArgumentException("Function \"" + this.getName().toLowerCase() + "\" needs exactly " + paramNum + " parameters, but " + args.size() + " " +
+				                                   ((args.size() == 1)? "was" : "were") + " " + "given!");
 			}
 		}
 		

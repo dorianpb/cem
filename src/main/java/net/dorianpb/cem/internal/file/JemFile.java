@@ -5,6 +5,7 @@ import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class JemFile{
 	public static final Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
-	private final       String                    texture;
+	private final       Identifier                texture;
 	private final       ArrayList<Double>         textureSize;
 	private final       Float                     shadowsize;
 	private final       HashMap<String, JemModel> models;
@@ -26,10 +27,27 @@ public class JemFile{
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws Exception{
-		this.texture = CemFairy.JSONparseString(json.get("texture"));
 		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
 		this.shadowsize = CemFairy.JSONparseFloat(json.get("shadowSize"));
 		this.path = path;
+		String texturepath = CemFairy.JSONparseString(json.get("texture"));
+		if(texturepath == null || texturepath.isEmpty()){
+			
+			Identifier jankTexture = CemFairy.transformPath(path.getPath().substring(path.getPath().lastIndexOf('/') + 1, path.getPath().lastIndexOf('.')) + ".png",
+			                                                this.path
+			                                               );
+			boolean jankExists = false;
+			try{
+				resourceManager.getResource(jankTexture).close();
+				jankExists = true;
+			} catch(Exception ignored){
+			}
+			this.texture = jankExists? jankTexture : null;
+		}
+		else{
+			this.texture = CemFairy.transformPath(texturepath, this.path);
+		}
+		
 		models = new HashMap<>();
 		for(LinkedTreeMap model : (ArrayList<LinkedTreeMap>) json.get("models")){
 			JemModel newmodel = new JemModel(model, this.path, resourceManager);
@@ -45,16 +63,13 @@ public class JemFile{
 		if(this.textureSize == null){
 			throw new InvalidParameterException("Element \"textureSize\" is required");
 		}
-		if(texture != null && !allowTextureChars.matcher(texture).find()){
+		if(texture != null && !allowTextureChars.matcher(texture.getPath()).find()){
 			throw new InvalidParameterException("Non [a-z0-9/._-] character in path of location: " + texture);
 		}
 	}
 	
 	public Identifier getTexture(){
-		if(this.texture != null){
-			return CemFairy.transformPath(this.texture, this.path);
-		}
-		return null;
+		return this.texture;
 	}
 	
 	public ArrayList<Double> getTextureSize(){
@@ -107,6 +122,10 @@ public class JemFile{
 						throw new Exception("Invalid File");
 					}
 					temp = new JpmFile(file);
+				} catch(FileNotFoundException exception){
+					CemFairy.postReadError(exception, id);
+					CemFairy.getLogger().warn(" Falling back on reading model definition from " + path.toString() + "!");
+					temp = new JpmFile(json);
 				} catch(Exception exception){
 					CemFairy.postReadError(exception, id);
 					throw new Exception("Error loading dependent file: " + id);
