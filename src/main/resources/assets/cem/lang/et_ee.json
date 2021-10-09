@@ -1,0 +1,20 @@
+{
+  "config.cem.use_optifine_folder": "Kasuta \"assets/minecraft/optifine/cem\"?",
+  "config.cem.use_optifine_folder.tooltip.0": "See laadib CEM-mudelid asukohast",
+  "config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
+  "config.cem.use_optifine_folder.tooltip.2": "mis järgib täpselt Optifine'i käitumist.",
+  "config.cem.use_optifine_folder.tooltip.3": "Muudatuse rakendamiseks",
+  "config.cem.use_optifine_folder.tooltip.4": "laadi ressursid uuesti (F3 + T)!",
+  "config.cem.use_new_model_creation_fix": "Kasuta mudeliloomise parandust?",
+  "config.cem.use_new_model_creation_fix.tooltip.0": "See väldib Minecraftil animeerimise ajal",
+  "config.cem.use_new_model_creation_fix.tooltip.1": "otseselt mudeliosade ümberliigutamist.",
+  "config.cem.use_new_model_creation_fix.tooltip.2": "See lõhub mõned mudelid",
+  "config.cem.use_new_model_creation_fix.tooltip.3": "kuid parandab teised.",
+  "config.cem.use_new_model_creation_fix.tooltip.4": "Võimalusel kasuta seda.",
+  "config.cem.use_new_model_creation_fix.tooltip.5": "Muudatuse rakendamiseks",
+  "config.cem.use_new_model_creation_fix.tooltip.6": "laadi ressursid uuesti (F3 + T)!",
+  "config.cem.use_old_animations": "Kasuta vanemat animatsiooniteostust?",
+  "config.cem.use_old_animations.tooltip.0": "See taastab CEM versiooni <= 0.6.2",
+  "config.cem.use_old_animations.tooltip.1": "animatsioonide käitumise.",
+  "config.cem.use_old_animations.tooltip.2": "Ilmselt soovid selle keelata."
+}
