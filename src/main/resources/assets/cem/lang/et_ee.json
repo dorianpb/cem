@@ -1,4 +1,5 @@
 {
+  "modmenu.descriptionTranslation.cem": "Võimaldab ressursipakis .jem ja .jpm failidega defineeritud kohandatud mudeleid mängu laadida.",
   "config.cem.use_optifine_folder": "Kasuta \"assets/minecraft/optifine/cem\"?",
   "config.cem.use_optifine_folder.tooltip.0": "See laadib CEM-mudelid asukohast",
   "config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
