@@ -1,4 +1,5 @@
 {
+  "modmenu.descriptionTranslation.cem": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
   "config.cem.use_optifine_folder": "Use \"assets/minecraft/optifine/cem\"?",
   "config.cem.use_optifine_folder.tooltip.0": "This will load CEM models from  ",
   "config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
