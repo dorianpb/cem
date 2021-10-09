@@ -77,6 +77,24 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 * Currently, all translation in custom animations is relative to the parent
 	* This *IS* different from Optifine, so if your model wants to use super fancy custom animations, you might need to change a few values, especially `*.ty` values
 
+## Recommended resource packs
+
+This mod is being tested with the following resource packs:
+
+### [Fresh Animations](https://www.curseforge.com/minecraft/texture-packs/fresh-animations)
+
+Features that are not supported yet:
+* feature 1
+* feature 2
+* feature 3
+
+### [Super Mario Craft](https://www.curseforge.com/minecraft/texture-packs/super-mario-craft)
+
+Features that are not supported yet:
+* feature 1
+* feature 2
+* feature 3
+
 ## Licensing
 
 This project is licensed with LGPL v3.0. Please don't repost this project anywhere without my written permission first.
