@@ -89,7 +89,7 @@ public class CemStringParser{
 				throw new IllegalArgumentException("Garbage symbol \"" + badboi + "\"");
 			}
 		}
-		//find functions, turn parentheses into curly braces so that we don't parse them as grouped expressions and we correctly parse them later
+		//find functions, turn parentheses into curly braces so that we don't parse them as grouped expressions, and we correctly parse them later
 		Pattern functionPattern = Pattern.compile("^(\\w\\d?)+$");
 		int j = 0;
 		while(true){
@@ -866,7 +866,7 @@ public class CemStringParser{
 	}
 	
 	/**
-	 * The "if" operator is the only operator that actually steals arguments from it's container class, the ParsedExpressionFloat
+	 * The "if" operator is the only operator that actually steals arguments from its container class, the ParsedExpressionFloat
 	 */
 	static class ParsedIf implements ParsedFunctionFloat{
 		private final ArrayList<ParsedExpressionBool>  conditions;

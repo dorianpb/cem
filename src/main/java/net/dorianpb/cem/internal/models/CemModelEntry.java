@@ -1,5 +1,6 @@
 package net.dorianpb.cem.internal.models;
 
+import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
@@ -24,6 +25,8 @@ public class CemModelEntry{
 	private final float[]                                   translates;
 	private final float[]                                   rotates;
 	private final boolean[]                                 invertAxis;
+	private final int                                       gen;
+	private final float[]                                   offsets;
 	
 	
 	CemModelEntry(JemModel file, int textureWidth, int textureHeight){
@@ -42,6 +45,7 @@ public class CemModelEntry{
 		this.part = part;
 		this.children = new HashMap<>();
 		this.invertAxis = data.getInvertAxis();
+		this.gen = gen;
 		this.translates = new float[]{(data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]? -1 : 1),
 		                              (data.getTranslate().get(1).floatValue()) * (this.invertAxis[1]? -1 : 1),
 		                              (data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]? -1 : 1),
@@ -52,53 +56,54 @@ public class CemModelEntry{
 		                           };
 		
 		this.model = new CemModelPart(textureWidth, textureHeight);
-		
-		this.initmodel(data, parents, gen, scale);
+		this.initmodel(data, parents, scale);
+		this.offsets = new float[]{0, 0, 0};
 		//CHILD INIT
 		if(data.getSubmodels() != null){
 			for(JpmFile submodel : data.getSubmodels()){
-				float childZ = (gen == 0)? ((data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]? -1 : 1)) : 0;
-				float childY = (gen == 0)? ((data.getTranslate().get(1).floatValue()) * (this.invertAxis[1]? -1 : 1)) : 0;
-				float childX = (gen == 0)? ((data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]? -1 : 1)) : 0;
-				this.addChild(new CemModelEntry(null, submodel, new float[]{childX, childY, childZ}, gen + 1, 1, textureWidth, textureHeight));
+				float childZ = (this.gen == 0)? ((data.getTranslate().get(2).floatValue()) * (this.invertAxis[2]? -1 : 1)) : 0;
+				float childY = (this.gen == 0)? ((data.getTranslate().get(1).floatValue()) * (this.invertAxis[1]? -1 : 1)) : 0;
+				float childX = (this.gen == 0)? ((data.getTranslate().get(0).floatValue()) * (this.invertAxis[0]? -1 : 1)) : 0;
+				this.addChild(new CemModelEntry(null, submodel, new float[]{childX, childY, childZ}, this.gen + 1, 1, textureWidth, textureHeight));
 			}
 		}
 		//END CHILD INIT
 	}
 	
-	private void initmodel(JpmFile data, float[] parents, int gen, float scale){
-		float[] pivot = new float[]{((gen == 0)
+	private void initmodel(JpmFile data, float[] parents, float scale){
+		float[] pivot = new float[]{((this.gen == 0)
 		                             ? (parents[0] - (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
-		                             : ((gen == 1)
+		                             : ((this.gen == 1)
 		                                ? (parents[0] + (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
 		                                : data.getTranslate().get(0).floatValue() * (this.invertAxis[1]? -1 : 1))),
-		                            ((gen == 0)
+		                            ((this.gen == 0)
 		                             ? (parents[1] - (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
-		                             : ((gen == 1)
+		                             : ((this.gen == 1)
 		                                ? (parents[1] + (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
 		                                : data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1))),
-		                            ((gen == 0)
+		                            ((this.gen == 0)
 		                             ? (parents[2] - (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
-		                             : ((gen == 1)
+		                             : ((this.gen == 1)
 		                                ? (parents[2] + (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
 		                                : data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1))),
 		                            };
-		///MUST SUBTRACT FROM PARENT FOR GEN1
+		///MUST SUBTRACT FROM PARENT FOR this.gen1
 		float[] translate = new float[]{(data.getTranslate().get(0).floatValue()), (data.getTranslate().get(1).floatValue()), (data.getTranslate().get(2).floatValue()),
 		                                };
 		if(data.getBoxes() != null){
 			for(JpmBox box : data.getBoxes()){
 				//apply translates first, then ?invert pos, then ?subtract pos by size so that it is drawn correctly
-				//top level model pivots need to translated up by 24, then 1st gen children need to work off of that rather than the translate values provided by the jpmFile
-				//only top level models need translates applied, others are relative to parent (even gen1)
+				//top level model pivots need to translated up by 24, then 1st this.gen children need to work off of that rather than the translate values provided by the
+				// jpmFile
+				//only top level models need translates applied, others are relative to parent (even this.gen1)
 				if(box.useUvMap()){
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
 					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
 					
-					                     ((box.getCoordinates().get(1).floatValue() + ((gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
 					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
 					
-					                     ((box.getCoordinates().get(2).floatValue() + ((gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
 					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
 					                     box.getCoordinates().get(3).intValue(),
 					                     box.getCoordinates().get(4).intValue(),
@@ -114,13 +119,13 @@ public class CemModelEntry{
 					                    );
 				}
 				else{
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
 					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
 					
-					                     ((box.getCoordinates().get(1).floatValue() + ((gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
 					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
 					
-					                     ((box.getCoordinates().get(2).floatValue() + ((gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
 					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
 					                     box.getCoordinates().get(3).intValue(),
 					                     box.getCoordinates().get(4).intValue(),
@@ -167,35 +172,94 @@ public class CemModelEntry{
 		return part;
 	}
 	
-	public float getTranslate(char axis){
-		return switch(axis){
-			case 'x' -> this.translates[0];
-			case 'y' -> this.translates[1];
-			case 'z' -> this.translates[2];
-			default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
-		};
+	/** this is done because there can be a discrepancy between the translate value in the .jem and the actual part */
+	void setTranslate(char axis, float requestedTranslate){
+		if(CemConfigFairy.getConfig().useOldAnimations()){
+			float oldTranslate;
+			switch(axis){
+				case 'x' -> {
+					oldTranslate = this.translates[0];
+					this.translates[0] = requestedTranslate;
+					this.getModel().pivotX += (this.translates[0] - oldTranslate);
+				}
+				case 'y' -> {
+					oldTranslate = this.translates[1];
+					this.translates[1] = requestedTranslate;
+					this.getModel().pivotY += (this.translates[1] - oldTranslate);
+				}
+				case 'z' -> {
+					oldTranslate = this.translates[2];
+					this.translates[2] = requestedTranslate;
+					this.getModel().pivotZ += (this.translates[2] - oldTranslate);
+				}
+			}
+		}
+		else{
+			float currentTranslate = this.getTranslate(axis);
+			switch(axis){
+				case 'x' -> {
+					this.getModel().pivotX += requestedTranslate - currentTranslate;
+					this.offsets[0] += requestedTranslate - currentTranslate;
+				}
+				case 'y' -> {
+					this.getModel().pivotY += requestedTranslate - currentTranslate;
+					this.offsets[1] += requestedTranslate - currentTranslate;
+				}
+				case 'z' -> {
+					this.getModel().pivotZ += requestedTranslate - currentTranslate;
+					this.offsets[2] += requestedTranslate - currentTranslate;
+				}
+			}
+		}
 	}
 	
-	/** this is done because there can be a discrepancy between the translate value in the .jem and the actual part */
-	void setTranslate(char axis, float translate){
-		float oldTranslate;
-		switch(axis){
-			case 'x' -> {
-				oldTranslate = this.translates[0];
-				this.translates[0] = translate;
-				this.getModel().pivotX += (this.translates[0] - oldTranslate);
+	public float getTranslate(char axis){
+		if(CemConfigFairy.getConfig().useOldAnimations()){
+			return switch(axis){
+				case 'x' -> this.translates[0];
+				case 'y' -> this.translates[1];
+				case 'z' -> this.translates[2];
+				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
+			};
+		}
+		else{
+			switch(axis){
+				case 'x' -> {
+					float value = this.gen != 0? this.translates[0] + this.offsets[0] : this.getModel().pivotX;
+					if(this.getModel().parent != null){
+						value += this.getModel().parent.pivotX;
+					}
+					return value;
+				}
+				case 'y' -> {
+					float value = this.gen != 0? this.translates[1] + this.offsets[1] : this.getModel().pivotY;
+					if(this.getModel().parent != null){
+						value += this.getModel().parent.pivotY;
+					}
+					return value;
+				}
+				case 'z' -> {
+					float value = this.gen != 0? this.translates[2] + this.offsets[2] : this.getModel().pivotZ;
+					if(this.getModel().parent != null){
+						value += this.getModel().parent.pivotZ;
+					}
+					return value;
+				}
+				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
 			}
-			case 'y' -> {
-				oldTranslate = this.translates[1];
-				this.translates[1] = translate;
-				this.getModel().pivotY += (this.translates[1] - oldTranslate);
+		}
+	}
+	
+	void setRotate(char axis, float requestedAngle){
+		if(CemConfigFairy.getConfig().useOldAnimations()){
+			this.getModel().setRotation(axis, requestedAngle);
+		}
+		else{
+			float angle = requestedAngle;
+			if(this.getModel().parent != null){
+				angle -= this.getModel().parent.getRotation(axis);
 			}
-			case 'z' -> {
-				oldTranslate = this.translates[2];
-				this.translates[2] = translate;
-				this.getModel().pivotZ += (this.translates[2] - oldTranslate);
-			}
-			default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
+			this.getModel().setRotation(axis, angle);
 		}
 	}
 	
@@ -335,12 +399,30 @@ public class CemModelEntry{
 		}
 		
 		public float getRotation(char axis){
-			return switch(axis){
-				case 'x' -> ((this.parent == null)? this.pitch : parent.pitch) + this.rotation[0];
-				case 'y' -> ((this.parent == null)? this.yaw : parent.yaw) + this.rotation[1];
-				case 'z' -> ((this.parent == null)? this.roll : parent.roll) + this.rotation[2];
+			switch(axis){
+				case 'x' -> {
+					float angle = this.pitch;
+					if(this.parent != null){
+						angle += parent.pitch;
+					}
+					return angle + this.rotation[0];
+				}
+				case 'y' -> {
+					float angle = this.yaw;
+					if(this.parent != null){
+						angle += parent.yaw;
+					}
+					return angle + this.rotation[1];
+				}
+				case 'z' -> {
+					float angle = this.roll;
+					if(this.parent != null){
+						angle += parent.roll;
+					}
+					return angle + this.rotation[2];
+				}
 				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
-			};
+			}
 		}
 		
 		public void addChild(String name, ModelPart modelPart){

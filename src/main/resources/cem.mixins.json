@@ -4,7 +4,6 @@
   "package": "net.dorianpb.cem.mixins",
   "compatibilityLevel": "JAVA_16",
   "client": [
-	"ArmorFeatureRendererMixin",
 	"BlockEntityRendererAccessor",
 	"DilationAccessor",
 	"EntityModelLoaderMixin",

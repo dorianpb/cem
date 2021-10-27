@@ -354,11 +354,16 @@ public class CemModelRegistry{
 		
 		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity){
 			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, livingEntity, this.registry);
-			switch(operation){
-				case 't' -> this.target.setTranslate(this.axis, val);
-				case 'r' -> this.target.getModel().setRotation(this.axis, val);
-				case 's' -> target.getModel().setScale(this.axis, val);
-				default -> throw new IllegalStateException("Unknown operation \"" + operation + "\"");
+			if(!Float.isNaN(val)){
+				switch(operation){
+					case 't' -> this.target.setTranslate(this.axis, val);
+					case 'r' -> this.target.setRotate(this.axis, val);
+					case 's' -> this.target.getModel().setScale(this.axis, val);
+					default -> throw new IllegalStateException("Unknown operation \"" + operation + "\"");
+				}
+			}
+			else{
+				this.target.setTranslate(this.axis, Float.MAX_VALUE);
 			}
 		}
 	}
