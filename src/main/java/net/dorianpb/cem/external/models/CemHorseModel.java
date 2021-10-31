@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.model.TexturedModelData;
@@ -55,7 +56,13 @@ public class CemHorseModel<T extends HorseBaseEntity> extends HorseEntityModel<T
 	}
 	
 	public CemHorseModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(registry.prepRootPart(partNames, familyTree, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, inflate));
+		super(registry.prepRootPart(new CemPrepRootPartParamsBuilder().setPartNameMap(partNames)
+		                                                              .setFamilyTree(familyTree)
+		                                                              .setVanillaReferenceModelFactory(() -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0)
+		                                                                                                                      .createModel())
+		                                                              .setFixes(modelTransformFixes)
+		                                                              .setInflate(inflate)
+		                                                              .create()));
 		this.registry = registry;
 	}
 	

@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.CowEntityModel;
 import net.minecraft.entity.passive.CowEntity;
 
@@ -24,7 +25,10 @@ public class CemCowModel<T extends CowEntity> extends CowEntityModel<T> implemen
 	}
 	
 	public CemCowModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90);
 	}

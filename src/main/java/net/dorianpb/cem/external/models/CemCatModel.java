@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.model.TexturedModelData;
@@ -33,7 +34,12 @@ public class CemCatModel extends CatEntityModel<CatEntity> implements CemModel{
 	}
 	
 	public CemCatModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(registry.prepRootPart(partNames, () -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0).createModel(), modelTransformFixes, inflate));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> TexturedModelData.of(getModelData(Dilation.NONE), 0, 0)
+		                                                                                                                        .createModel())
+		                                                                .setFixes(modelTransformFixes)
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

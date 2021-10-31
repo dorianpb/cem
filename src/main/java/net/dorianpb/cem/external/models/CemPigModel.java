@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.entity.model.PigEntityModel;
 import net.minecraft.entity.passive.PigEntity;
@@ -22,7 +23,10 @@ public class CemPigModel extends PigEntityModel<PigEntity> implements CemModel{
 	}
 	
 	public CemPigModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData(Dilation.NONE).createModel(), null, inflate));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData(Dilation.NONE).createModel())
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

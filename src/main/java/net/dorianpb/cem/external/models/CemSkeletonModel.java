@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import org.jetbrains.annotations.Nullable;
@@ -17,8 +18,15 @@ public class CemSkeletonModel extends SkeletonEntityModel<AbstractSkeletonEntity
 		partNames.put("headwear", "hat");
 	}
 	
+	public CemSkeletonModel(CemModelRegistry registry){
+		this(registry, null);
+	}
+	
 	public CemSkeletonModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), null, inflate));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

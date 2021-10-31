@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.entity.mob.EndermanEntity;
 
@@ -17,7 +18,9 @@ public class CemEndermanModel extends EndermanEntityModel<EndermanEntity> implem
 	}
 	
 	public CemEndermanModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

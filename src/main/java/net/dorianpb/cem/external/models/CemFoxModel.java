@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.entity.model.FoxEntityModel;
 import net.minecraft.entity.passive.FoxEntity;
@@ -32,7 +33,11 @@ public class CemFoxModel extends FoxEntityModel<FoxEntity> implements CemModel{
 	}
 	
 	public CemFoxModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel(), modelTransformFixes));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .setFixes(modelTransformFixes)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

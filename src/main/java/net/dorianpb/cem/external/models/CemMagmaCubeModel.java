@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.MagmaCubeEntityModel;
 import net.minecraft.entity.mob.MagmaCubeEntity;
 
@@ -20,7 +21,9 @@ public class CemMagmaCubeModel extends MagmaCubeEntityModel<MagmaCubeEntity> imp
 	}
 	
 	public CemMagmaCubeModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.SlimeEntityModel;
 import net.minecraft.entity.mob.SlimeEntity;
 
@@ -17,7 +18,9 @@ public class CemSlimeModel extends SlimeEntityModel<SlimeEntity> implements CemM
 	}
 	
 	public CemSlimeModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getInnerTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getInnerTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

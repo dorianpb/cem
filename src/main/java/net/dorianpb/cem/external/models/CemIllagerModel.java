@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
 import net.minecraft.entity.mob.IllagerEntity;
 
@@ -17,7 +18,9 @@ public class CemIllagerModel<T extends IllagerEntity> extends IllagerEntityModel
 	}
 	
 	public CemIllagerModel(CemModelRegistry registry){
-		super(registry.prepRootPart(null, familyTree, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

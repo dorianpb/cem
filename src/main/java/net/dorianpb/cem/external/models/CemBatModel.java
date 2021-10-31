@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.entity.passive.BatEntity;
 
@@ -24,7 +25,10 @@ public class CemBatModel extends BatEntityModel implements CemModel{
 	}
 	
 	public CemBatModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

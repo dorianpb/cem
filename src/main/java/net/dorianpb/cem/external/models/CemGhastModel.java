@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.entity.model.GhastEntityModel;
 import net.minecraft.entity.mob.GhastEntity;
@@ -34,7 +35,10 @@ public class CemGhastModel extends GhastEntityModel<GhastEntity> implements CemM
 	}
 	
 	public CemGhastModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, null, () -> getTexturedModelData().createModel(), modelTransformFixes));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .setFixes(modelTransformFixes)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

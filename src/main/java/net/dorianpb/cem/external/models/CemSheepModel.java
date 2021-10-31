@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.SheepEntityModel;
 import net.minecraft.client.render.entity.model.SheepWoolEntityModel;
 import net.minecraft.entity.passive.SheepEntity;
@@ -21,7 +22,9 @@ public class CemSheepModel extends SheepEntityModel<SheepEntity> implements CemM
 	}
 	
 	public CemSheepModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	
@@ -35,7 +38,9 @@ public class CemSheepModel extends SheepEntityModel<SheepEntity> implements CemM
 		private final CemModelRegistry registry;
 		
 		public CemSheepWoolModel(CemModelRegistry registry){
-			super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+			super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+			                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+			                                                                .create()));
 			this.registry = registry;
 		}
 		

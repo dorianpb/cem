@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.RabbitEntityModel;
 import net.minecraft.entity.passive.RabbitEntity;
 
@@ -22,7 +23,9 @@ public class CemRabbitModel extends RabbitEntityModel<RabbitEntity> implements C
 	}
 	
 	public CemRabbitModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', -19.999F);
 	}

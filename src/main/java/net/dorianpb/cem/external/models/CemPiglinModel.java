@@ -2,10 +2,12 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.PiglinEntityModel;
 import net.minecraft.entity.mob.MobEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -23,7 +25,19 @@ public class CemPiglinModel extends PiglinEntityModel<MobEntity> implements CemM
 	}
 	
 	public CemPiglinModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> TexturedModelData.of(getTexturedModelData(Dilation.NONE, false), 0, 0).createModel()));
+		this(registry, null);
+	}
+	
+	public CemPiglinModel(CemModelRegistry registry, @Nullable Float inflate){
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> TexturedModelData.of(getTexturedModelData(Dilation.NONE,
+		                                                                                                                                                 false),
+		                                                                                                                            0,
+		                                                                                                                            0
+		                                                                                                                           ).createModel())
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

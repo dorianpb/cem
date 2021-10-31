@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.ArmorStandEntityModel;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 
@@ -21,7 +22,9 @@ public class CemArmorStandModel extends ArmorStandEntityModel implements CemMode
 	}
 	
 	public CemArmorStandModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

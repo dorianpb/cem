@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.entity.EnderDragonEntityRenderer;
 import net.minecraft.client.render.entity.EnderDragonEntityRenderer.DragonEntityModel;
@@ -51,7 +52,11 @@ public class CemEnderDragonModel extends DragonEntityModel implements CemModel{
 	}
 	
 	public CemEnderDragonModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> EnderDragonEntityRenderer.getTexturedModelData().createModel(), modelTransformFixes));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> EnderDragonEntityRenderer.getTexturedModelData().createModel())
+		                                                                .setFixes(modelTransformFixes)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

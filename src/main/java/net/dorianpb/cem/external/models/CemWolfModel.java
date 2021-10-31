@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.render.entity.model.WolfEntityModel;
 import net.minecraft.entity.passive.WolfEntity;
@@ -28,7 +29,10 @@ public class CemWolfModel extends WolfEntityModel<WolfEntity> implements CemMode
 	}
 	
 	public CemWolfModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData().createModel(), modelTransformFixes, null));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .setFixes(modelTransformFixes)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

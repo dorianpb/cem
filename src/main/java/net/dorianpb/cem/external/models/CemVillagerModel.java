@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.VillagerResemblingModel;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +27,10 @@ public class CemVillagerModel<T extends LivingEntity> extends VillagerResembling
 	}
 	
 	public CemVillagerModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> TexturedModelData.of(getModelData(), 0, 0).createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> TexturedModelData.of(getModelData(), 0, 0).createModel())
+		                                                                .create()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90);
 		this.rotatePart(this.registry.getEntryByPartName("arms"), 'x', -43);

@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.BeeEntityModel;
 import net.minecraft.entity.passive.BeeEntity;
 
@@ -23,7 +24,10 @@ public class CemBeeModel extends BeeEntityModel<BeeEntity> implements CemModel{
 	}
 	
 	public CemBeeModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .create()));
 		this.registry = registry;
 	}
 	

@@ -2,8 +2,10 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.render.entity.model.ZombieVillagerEntityModel;
 import net.minecraft.entity.mob.ZombieEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -24,7 +26,15 @@ public class CemZombieVillagerModel<T extends ZombieEntity> extends ZombieVillag
 	}
 	
 	public CemZombieVillagerModel(CemModelRegistry registry){
-		super(registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel()));
+		this(registry, null);
+	}
+	
+	public CemZombieVillagerModel(CemModelRegistry registry, @Nullable Float inflate){
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setFamilyTree(familyTree)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 		this.rotatePart(this.registry.getEntryByPartName("headwear2"), 'x', -90);
 	}

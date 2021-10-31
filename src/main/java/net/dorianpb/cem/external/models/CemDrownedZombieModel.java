@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.entity.model.DrownedEntityModel;
 import net.minecraft.entity.mob.DrownedEntity;
@@ -18,8 +19,15 @@ public class CemDrownedZombieModel extends DrownedEntityModel<DrownedEntity> imp
 		partNames.put("headwear", "hat");
 	}
 	
+	public CemDrownedZombieModel(CemModelRegistry registry){
+		this(registry, null);
+	}
+	
 	public CemDrownedZombieModel(CemModelRegistry registry, @Nullable Float inflate){
-		super(registry.prepRootPart(partNames, () -> getTexturedModelData(Dilation.NONE).createModel(), null, inflate));
+		super(registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData(Dilation.NONE).createModel())
+		                                                                .setInflate(inflate)
+		                                                                .create()));
 		this.registry = registry;
 	}
 	
