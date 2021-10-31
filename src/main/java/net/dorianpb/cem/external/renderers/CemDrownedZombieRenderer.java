@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.DrownedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.DrownedOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
@@ -21,13 +22,19 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemDrownedZombieModel(registry, null);
+			this.model = new CemDrownedZombieModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof DrownedOverlayFeatureRenderer<DrownedEntity>){
 					return new CemDrownedOverlayRenderer(this, context.getModelLoader());
+				}
+				else if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemDrownedZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
+					                                  new CemDrownedZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F)
+					);
 				}
 				else{
 					return feature;

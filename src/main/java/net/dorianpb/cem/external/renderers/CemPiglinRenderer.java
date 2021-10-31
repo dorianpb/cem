@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PiglinEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
@@ -26,6 +27,17 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemPiglinModel(CemRegistryManager.getArmorRegistry(entityType), 0.5F),
+					                                  new CemPiglinModel(CemRegistryManager.getArmorRegistry(entityType), 1.02F)
+					);
+				}
+				else{
+					return feature;
+				}
+			});
 		} catch(Exception e){
 			modelError(e);
 		}

@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -22,6 +23,17 @@ public class CemZombieRenderer extends ZombieEntityRenderer implements CemRender
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
+					                                  new CemZombieModel(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					);
+				}
+				else{
+					return feature;
+				}
+			});
 		} catch(Exception e){
 			modelError(e);
 		}

@@ -450,6 +450,22 @@ public class CemModelEntry{
 		}
 		
 		@Override
+		public void copyTransform(ModelPart part){
+			super.copyTransform(part);
+			if(part instanceof CemModelPart){
+				for(int i = 0; i < 3; i++){
+					this.rotation[i] = ((CemModelPart) part).rotation[i];
+					this.scale[i] = ((CemModelPart) part).scale[i];
+				}
+				if(this.children.keySet().equals(part.children.keySet())){
+					for(String key : part.children.keySet()){
+						this.children.get(key).copyTransform(part.children.get(key));
+					}
+				}
+			}
+		}
+		
+		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha){
 			matrices.scale(scale[0], scale[1], scale[2]);
 			super.render(matrices, vertices, light, overlay, red, green, blue, alpha);

@@ -49,6 +49,10 @@ public class CemRegistryManager{
 		return new CemModelRegistry(EntityTypeRegistries.get(entityType));
 	}
 	
+	public static CemModelRegistry getArmorRegistry(EntityType<? extends Entity> entityType){
+		return new CemModelRegistry(EntityTypeRegistries.get(entityType).getArmorVarient());
+	}
+	
 	public static CemModelRegistry getRegistry(BlockEntityType<? extends BlockEntity> entityType){
 		return new CemModelRegistry(BlockEntityTypeRegistries.get(entityType));
 	}

@@ -8,8 +8,7 @@
 	"DilationAccessor",
 	"EntityModelLoaderMixin",
 	"EntityRendererAccessor",
-	"ModelCuboidDataMixin",
-	"ModelPartMixin"
+	"ModelCuboidDataMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

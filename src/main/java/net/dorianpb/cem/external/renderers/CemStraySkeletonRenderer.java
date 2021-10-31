@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.StrayEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.StrayOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
@@ -21,7 +22,7 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemSkeletonModel(registry, null);
+			this.model = new CemSkeletonModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
@@ -29,7 +30,12 @@ public class CemStraySkeletonRenderer extends StrayEntityRenderer implements Cem
 				if(feature instanceof StrayOverlayFeatureRenderer<AbstractSkeletonEntity, SkeletonEntityModel<AbstractSkeletonEntity>>){
 					return new CemStrayOverlayRenderer(this, context.getModelLoader());
 				}
-				
+				else if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
+					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					);
+				}
 				else{
 					return feature;
 				}

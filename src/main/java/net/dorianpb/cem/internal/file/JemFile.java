@@ -10,10 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class JemFile{
@@ -68,6 +65,14 @@ public class JemFile{
 		}
 	}
 	
+	private JemFile(Identifier texture, ArrayList<Double> textureSize, Float shadowsize, HashMap<String, JemModel> models, Identifier path){
+		this.texture = texture;
+		this.textureSize = textureSize;
+		this.shadowsize = shadowsize;
+		this.models = models;
+		this.path = path;
+	}
+	
 	public Identifier getTexture(){
 		return this.texture;
 	}
@@ -90,6 +95,10 @@ public class JemFile{
 	
 	public Float getShadowsize(){
 		return this.shadowsize;
+	}
+	
+	public JemFile getArmorVarient(){
+		return new JemFile(texture, new ArrayList<>(Arrays.asList(64D, 32D)), shadowsize, models, path);
 	}
 	
 	public static class JemModel{

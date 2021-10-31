@@ -6,6 +6,7 @@ import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.SkeletonEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
@@ -18,10 +19,21 @@ public class CemSkeletonRenderer extends SkeletonEntityRenderer implements CemRe
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemSkeletonModel(registry, null);
+			this.model = new CemSkeletonModel(registry);
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
+					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					);
+				}
+				else{
+					return feature;
+				}
+			});
 		} catch(Exception e){
 			modelError(e);
 		}

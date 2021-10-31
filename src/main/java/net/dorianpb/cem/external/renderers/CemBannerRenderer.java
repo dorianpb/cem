@@ -3,6 +3,7 @@ package net.dorianpb.cem.external.renderers;
 import net.dorianpb.cem.internal.api.CemRenderer;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
+import net.dorianpb.cem.internal.models.CemModelRegistry.CemPrepRootPartParamsBuilder;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -28,7 +29,10 @@ public class CemBannerRenderer extends BannerBlockEntityRenderer implements CemR
 		super(context);
 		CemModelRegistry registry = CemRegistryManager.getRegistry(this.getType());
 		try{
-			CemModelPart root = registry.prepRootPart(partNames, familyTree, () -> getTexturedModelData().createModel());
+			CemModelPart root = registry.prepRootPart((new CemPrepRootPartParamsBuilder()).setPartNameMap(partNames)
+			                                                                              .setFamilyTree(familyTree)
+			                                                                              .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
+			                                                                              .create());
 			this.banner = root.getChild("flag");
 			this.pillar = root.getChild("pole"); //haha demon slayer reference lol
 			this.crossbar = root.getChild("bar");

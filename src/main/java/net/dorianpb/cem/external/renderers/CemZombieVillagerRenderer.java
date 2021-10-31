@@ -22,6 +22,19 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
+			/*
+			this.features.replaceAll((feature) -> {
+				if(feature instanceof ArmorFeatureRenderer){
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemZombieVillagerModel<>(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
+					                                  new CemZombieVillagerModel<>(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					);
+				}
+				else{
+					return feature;
+				}
+			});
+			*/
 		} catch(Exception e){
 			modelError(e);
 		}
