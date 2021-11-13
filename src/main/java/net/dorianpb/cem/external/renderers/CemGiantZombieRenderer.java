@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemGiantZombieModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemArmorModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -26,8 +27,8 @@ public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRe
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
-					                                  new CemGiantZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
-					                                  new CemGiantZombieModel(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					                                  new CemArmorModel<>((CemGiantZombieModel) this.model, 0.5F),
+					                                  new CemArmorModel<>((CemGiantZombieModel) this.model, 1.0F)
 					);
 				}
 				else{

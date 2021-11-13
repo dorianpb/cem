@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemSkeletonModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemArmorModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -25,10 +26,8 @@ public class CemWitherSkeletonRenderer extends WitherSkeletonEntityRenderer impl
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
-					return new ArmorFeatureRenderer<>(this,
-					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
-					                                  new CemSkeletonModel(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
-					);
+					return new ArmorFeatureRenderer<>(this, new CemArmorModel<>((CemSkeletonModel) this.model, 0.5F), new CemArmorModel<>((CemSkeletonModel) this.model,
+					                                                                                                                      1.0F));
 				}
 				else{
 					return feature;

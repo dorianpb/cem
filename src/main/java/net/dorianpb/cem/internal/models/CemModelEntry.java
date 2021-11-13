@@ -287,7 +287,14 @@ public class CemModelEntry{
 		}
 		
 		public static CemModelPart of(ModelPart modelPart){
-			CemModelPart yeet = new CemModelPart();
+			CemModelPart yeet;
+			if(modelPart instanceof CemModelPart){
+				yeet = new CemModelPart(((CemModelPart) modelPart).textureWidth, ((CemModelPart) modelPart).textureHeight);
+			}
+			else{
+				yeet = new CemModelPart();
+			}
+			
 			for(String key : modelPart.children.keySet()){
 				yeet.children.put(key, of(modelPart.children.get(key)));
 			}
@@ -438,18 +445,6 @@ public class CemModelEntry{
 		}
 		
 		@Override
-		public ModelPart getChild(String name){
-			ModelPart child = this.children.get(name);
-			if(child == null){
-				this.children.put(name, new CemModelPart());
-				return this.getChild(name);
-			}
-			else{
-				return super.getChild(name);
-			}
-		}
-		
-		@Override
 		public void copyTransform(ModelPart part){
 			super.copyTransform(part);
 			if(part instanceof CemModelPart){
@@ -462,6 +457,18 @@ public class CemModelEntry{
 						this.children.get(key).copyTransform(part.children.get(key));
 					}
 				}
+			}
+		}
+		
+		@Override
+		public ModelPart getChild(String name){
+			ModelPart child = this.children.get(name);
+			if(child == null){
+				this.children.put(name, new CemModelPart());
+				return this.getChild(name);
+			}
+			else{
+				return super.getChild(name);
 			}
 		}
 		
@@ -504,6 +511,19 @@ public class CemModelEntry{
 			this.part.pivotY = part.pivotY - fakeTransform.pivotY;
 			this.part.pivotZ = part.pivotZ - fakeTransform.pivotZ;
 			this.part.setParent(this);
+		}
+		
+		private TransparentCemModelPart(CemModelPart part){
+			super();
+			this.part = part;
+			addChild("my_precious", part);
+		}
+		
+		public static TransparentCemModelPart of(TransparentCemModelPart modelPart){
+			TransparentCemModelPart yeet = new TransparentCemModelPart(CemModelPart.of(modelPart.part));
+			yeet.copyTransform(modelPart);
+			yeet.visible = modelPart.visible;
+			return yeet;
 		}
 		
 		@Override

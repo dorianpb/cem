@@ -22,7 +22,7 @@ public class CemZombieVillagerModel<T extends ZombieEntity> extends ZombieVillag
 	
 	static{
 		familyTree.put("headwear", Collections.singletonList("headwear2"));
-		familyTree.put("head", Arrays.asList("headwear", "nose"));
+		familyTree.put("head", Collections.singletonList("nose"));
 	}
 	
 	public CemZombieVillagerModel(CemModelRegistry registry){

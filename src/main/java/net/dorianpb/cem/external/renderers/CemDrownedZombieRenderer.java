@@ -2,6 +2,7 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemDrownedZombieModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemArmorModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.DrownedEntityRenderer;
@@ -32,8 +33,8 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				}
 				else if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
-					                                  new CemDrownedZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
-					                                  new CemDrownedZombieModel(CemRegistryManager.getArmorRegistry(getType()), 0.5F)
+					                                  new CemArmorModel<>((CemDrownedZombieModel) this.model, 0.5F),
+					                                  new CemArmorModel<>((CemDrownedZombieModel) this.model, 0.5F)
 					);
 				}
 				else{

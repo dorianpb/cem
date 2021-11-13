@@ -2,10 +2,12 @@ package net.dorianpb.cem.external.renderers;
 
 import net.dorianpb.cem.external.models.CemZombieVillagerModel;
 import net.dorianpb.cem.internal.api.CemRenderer;
+import net.dorianpb.cem.internal.models.CemArmorModel;
 import net.dorianpb.cem.internal.models.CemModelRegistry;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieVillagerEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
@@ -22,19 +24,19 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 			if(registry.hasShadowRadius()){
 				this.shadowRadius = registry.getShadowRadius();
 			}
-			/*
+			
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
-					                                  new CemZombieVillagerModel<>(CemRegistryManager.getArmorRegistry(getType()), 0.5F),
-					                                  new CemZombieVillagerModel<>(CemRegistryManager.getArmorRegistry(getType()), 1.0F)
+					                                  new CemArmorModel<>((CemZombieVillagerModel<ZombieVillagerEntity>) this.model, 0.5F),
+					                                  new CemArmorModel<>((CemZombieVillagerModel<ZombieVillagerEntity>) this.model, 1.0F)
 					);
 				}
 				else{
 					return feature;
 				}
 			});
-			*/
+			
 		} catch(Exception e){
 			modelError(e);
 		}
