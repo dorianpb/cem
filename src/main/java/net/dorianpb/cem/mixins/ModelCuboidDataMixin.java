@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ModelCuboidData.class)
-public class ModelCuboidDataMixin{
+public abstract class ModelCuboidDataMixin{
 	@Final
 	@Shadow
 	private Vec3f offset, dimensions;

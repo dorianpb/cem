@@ -544,6 +544,10 @@ public class CemModelEntry{
 			this.setTransform(rotations);
 			
 		}
+		
+		public CemModelPart getPart(){
+			return part;
+		}
 	}
 	
 	public static class CemCuboid extends Cuboid{
