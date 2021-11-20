@@ -9,6 +9,7 @@
 	"DilationAccessor",
 	"EntityModelLoaderMixin",
 	"EntityRendererAccessor",
+	"HeadFeatureRendererMixin",
 	"ModelCuboidDataMixin"
   ],
   "injectors": {
