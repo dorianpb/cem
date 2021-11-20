@@ -43,14 +43,7 @@ public class CemSkeletonModel extends SkeletonEntityModel<AbstractSkeletonEntity
 	public void setArmAngle(Arm arm, MatrixStack matrices){
 		var part = this.getArm(arm);
 		if(part instanceof TransparentCemModelPart){
-			var armpart = ((TransparentCemModelPart) part).getPart();
-			armpart.pivotX += part.pivotX + 1;
-			armpart.pivotY += part.pivotY;
-			armpart.pivotZ += part.pivotZ;
-			armpart.rotate(matrices);
-			armpart.pivotX -= part.pivotX + 1;
-			armpart.pivotY -= part.pivotY;
-			armpart.pivotZ -= part.pivotZ;
+			((TransparentCemModelPart) part).rotateInnerPart(matrices, 1, 0, 0);
 		}
 		else{
 			part.rotate(matrices);

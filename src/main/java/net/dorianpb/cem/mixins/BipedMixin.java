@@ -16,21 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BipedEntityModel.class)
 public abstract class BipedMixin{
 	@Inject(method = "setArmAngle", at = @At(value = "HEAD"), cancellable = true)
-	private void cem$setArmtoPart(Arm arm, MatrixStack matrices, CallbackInfo ci){
+	private void cem$handleArmRot(Arm arm, MatrixStack matrices, CallbackInfo ci){
 		if(this instanceof CemModel){
 			var part = this.getArm(arm);
 			if(part instanceof TransparentCemModelPart){
-				var armpart = ((TransparentCemModelPart) part).getPart();
-				armpart.pivotX += part.pivotX;
-				armpart.pivotY += part.pivotY;
-				armpart.pivotZ += part.pivotZ;
-				armpart.rotate(matrices);
-				armpart.pivotX -= part.pivotX;
-				armpart.pivotY -= part.pivotY;
-				armpart.pivotZ -= part.pivotZ;
+				((TransparentCemModelPart) part).rotateInnerPart(matrices);
 				ci.cancel();
 			}
-			
 		}
 	}
 	

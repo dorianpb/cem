@@ -545,8 +545,18 @@ public class CemModelEntry{
 			
 		}
 		
-		public CemModelPart getPart(){
-			return part;
+		public void rotateInnerPart(MatrixStack matrix){
+			this.rotateInnerPart(matrix, 0, 0, 0);
+		}
+		
+		public void rotateInnerPart(MatrixStack matrix, float xOffset, float yOffset, float zOffset){
+			part.pivotX += this.pivotX + xOffset;
+			part.pivotY += this.pivotY + yOffset;
+			part.pivotZ += this.pivotZ + zOffset;
+			part.rotate(matrix);
+			part.pivotX -= this.pivotX + xOffset;
+			part.pivotY -= this.pivotY + yOffset;
+			part.pivotZ -= this.pivotZ + zOffset;
 		}
 	}
 	
