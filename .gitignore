@@ -1,3 +1,10 @@
+# Eclipse
+bin/
+.project
+.classpath
+.settings/
+*.launch
+
 # User-specific stuff
 .idea/
 
