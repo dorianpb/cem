@@ -28,8 +28,8 @@
 	}
   ],
   "depends": {
-	"fabricloader": ">=0.12.4",
-	"minecraft": ">=1.17"
+	"fabricloader": ">=0.12.11",
+	"minecraft": ">=1.18"
   },
   "recommends": {
 	"completeconfig": "*",

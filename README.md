@@ -8,9 +8,8 @@ This mod is currently in ***ALPHA***, meaning that things *MAY* or *MAY NOT* wor
 
 ## Installation
 
-Check out the [CurseForge page for downloads](https://www.curseforge.com/minecraft/mc-mods/custom-entity-models-cem "CurseForge Page"), or build it yourself. This mod *DOES*
-require the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader") and
-the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api "Fabric API"). If you want to configure this mod, the installation
+Check out [Modrinth](https://modrinth.com/mod/cem) page, the [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/custom-entity-models-cem "CurseForge Page"), or
+build it yourself. This mod requires the installation of the [Fabric Loader](https://fabricmc.net/use/ "Fabric Loader"). If you want to configure this mod, the installation
 of [completeconfig](https://www.curseforge.com/minecraft/mc-mods/completeconfig "completeconfig")
 and [Cloth Config API](https://www.curseforge.com/minecraft/mc-mods/cloth-config "cloth api")
 are also required.
@@ -74,8 +73,7 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 * The `attach` option is not supported.
 * This mod will auto create features like the charge aura around a creeper, and the pig's saddle model so that it fits with your custom model, which Optifine doesn't do
 	* Mobs like Drowned support customization of their outer layers (drowned_outer.jem would work here).
-* Currently, all translation in custom animations is relative to the parent
-	* This *IS* different from Optifine, so if your model wants to use super fancy custom animations, you might need to change a few values, especially `*.ty` values
+* Currently, the animations do behave slightly differently than optifine's, just enough to break some packs.
 
 ## Licensing
 
