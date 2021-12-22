@@ -62,3 +62,7 @@ extendable  class   net/minecraft/client/render/entity/HorseEntityRenderer
 #Horse Armor
 mutable     field   net/minecraft/client/render/entity/feature/HorseArmorFeatureRenderer        model           Lnet/minecraft/client/render/entity/model/HorseEntityModel;
 accessible  field   net/minecraft/client/render/entity/feature/HorseArmorFeatureRenderer        model           Lnet/minecraft/client/render/entity/model/HorseEntityModel;
+
+#Trident
+mutable     field   net/minecraft/client/render/entity/TridentEntityRenderer                    model           Lnet/minecraft/client/render/entity/model/TridentEntityModel;
+accessible  field   net/minecraft/client/render/entity/TridentEntityRenderer                    model           Lnet/minecraft/client/render/entity/model/TridentEntityModel;

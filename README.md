@@ -40,27 +40,28 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Cows
 	* Chicken
 	* Creepers
-	* Ender Dragon (must be ender_dragon.jem, not dragon.jem)
 	* Endermen
+	* Ender Dragon (must be ender_dragon.jem, not dragon.jem)
 	* Fish (just salmon for now)
 	* Foxes
 	* Ghasts
-	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
 	* Guardians and Elder Guardians
 	* Horses and their undead variants
+	* Illagers (Evokers, Illusioners, Pillagers, and Vindicators)
 	* Iron Golems
 	* Magma Cubes
 	* Minecarts (all variants)
 	* Mooshrooms
 	* Ocelots
+	* Phantoms
+	* Pigs
+	* Piglins (including Piglin Brutes and Zombified Piglins)
 	* Rabbits
 	* Sheep
 	* Skeletons and their variants (Wither Skeletons and Strays)
 	* Slimes
 	* Spiders (and Cave Spiders
-	* Phantoms
-	* Pigs
-	* Piglins (including Piglin Brutes and Zombified Piglins)
+	* Tridents
 	* Villagers (and Zombie Villagers)
 	* Wandering Traders
 	* Witches

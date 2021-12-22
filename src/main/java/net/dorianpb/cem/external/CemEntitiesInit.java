@@ -69,5 +69,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.PHANTOM, CemPhantomRenderer::new);
 		register(EntityType.GHAST, CemGhastRenderer::new);
 		register(EntityType.SALMON, CemSalmonRenderer::new);
+		register(EntityType.TRIDENT, CemTridentRenderer::new);
 	}
 }
