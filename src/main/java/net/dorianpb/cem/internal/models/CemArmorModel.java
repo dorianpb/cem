@@ -66,12 +66,12 @@ public class CemArmorModel<C extends CemModel, T extends LivingEntity> extends B
 				var newarmor = new CemModelPart(64, 32);
 				newarmor.setPivot(x, y, z);
 				switch(name){
-					case EntityModelPartNames.HAT -> newarmor.addCuboid(0, 0, 0, 8, 8, 8, 0, false, 0, 0);
-					case EntityModelPartNames.BODY -> newarmor.addCuboid(0, 0, 0, 8, 12, 4, 0, false, 16, 16);
-					case EntityModelPartNames.RIGHT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, 40, 16);
-					case EntityModelPartNames.LEFT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, 40, 16);
-					case EntityModelPartNames.RIGHT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, 0, 16);
-					case EntityModelPartNames.LEFT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, 0, 16);
+					case EntityModelPartNames.HAT -> newarmor.addCuboid(0, 0, 0, 8, 8, 8, 0, false, false, 0, 0);
+					case EntityModelPartNames.BODY -> newarmor.addCuboid(0, 0, 0, 8, 12, 4, 0, false, false, 16, 16);
+					case EntityModelPartNames.RIGHT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, false, 40, 16);
+					case EntityModelPartNames.LEFT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, true, 40, 16);
+					case EntityModelPartNames.RIGHT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, false, 0, 16);
+					case EntityModelPartNames.LEFT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, true, 0, 16);
 				}
 				armorPart.addChild("armor", newarmor);
 			}

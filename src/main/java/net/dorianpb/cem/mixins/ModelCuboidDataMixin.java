@@ -43,6 +43,7 @@ public abstract class ModelCuboidDataMixin{
 		                                 ((DilationAccessor) this.extraSize).getRadiusY(),
 		                                 ((DilationAccessor) this.extraSize).getRadiusZ(),
 		                                 this.mirror,
+										 this.mirror,
 		                                 (int) (textureWidth * this.textureScale.getX()),
 		                                 (int) (textureHeight * this.textureScale.getY()),
 		                                 (int) this.textureUV.getX(),
