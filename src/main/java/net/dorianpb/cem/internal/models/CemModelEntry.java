@@ -653,21 +653,7 @@ public class CemModelEntry{
 		                 int textureHeight,
 		                 int u,
 		                 int v){
-			super(u,
-			      v,
-			      mirrorU? x + sizeX : x,
-			      mirrorV? y + sizeY : y,
-			      z,
-			      mirrorU? -sizeX : sizeX,
-			      mirrorV? -sizeY : sizeY,
-			      sizeZ,
-			      mirrorU? -extraX : extraX,
-			      mirrorV? -extraY : extraY,
-			      extraZ,
-			      false,
-			      textureWidth,
-			      textureHeight
-			     );
+			super(u, v, x, mirrorV? y + sizeY : y, z, sizeX, mirrorV? -sizeY : sizeY, sizeZ, extraX, extraY, extraZ, mirrorU, textureWidth, textureHeight);
 			this.params = new CemCuboidTexOffsetParams(x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirrorU, mirrorV, textureWidth, textureHeight, u, v);
 		}
 		
@@ -709,6 +695,10 @@ public class CemModelEntry{
 			                       ((CemCuboidUvParams) this.params).getUvUp(),
 			                       ((CemCuboidUvParams) this.params).getUvDown()
 			       );
+		}
+		
+		public boolean isMirrorU(){
+			return this.params.isMirrorU();
 		}
 		
 		private abstract static class CemCuboidParams{

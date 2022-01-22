@@ -2,6 +2,7 @@ package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
+import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
 import net.minecraft.client.model.ModelPart;
@@ -59,19 +60,20 @@ public class CemArmorModel<C extends CemModel, T extends LivingEntity> extends B
 		removeCuboids(modelpart, armorCandidates);
 		armorCandidates.forEach((armorPart, map) -> {
 			if(armorCandidates.get(armorPart) != null){
-				float[] array = armorCandidates.get(armorPart);
-				float x = array[0];
-				float y = array[1];
-				float z = array[2];
+				float x = map[0];
+				float y = map[1];
+				float z = map[2];
+				boolean reverse = map[3] == 1;
+				
 				var newarmor = new CemModelPart(64, 32);
 				newarmor.setPivot(x, y, z);
 				switch(name){
-					case EntityModelPartNames.HAT -> newarmor.addCuboid(0, 0, 0, 8, 8, 8, 0, false, false, 0, 0);
-					case EntityModelPartNames.BODY -> newarmor.addCuboid(0, 0, 0, 8, 12, 4, 0, false, false, 16, 16);
-					case EntityModelPartNames.RIGHT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, false, 40, 16);
-					case EntityModelPartNames.LEFT_ARM -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, true, 40, 16);
-					case EntityModelPartNames.RIGHT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, false, false, 0, 16);
-					case EntityModelPartNames.LEFT_LEG -> newarmor.addCuboid(0, 0, 0, 4, 12, 4, 0, true, true, 0, 16);
+					case EntityModelPartNames.HAT -> newarmor.addCuboid(reverse? -8 : 0, 0, 0, 8, 8, 8, 0, false, false, 0, 0);
+					case EntityModelPartNames.BODY -> newarmor.addCuboid(reverse? -8 : 0, 0, 0, 8, 12, 4, 0, false, false, 16, 16);
+					case EntityModelPartNames.RIGHT_ARM -> newarmor.addCuboid(reverse? -4 : 0, 0, 0, 4, 12, 4, 0, false, false, 40, 16);
+					case EntityModelPartNames.LEFT_ARM -> newarmor.addCuboid(reverse? -4 : 0, 0, 0, 4, 12, 4, 0, true, false, 40, 16);
+					case EntityModelPartNames.RIGHT_LEG -> newarmor.addCuboid(reverse? -4 : 0, 0, 0, 4, 12, 4, 0, false, false, 0, 16);
+					case EntityModelPartNames.LEFT_LEG -> newarmor.addCuboid(reverse? -4 : 0, 0, 0, 4, 12, 4, 0, true, false, 0, 16);
 				}
 				armorPart.addChild("armor", newarmor);
 			}
@@ -95,7 +97,7 @@ public class CemArmorModel<C extends CemModel, T extends LivingEntity> extends B
 	private static <M extends ModelPart> void removeCuboids(M modelPart, Map<CemModelPart, float[]> armorCandidates){
 		if(armorCandidates.containsKey((CemModelPart) modelPart)){
 			for(ModelPart.Cuboid cuboid : modelPart.cuboids){
-				armorCandidates.put((CemModelPart) modelPart, new float[]{cuboid.minX, cuboid.minY, cuboid.minZ});
+				armorCandidates.put((CemModelPart) modelPart, new float[]{cuboid.minX, cuboid.minY, cuboid.minZ, ((CemCuboid) cuboid).isMirrorU()? 1 : 0});
 			}
 		}
 		modelPart.cuboids.clear();
