@@ -11,7 +11,7 @@ import net.dorianpb.cem.internal.util.CemStringParser;
 import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelTransform;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -229,9 +229,9 @@ public class CemModelRegistry{
 		return this.file.getShadowsize();
 	}
 	
-	public void applyAnimations(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity){
+	public void applyAnimations(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
 		for(CemAnimation anim : this.animations){
-			anim.apply(limbAngle, limbDistance, age, head_yaw, head_pitch, livingEntity);
+			anim.apply(limbAngle, limbDistance, age, head_yaw, head_pitch, entity);
 		}
 	}
 	
@@ -297,8 +297,8 @@ public class CemModelRegistry{
 			this.axis = var.charAt(1);
 		}
 		
-		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, LivingEntity livingEntity){
-			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, livingEntity, this.registry);
+		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
+			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity, this.registry);
 			if(!Float.isNaN(val)){
 				switch(operation){
 					case 't' -> this.target.setTranslate(this.axis, val);
