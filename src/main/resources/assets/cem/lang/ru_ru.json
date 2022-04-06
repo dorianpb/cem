@@ -4,8 +4,8 @@
   "config.cem.use_optifine_folder.tooltip.0": "Позволяет загружать пользовательские",
   "config.cem.use_optifine_folder.tooltip.1": "модели из assets/minecraft/optifine/cem,",
   "config.cem.use_optifine_folder.tooltip.2": "как это делает Optifine. Для применения",
-  "config.cem.use_optifine_folder.tooltip.3": "изменений требуется перезагрузить пакеты",
-  "config.cem.use_optifine_folder.tooltip.4": "ресурсов (F3+T).",
+  "config.cem.use_optifine_folder.tooltip.3": "изменений требуется перезагрузить",
+  "config.cem.use_optifine_folder.tooltip.4": "пакеты ресурсов (F3+T).",
   "config.cem.use_new_model_creation_fix": "Исправлять создание моделей?",
   "config.cem.use_new_model_creation_fix.tooltip.0": "Предотвращает прямое перемещение",
   "config.cem.use_new_model_creation_fix.tooltip.1": "частей модели при анимации. Это",
@@ -16,6 +16,6 @@
   "config.cem.use_new_model_creation_fix.tooltip.6": "перезагрузить пакеты ресурсов (F3+T).",
   "config.cem.use_old_animations": "Использовать старую реализацию анимации?",
   "config.cem.use_old_animations.tooltip.0": "Восстанавливает поведение анимации",
-  "config.cem.use_old_animations.tooltip.1": "из CEM 0.6.2 и ниже. Скорее всего,",
-  "config.cem.use_old_animations.tooltip.2": "вам следует это отключить."
+  "config.cem.use_old_animations.tooltip.1": "из CEM 0.6.2 и ниже. Скорее всего, вам",
+  "config.cem.use_old_animations.tooltip.2": "следует это отключить."
 }
