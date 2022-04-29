@@ -1,9 +1,9 @@
 {
-  "modmenu.descriptionTranslation.cem": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
-  "config.cem.use_optifine_folder": "Use \"assets/minecraft/optifine/cem\"?",
-  "config.cem.use_optifine_folder.tooltip": "This will load CEM models from assets/minecraft/optifine/cem,\nwhich is exactly what optifine does.\nReload resources (F3 + T) for this to take effect!",
-  "config.cem.use_new_model_creation_fix": "Use model creation fix?",
-  "config.cem.use_new_model_creation_fix.tooltip": "This prevents minecraft from directly moving\nyour model parts around when animating.\nThis breaks a few models but fixes other ones.\nPlease use if possible.\nReload resources (F3 + T) for this to take effect!",
-  "config.cem.use_old_animations": "Use older animation implementation?",
-  "config.cem.use_old_animations.tooltip": "This restores animation behavior from CEM version <=0.6.2.\nYou probably want this off."
+  "modmenu.descriptionTranslation.cem": "Permet de charger des modèles personnalisés par les fichiers .jem et .jpm définis par un pack de ressources.",
+  "config.cem.use_optifine_folder": "Utiliser \"assets/minecraft/optifine/cem\" ?",
+  "config.cem.use_optifine_folder.tooltip": "Ceci va charger les modèles personalisés d'\"assets/minecraft/optifine/cem\",\nce qui est le même fonctionnement qu'optifine.\nRechargez les ressources (F3 + T) pour appliquer !",
+  "config.cem.use_new_model_creation_fix": "Utiliser le correctif de création de modèle ?",
+  "config.cem.use_new_model_creation_fix.tooltip": "Ceci empêche minecraft de déplacer directement les parties de votre modèle animé.\nCeci casse quelques modèles mais en corrige d'autres.\nUtilisez si possible.\nRechargez les ressources (F3 + T) pour appliquer !",
+  "config.cem.use_old_animations": "Utiliser la vielle technique d'aniamtion ?",
+  "config.cem.use_old_animations.tooltip": "Ceci restaure le comportement d'animation de la version <=0.6.2.\nCeci doit probablement être désactivé."
 }
