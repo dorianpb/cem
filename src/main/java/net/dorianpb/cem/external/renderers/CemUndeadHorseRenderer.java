@@ -10,28 +10,28 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.HorseBaseEntity;
+import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.util.Identifier;
 
 public class CemUndeadHorseRenderer extends ZombieHorseEntityRenderer implements CemRenderer{
-	private final EntityType<? extends HorseBaseEntity> entityType;
-	private final CemModelRegistry                      registry;
+	private final EntityType<? extends AbstractHorseEntity> entityType;
+	private final CemModelRegistry                          registry;
 	
-	public CemUndeadHorseRenderer(EntityRendererFactory.Context context, EntityType<? extends HorseBaseEntity> entityType){
+	public CemUndeadHorseRenderer(EntityRendererFactory.Context context, EntityType<? extends AbstractHorseEntity> entityType){
 		super(context, getLayer(entityType));
 		this.entityType = entityType;
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemHorseModel<>(registry, null);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = new CemHorseModel<>(this.registry, null);
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 		} catch(Exception e){
 			modelError(e);
 		}
 	}
 	
-	private static EntityModelLayer getLayer(EntityType<? extends HorseBaseEntity> entityType){
+	private static EntityModelLayer getLayer(EntityType<? extends AbstractHorseEntity> entityType){
 		if(entityType.equals(EntityType.ZOMBIE_HORSE)){
 			return EntityModelLayers.ZOMBIE_HORSE;
 		}
@@ -53,7 +53,7 @@ public class CemUndeadHorseRenderer extends ZombieHorseEntityRenderer implements
 	}
 	
 	@Override
-	public Identifier getTexture(HorseBaseEntity entity){
+	public Identifier getTexture(AbstractHorseEntity entity){
 		if(this.registry != null && this.registry.hasTexture()){
 			return this.registry.getTexture();
 		}
