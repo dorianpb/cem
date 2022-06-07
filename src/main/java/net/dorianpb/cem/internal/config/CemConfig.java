@@ -1,6 +1,5 @@
 package net.dorianpb.cem.internal.config;
 
-import me.lortseam.completeconfig.api.ConfigContainer;
 import me.lortseam.completeconfig.api.ConfigEntry;
 import me.lortseam.completeconfig.data.Config;
 import me.lortseam.completeconfig.gui.ConfigScreenBuilder;
@@ -8,7 +7,7 @@ import me.lortseam.completeconfig.gui.cloth.ClothConfigScreenBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
 @SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"})
-public final class CemConfig extends Config implements ConfigContainer, CemOptions{
+public final class CemConfig extends Config implements CemOptions{
 	@ConfigEntry private boolean use_optifine_folder        = CemOptions.instance.useOptifineFolder();
 	@ConfigEntry private boolean use_new_model_creation_fix = CemOptions.instance.useTransparentParts();
 	@ConfigEntry private boolean use_old_animations         = CemOptions.instance.useOldAnimations();

@@ -3,13 +3,17 @@ package net.dorianpb.cem.internal.config;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.fabricmc.loader.api.FabricLoader;
 
-public class CemConfigFairy{
+public enum CemConfigFairy{
+	;
 	private static CemOptions config;
 	
 	public static void loadConfig(){
-		if(FabricLoader.getInstance().isModLoaded("completeconfig")){
+		if(FabricLoader.getInstance().isModLoaded("completeconfig-base")){
 			config = CemConfig.getConfig();
-			CemConfig.createScreen();
+			
+			if(FabricLoader.getInstance().isModLoaded("completeconfig-gui-cloth") || FabricLoader.getInstance().isModLoaded("completeconfig-gui-coat")){
+				CemConfig.createScreen();
+			}
 		}
 		else{
 			CemFairy.getLogger().warn("Unable to set up config due to missing dependencies; using defaults!");
