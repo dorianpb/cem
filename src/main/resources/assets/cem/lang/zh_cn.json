@@ -1,21 +1,9 @@
 {
-	"modmenu.descriptionTranslation.cem": "允许将自定义模型加载到游戏中。资源包中的.jem和.jpm文件",
-	"config.cem.use_optifine_folder": "使用 \"assets/minecraft/optifine/cem\"?",
-	"config.cem.use_optifine_folder.tooltip.0": "这将从中加载CEM模型",
-	"config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
-	"config.cem.use_optifine_folder.tooltip.2": "使用Optifine模型",
-	"config.cem.use_optifine_folder.tooltip.3": "重新加载资源（F3+T）",
-	"config.cem.use_optifine_folder.tooltip.4": "使其更改生效!",
-	"config.cem.use_new_model_creation_fix": "使用模型创建修复?",
-	"config.cem.use_new_model_creation_fix.tooltip.0": "这可以防止minecraft在设置动画时",
-	"config.cem.use_new_model_creation_fix.tooltip.1": "直接移动模型零件",
-	"config.cem.use_new_model_creation_fix.tooltip.2": "这破坏了一些模型",
-	"config.cem.use_new_model_creation_fix.tooltip.3": "但修复了其他模型",
-	"config.cem.use_new_model_creation_fix.tooltip.4": "如果可能，请使用",
-	"config.cem.use_new_model_creation_fix.tooltip.5": "重新加载资源（F3+T）",
-	"config.cem.use_new_model_creation_fix.tooltip.6": "使其更改生效!",
-	"config.cem.use_old_animations": "使用旧的动画实现?",
-	"config.cem.use_old_animations.tooltip.0": "使用老版本的动画",
-	"config.cem.use_old_animations.tooltip.1": "从<=0.6.2版本中",
-	"config.cem.use_old_animations.tooltip.2": "也许你想把它关掉"
+    "modmenu.descriptionTranslation.cem": "允许将自定义模型加载到游戏中。资源包中的.jem和.jpm文件",
+    "config.cem.use_optifine_folder": "使用 \"assets/minecraft/optifine/cem\"?",
+    "config.cem.use_optifine_folder.description": "这将从中加载CEM模型\nassets/minecraft/optifine/cem,\n使用Optifine模型\n重新加载资源（F3+T）\n使其更改生效!",
+    "config.cem.use_new_model_creation_fix": "使用模型创建修复?",
+    "config.cem.use_new_model_creation_fix.description": "这可以防止minecraft在设置动画时\n直接移动模型零件\n这破坏了一些模型\n但修复了其他模型\n如果可能，请使用\n重新加载资源（F3+T）\n使其更改生效!",
+    "config.cem.use_old_animations": "使用旧的动画实现?",
+    "config.cem.use_old_animations.description": "使用老版本的动画\n从<=0.6.2版本中\n也许你想把它关掉"
 }

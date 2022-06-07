@@ -1,21 +1,9 @@
 {
     "modmenu.descriptionTranslation.cem": "Permet de charger des modèles personnalisés par les fichiers .jem et .jpm définis par un pack de ressources.",
     "config.cem.use_optifine_folder": "Utiliser \"assets/minecraft/optifine/cem\" ?",
-    "config.cem.use_optifine_folder.tooltip.0": "Ceci va charger les modèles",
-    "config.cem.use_optifine_folder.tooltip.1": "personalisés du dossier",
-    "config.cem.use_optifine_folder.tooltip.2": "\"assets/minecraft/optifine/cem\",",
-    "config.cem.use_optifine_folder.tooltip.3": "ce qui est le même fonctionnement qu'optifine.",
-    "config.cem.use_optifine_folder.tooltip.4": "Rechargez les ressources (F3 + T) pour appliquer !",
+    "config.cem.use_optifine_folder.description": "Ceci va charger les modèles\npersonalisés du dossier\n\"assets/minecraft/optifine/cem\",\nce qui est le même fonctionnement qu'optifine.\nRechargez les ressources (F3 + T) pour appliquer!",
     "config.cem.use_new_model_creation_fix": "Utiliser le correctif de création de modèle ?",
-    "config.cem.use_new_model_creation_fix.tooltip.0": "Ceci empêche minecraft de ",
-    "config.cem.use_new_model_creation_fix.tooltip.1": "déplacer directement les ",
-    "config.cem.use_new_model_creation_fix.tooltip.2": "parties de votre modèle animé. ",
-    "config.cem.use_new_model_creation_fix.tooltip.3": "Ceci casse quelques modèles mais",
-    "config.cem.use_new_model_creation_fix.tooltip.4": "en corrige d'autres. Utilisez ",
-    "config.cem.use_new_model_creation_fix.tooltip.5": "si possible. Rechargez les",
-    "config.cem.use_new_model_creation_fix.tooltip.6": "ressources (F3 + T) pour appliquer!",
+    "config.cem.use_new_model_creation_fix.description": "Ceci empêche minecraft de\ndéplacer directement les\nparties de votre modèle animé.\nCeci casse quelques modèles mais\nen corrige d'autres. Utilisez\nsi possible. Rechargez les\nressources (F3 + T) pour appliquer!",
     "config.cem.use_old_animations": "Utiliser la vielle technique d'aniamtion ?",
-    "config.cem.use_old_animations.tooltip.0": "Ceci restaure le comportement ",
-    "config.cem.use_old_animations.tooltip.1": "d'animation de la version <=0.6.2.",
-    "config.cem.use_old_animations.tooltip.2": "Ceci doit probablement être désactivé."
+    "config.cem.use_old_animations.description": "Ceci restaure le comportement\nd'animation de la version <=0.6.2.\nCeci doit probablement être désactivé."
 }
