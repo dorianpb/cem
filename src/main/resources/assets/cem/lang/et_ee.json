@@ -1,9 +1,9 @@
 {
-    "modmenu.descriptionTranslation.cem": "Võimaldab ressursipakis .jem ja .jpm failidega defineeritud kohandatud mudeleid mängu laadida.",
-    "config.cem.use_optifine_folder": "Kasuta \"assets/minecraft/optifine/cem\"?",
-    "config.cem.use_optifine_folder.description": "See laadib CEM-mudelid asukohast\nassets/minecraft/optifine/cem,\nmis järgib täpselt Optifine'i käitumist.\nMuudatuse rakendamiseks\nlaadi ressursid uuesti (F3 + T)!",
-    "config.cem.use_new_model_creation_fix": "Kasuta mudeliloomise parandust?",
-    "config.cem.use_new_model_creation_fix.description": "See väldib Minecraftil animeerimise ajal\notseselt mudeliosade ümberliigutamist.\nSee lõhub mõned mudelid\nkuid parandab teised.\nVõimalusel kasuta seda.\nMuudatuse rakendamiseks\nlaadi ressursid uuesti (F3 + T)!",
-    "config.cem.use_old_animations": "Kasuta vanemat animatsiooniteostust?",
-    "config.cem.use_old_animations.description": "See taastab CEM versiooni <= 0.6.2\nanimatsioonide käitumise.\nIlmselt soovid selle keelata."
+	"modmenu.descriptionTranslation.cem": "Võimaldab ressursipakis .jem ja .jpm failidega defineeritud kohandatud mudeleid mängu laadida.",
+	"config.cem.use_optifine_folder": "Kasuta \"assets/minecraft/optifine/cem\"?",
+	"config.cem.use_optifine_folder.description": "See laadib CEM-mudelid asukohast\nassets/minecraft/optifine/cem,\nmis järgib täpselt Optifine'i käitumist.\nMuudatuse rakendamiseks\nlaadi ressursid uuesti (F3 + T)!",
+	"config.cem.use_new_model_creation_fix": "Kasuta mudeliloomise parandust?",
+	"config.cem.use_new_model_creation_fix.description": "See väldib Minecraftil animeerimise ajal\notseselt mudeliosade ümberliigutamist.\nSee lõhub mõned mudelid\nkuid parandab teised.\nVõimalusel kasuta seda.\nMuudatuse rakendamiseks\nlaadi ressursid uuesti (F3 + T)!",
+	"config.cem.use_old_animations": "Kasuta vanemat animatsiooniteostust?",
+	"config.cem.use_old_animations.description": "See taastab CEM versiooni <= 0.6.2\nanimatsioonide käitumise.\nIlmselt soovid selle keelata."
 }

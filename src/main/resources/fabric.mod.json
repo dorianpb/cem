@@ -1,41 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "cem",
-  "version": "${version}",
-  "name": "Custom Entity Models",
-  "description": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
-  "authors": ["dorianpb"],
-  "contact": {
-	"homepage": "https://github.com/dorianpb/cem",
-	"issues": "https://github.com/dorianpb/cem/issues"
-  },
-  "license": " LGPL-3.0-only",
-  "icon": "assets/cem/icon.png",
-  "environment": "client",
-  "accessWidener": "cem.accesswidener",
-  "entrypoints": {
-	"client": [
-	  "net.dorianpb.cem.internal.CemInit"
+	"schemaVersion": 1,
+	"id": "cem",
+	"version": "${version}",
+	"name": "Custom Entity Models",
+	"description": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
+	"authors": ["dorianpb"],
+	"contact": {
+		"homepage": "https://github.com/dorianpb/cem",
+		"issues": "https://github.com/dorianpb/cem/issues"
+	},
+	"license": " LGPL-3.0-only",
+	"icon": "assets/cem/icon.png",
+	"environment": "client",
+	"accessWidener": "cem.accesswidener",
+	"entrypoints": {
+		"client": [
+			"net.dorianpb.cem.internal.CemInit"
+		],
+		"cem": [
+			"net.dorianpb.cem.external.CemEntitiesInit"
+		]
+	},
+	"mixins": [
+		{
+			"config": "cem.mixins.json",
+			"environment": "client"
+		}
 	],
-	"cem": [
-	  "net.dorianpb.cem.external.CemEntitiesInit"
-	]
-  },
-  "mixins": [
-	{
-	  "config": "cem.mixins.json",
-	  "environment": "client"
+	"depends": {
+		"fabricloader": ">=0.12.11",
+		"minecraft": ">=1.19"
+	},
+	"recommends": {
+		"completeconfig": "*",
+		"cloth-config2": "*"
+	},
+	"conflicts": {
+		"optifabric": "*"
 	}
-  ],
-  "depends": {
-	"fabricloader": ">=0.12.11",
-	"minecraft": ">=1.18"
-  },
-  "recommends": {
-	"completeconfig": "*",
-	"cloth-config2": "*"
-  },
-  "conflicts": {
-	"optifabric": "*"
-  }
 }
