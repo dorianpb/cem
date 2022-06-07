@@ -2,10 +2,10 @@ package net.dorianpb.cem.internal.file;
 
 import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.util.CemFairy;
+import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -33,22 +33,16 @@ public class JemFile{
 			Identifier jankTexture = CemFairy.transformPath(path.getPath().substring(path.getPath().lastIndexOf('/') + 1, path.getPath().lastIndexOf('.')) + ".png",
 			                                                this.path
 			                                               );
-			boolean jankExists = false;
-			try{
-				resourceManager.getResource(jankTexture).close();
-				jankExists = true;
-			} catch(Exception ignored){
-			}
-			this.texture = jankExists? jankTexture : null;
+			this.texture = resourceManager.getResource(jankTexture).isPresent()? jankTexture : null;
 		}
 		else{
 			this.texture = CemFairy.transformPath(texturepath, this.path);
 		}
 		
-		models = new HashMap<>();
+		this.models = new HashMap<>();
 		for(LinkedTreeMap model : (ArrayList<LinkedTreeMap>) json.get("models")){
 			JemModel newmodel = new JemModel(model, this.path, resourceManager);
-			models.put(newmodel.getPart(), newmodel);
+			this.models.put(newmodel.getPart(), newmodel);
 		}
 		this.validate();
 	}
@@ -60,8 +54,8 @@ public class JemFile{
 		if(this.textureSize == null){
 			throw new InvalidParameterException("Element \"textureSize\" is required");
 		}
-		if(texture != null && !allowTextureChars.matcher(texture.getPath()).find()){
-			throw new InvalidParameterException("Non [a-z0-9/._-] character in path of location: " + texture);
+		if(this.texture != null && !allowTextureChars.matcher(this.texture.getPath()).find()){
+			throw new InvalidParameterException("Non [a-z0-9/._-] character in path of location: " + this.texture);
 		}
 	}
 	
@@ -78,7 +72,7 @@ public class JemFile{
 	}
 	
 	public ArrayList<Double> getTextureSize(){
-		return textureSize;
+		return this.textureSize;
 	}
 	
 	public Set<String> getModelList(){
@@ -98,7 +92,7 @@ public class JemFile{
 	}
 	
 	public JemFile getArmorVarient(){
-		return new JemFile(texture, new ArrayList<>(Arrays.asList(64D, 32D)), shadowsize, models, path);
+		return new JemFile(this.texture, new ArrayList<>(Arrays.asList(64D, 32D)), this.shadowsize, this.models, this.path);
 	}
 	
 	public static class JemModel{
@@ -124,20 +118,24 @@ public class JemFile{
 			JpmFile temp;
 			if(this.model != null){
 				Identifier id = CemFairy.transformPath(this.model, path);
-				try(InputStream stream = resourceManager.getResource(id).getInputStream()){
-					@SuppressWarnings("unchecked")
-					LinkedTreeMap<String, Object> file = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
-					if(file == null){
-						throw new Exception("Invalid File");
+				Optional<Resource> resourceOptional = resourceManager.getResource(id);
+				if(resourceOptional.isPresent()){
+					try(InputStream stream = resourceOptional.get().getInputStream()){
+						@SuppressWarnings("unchecked")
+						LinkedTreeMap<String, Object> file = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
+						if(file == null){
+							throw new Exception("Invalid File");
+						}
+						temp = new JpmFile(file);
+					} catch(Exception exception){
+						CemFairy.postReadError(exception, id);
+						throw new Exception("Error loading dependent file: " + id + exception.getMessage());
 					}
-					temp = new JpmFile(file);
-				} catch(FileNotFoundException exception){
-					CemFairy.postReadError(exception, id);
-					CemFairy.getLogger().warn(" Falling back on reading model definition from " + path.toString() + "!");
+				}
+				else{
+					CemFairy.getLogger().warn(" File \"" + resourceOptional + " not found,");
+					CemFairy.getLogger().warn(" falling back on reading model definition from " + path.toString() + "!");
 					temp = new JpmFile(json);
-				} catch(Exception exception){
-					CemFairy.postReadError(exception, id);
-					throw new Exception("Error loading dependent file: " + id);
 				}
 			}
 			else{
@@ -154,15 +152,15 @@ public class JemFile{
 		}
 		
 		public String getPart(){
-			return part;
+			return this.part;
 		}
 		
 		public Double getScale(){
-			return scale;
+			return this.scale;
 		}
 		
 		String getModel(){
-			return model;
+			return this.model;
 		}
 		
 		String getId(){
@@ -170,11 +168,11 @@ public class JemFile{
 		}
 		
 		public JpmFile getModelDef(){
-			return modelDef;
+			return this.modelDef;
 		}
 		
 		public LinkedTreeMap<String, String> getAnimations(){
-			return animations;
+			return this.animations;
 		}
 		
 	}

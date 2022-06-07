@@ -25,12 +25,12 @@ import java.util.Optional;
 
 @Mixin(EntityModelLoader.class)
 public abstract class EntityModelLoaderMixin{
-	@Inject(method = "reload", at = @At(value = "HEAD"))
+	@Inject(method = "reload", at = @At("HEAD"))
 	private void cem$injectReload(ResourceManager manager, CallbackInfo ci){
 		CemRegistryManager.clearRegistries();
-		manager.findResources("cem", path -> path.endsWith(".jem")).forEach((id -> loadResourceFromId(manager, id, "dorianpb")));
+		manager.findResources("cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "dorianpb"));
 		if(CemConfigFairy.getConfig().useOptifineFolder()){
-			manager.findResources("optifine/cem", path -> path.endsWith(".jem")).forEach((id -> loadResourceFromId(manager, id, "minecraft")));
+			manager.findResources("optifine/cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "minecraft"));
 		}
 	}
 	
@@ -39,7 +39,7 @@ public abstract class EntityModelLoaderMixin{
 			return;
 		}
 		CemFairy.getLogger().info(id.toString());
-		try(InputStream stream = manager.getResource(id).getInputStream()){
+		try(InputStream stream = manager.getResource(id).get().getInputStream()){
 			//initialize the file
 			@SuppressWarnings("unchecked")
 			LinkedTreeMap<String, Object> json = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
