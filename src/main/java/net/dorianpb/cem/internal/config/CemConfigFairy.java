@@ -11,7 +11,7 @@ public enum CemConfigFairy{
 		if(FabricLoader.getInstance().isModLoaded("completeconfig-base")){
 			config = CemConfig.getConfig();
 			
-			if(FabricLoader.getInstance().isModLoaded("completeconfig-gui-cloth") || FabricLoader.getInstance().isModLoaded("completeconfig-gui-coat")){
+			if(FabricLoader.getInstance().isModLoaded("completeconfig-gui-cloth")){
 				CemConfig.createScreen();
 			}
 		}
