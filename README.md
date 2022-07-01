@@ -20,6 +20,10 @@ This mod loads .jem and .jpm files from  "assets/dorianpb/cem" folder in resourc
 assets/minecraft/optifine/cem" to "assets/dorianpb/cem" should work fine. If you install the optional dependencies, this isn't necessary as there is an option within the
 config to just load from optifine's folder structure.
 
+## Discord Server Link
+
+Join my discord server here: https://discord.gg/3qxFZm7Ycw
+
 ## For resource pack devs
 
 The file format for the .jem and .jpm is identical to the Optfine's (check out [here](https://github.com/sp614x/optifine/blob/master/OptiFineDoc/doc/cem_model.txt ".jem")
