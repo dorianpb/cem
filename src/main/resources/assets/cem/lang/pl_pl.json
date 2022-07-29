@@ -1,0 +1,21 @@
+{
+  "modmenu.descriptionTranslation.cem": "Pozwala na ładowanie do gry niestandardowych modeli zdefiniowanych przez pliki .jem i .jpm w paczce zasobów.",
+  "config.cem.use_optifine_folder": "Użyć \"assets/minecraft/optifine/cem\"?",
+  "config.cem.use_optifine_folder.tooltip.0": "To załaduje modele CEM z  ",
+  "config.cem.use_optifine_folder.tooltip.1": "assets/minecraft/optifine/cem,",
+  "config.cem.use_optifine_folder.tooltip.2": "Dokładnie to samo robi optifine.",
+  "config.cem.use_optifine_folder.tooltip.3": "Przeładuj zasoby (F3 + T) aby",
+  "config.cem.use_optifine_folder.tooltip.4": "zmiany zostały zastosowane!",
+  "config.cem.use_new_model_creation_fix": "Użyć poprawki tworzenia modelu?",
+  "config.cem.use_new_model_creation_fix.tooltip.0": "Zapobiega to bezpośredniemu",
+  "config.cem.use_new_model_creation_fix.tooltip.1": "przemeiszczaniu części twojego modelu",
+  "config.cem.use_new_model_creation_fix.tooltip.2": "przez minecraft podczas animowania.",
+  "config.cem.use_new_model_creation_fix.tooltip.3": "Psuje to kilka modeli, ale naprawia inne.",
+  "config.cem.use_new_model_creation_fix.tooltip.4": "Proszę używać, jeśli to możliwe.",
+  "config.cem.use_new_model_creation_fix.tooltip.5": "Przeładuj zasoby (F3 + T) aby",
+  "config.cem.use_new_model_creation_fix.tooltip.6": "zmiany zostały zastosowane!",
+  "config.cem.use_old_animations": "Użyć starszej implementacji animacji?",
+  "config.cem.use_old_animations.tooltip.0": "Przywraca to zachowanie animacji",
+  "config.cem.use_old_animations.tooltip.1": "z wersji CEM <=0.6.2. Prawdopodobnie",
+  "config.cem.use_old_animations.tooltip.2": "chcesz, żeby było to wyłączone."
+}
