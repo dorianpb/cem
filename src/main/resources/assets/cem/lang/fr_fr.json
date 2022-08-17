@@ -14,7 +14,7 @@
     "config.cem.use_new_model_creation_fix.tooltip.4": "en corrige d'autres. Utilisez ",
     "config.cem.use_new_model_creation_fix.tooltip.5": "si possible. Rechargez les",
     "config.cem.use_new_model_creation_fix.tooltip.6": "ressources (F3 + T) pour appliquer!",
-    "config.cem.use_old_animations": "Utiliser la vielle technique d'aniamtion ?",
+    "config.cem.use_old_animations": "Utiliser la vielle technique d'animation ?",
     "config.cem.use_old_animations.tooltip.0": "Ceci restaure le comportement ",
     "config.cem.use_old_animations.tooltip.1": "d'animation de la version <=0.6.2.",
     "config.cem.use_old_animations.tooltip.2": "Ceci doit probablement être désactivé."
