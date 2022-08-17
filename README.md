@@ -75,6 +75,24 @@ assets/dorianpb/cem/za/waurdo/creeper.jem", etc.
 	* Mobs like Drowned support customization of their outer layers (drowned_outer.jem would work here).
 * Currently, the animations do behave slightly differently than optifine's, just enough to break some packs.
 
+## Recommended resource packs
+
+This mod is being tested with the following resource packs:
+
+### [Fresh Animations](https://www.curseforge.com/minecraft/texture-packs/fresh-animations)
+
+Features that are not supported yet:
+* feature 1
+* feature 2
+* feature 3
+
+### [Super Mario Craft](https://www.curseforge.com/minecraft/texture-packs/super-mario-craft)
+
+Features that are not supported yet:
+* feature 1
+* feature 2
+* feature 3
+
 ## Licensing
 
 This project is licensed with LGPL v3.0. Please don't repost this project anywhere without my written permission first.
