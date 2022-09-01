@@ -20,13 +20,15 @@ public class JemFile{
 	private final       Float                     shadowsize;
 	private final       HashMap<String, JemModel> models;
 	private final       Identifier                path;
+	private final String filePath;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws Exception{
+	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, String filePath, ResourceManager resourceManager) throws Exception{
 		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
 		this.shadowsize = CemFairy.JSONparseFloat(json.get("shadowSize"));
 		this.path = path;
+		this.filePath = filePath;
 		String texturepath = CemFairy.JSONparseString(json.get("texture"));
 		if(texturepath == null || texturepath.isEmpty()){
 			

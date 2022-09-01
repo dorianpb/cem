@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -46,6 +47,7 @@ public abstract class EntityModelLoaderMixin{
 			if(json == null){
 				throw new Exception("Invalid File");
 			}
+			Resource resource = manager.getResource(id).get();
 			JemFile file = new JemFile(json, id, manager);
 			
 			String entityName = CemFairy.getEntityNameFromId(id);
