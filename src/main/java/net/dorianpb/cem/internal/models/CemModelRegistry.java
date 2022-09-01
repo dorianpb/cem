@@ -1,7 +1,6 @@
 package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.api.CemModel.VanillaReferenceModelFactory;
-import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
@@ -15,7 +14,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /** Contains all of the data for the CEM model */
 public class CemModelRegistry{
@@ -81,7 +88,7 @@ public class CemModelRegistry{
 			newRoot.inflate(params.inflate());
 		}
 		//new model creation fix!
-		if(CemConfigFairy.getConfig().useTransparentParts()){
+		if(CemFairy.useCreationFix(new File(file.getPath()))) {
 			Map<String, ModelTransform> newFixes = new HashMap<>();
 			if(params.fixes() != null){
 				params.fixes().forEach(((key, modelTransform) -> newFixes.put(params.partNameMap().getOrDefault(key, key), modelTransform)));
