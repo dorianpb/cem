@@ -10,7 +10,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class JemFile{
@@ -20,15 +25,16 @@ public class JemFile{
 	private final       Float                     shadowsize;
 	private final       HashMap<String, JemModel> models;
 	private final       Identifier                path;
-	private final String filePath;
+	private final boolean modelCreatinFix;
 	
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, String filePath, ResourceManager resourceManager) throws Exception{
+	public JemFile(LinkedTreeMap<String, Object> json, LinkedTreeMap<String, Object> mcMeta,Identifier path, String packName, ResourceManager resourceManager) throws Exception{
 		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
 		this.shadowsize = CemFairy.JSONparseFloat(json.get("shadowSize"));
 		this.path = path;
-		this.filePath = filePath;
+		this.modelCreatinFix = Boolean.TRUE.equals(CemFairy.JSONparseBool(mcMeta.get("creation_model_fix")));
+
 		String texturepath = CemFairy.JSONparseString(json.get("texture"));
 		if(texturepath == null || texturepath.isEmpty()){
 			
@@ -61,12 +67,13 @@ public class JemFile{
 		}
 	}
 	
-	private JemFile(Identifier texture, ArrayList<Double> textureSize, Float shadowsize, HashMap<String, JemModel> models, Identifier path){
+	private JemFile(Identifier texture, ArrayList<Double> textureSize, Float shadowsize, HashMap<String, JemModel> models, Identifier path, boolean modelCreatinFix){
 		this.texture = texture;
 		this.textureSize = textureSize;
 		this.shadowsize = shadowsize;
 		this.models = models;
 		this.path = path;
+		this.modelCreatinFix = modelCreatinFix;
 	}
 	
 	public Identifier getTexture(){
@@ -94,7 +101,7 @@ public class JemFile{
 	}
 	
 	public JemFile getArmorVarient(){
-		return new JemFile(this.texture, new ArrayList<>(Arrays.asList(64D, 32D)), this.shadowsize, this.models, this.path);
+		return new JemFile(this.texture, new ArrayList<>(Arrays.asList(64D, 32D)), this.shadowsize, this.models, this.path, this.modelCreatinFix);
 	}
 	
 	public static class JemModel{
