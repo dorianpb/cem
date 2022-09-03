@@ -16,9 +16,6 @@
 	"entrypoints": {
 		"client": [
 			"net.dorianpb.cem.internal.CemInit"
-		],
-		"cem": [
-			"net.dorianpb.cem.external.CemEntitiesInit"
 		]
 	},
 	"mixins": [
