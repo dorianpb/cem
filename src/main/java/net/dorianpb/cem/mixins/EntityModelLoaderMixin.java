@@ -22,37 +22,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Mixin(EntityModelLoader.class)
 public abstract class EntityModelLoaderMixin{
-
-	private final Map<String, Identifier> mcMetas = new HashMap<>();
 	@Inject(method = "reload", at = @At("HEAD"))
 	private void cem$injectReload(ResourceManager manager, CallbackInfo ci){
 		CemRegistryManager.clearRegistries();
-		final Identifier mcmetaid;
-		manager.findResources("", path -> path.getPath().endsWith(".mcmeta")).forEach((id, resource) -> addMcMetaId(resource.getResourcePackName(), id));
 		manager.findResources("cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "dorianpb"));
 		if(CemConfigFairy.getConfig().useOptifineFolder()){
 			manager.findResources("optifine/cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "minecraft"));
 		}
 	}
-
-	private void addMcMetaId(String resourcepackName, Identifier id) {
-		mcMetas.put(resourcepackName, id);
-	}
-
+	
 	private void loadResourceFromId(ResourceManager manager, Identifier id, String namespace){
 		if(!id.getNamespace().equals(namespace)){
 			return;
 		}
 		CemFairy.getLogger().info(id.toString());
-
 		try(InputStream stream = manager.getResource(id).get().getInputStream()){
-
 			//initialize the file
 			@SuppressWarnings("unchecked")
 			LinkedTreeMap<String, Object> json = CemFairy.getGson().fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
@@ -60,25 +48,7 @@ public abstract class EntityModelLoaderMixin{
 				throw new Exception("Invalid File");
 			}
 			Resource resource = manager.getResource(id).get();
-			String packName = resource.getResourcePackName();
-			LinkedTreeMap<String, Object> metaJson = null;
-			try (InputStream metaStream = manager.getResource(mcMetas.get(packName)).get().getInputStream()) {
-				metaJson = CemFairy.getGson().fromJson(new InputStreamReader(metaStream, StandardCharsets.UTF_8), LinkedTreeMap.class);
-				if(metaJson == null){
-					throw new Exception("Invalid File");
-				}
-			} catch(Exception e) {
-				CemFairy.getLogger().error("Error parsing mcmeta" + id + ":");
-				String message = e.getMessage();
-				CemFairy.getLogger().error(e);
-				if(message == null || message.trim().equals("")){
-					CemFairy.getLogger().error(e.getStackTrace()[0]);
-					CemFairy.getLogger().error(e.getStackTrace()[1]);
-					CemFairy.getLogger().error(e.getStackTrace()[2]);
-				}
-			}
-
-			JemFile file = new JemFile(json, metaJson, id, packName, manager);
+			JemFile file = new JemFile(json, id, manager);
 			
 			String entityName = CemFairy.getEntityNameFromId(id);
 			Optional<EntityType<?>> entityTypeOptional = EntityType.get(entityName);

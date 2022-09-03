@@ -1,6 +1,8 @@
 package net.dorianpb.cem.internal.util;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import net.dorianpb.cem.internal.config.CemConfig;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
@@ -8,7 +10,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -98,6 +104,47 @@ public class CemFairy{
 	//logger
 	public static Logger getLogger(){
 		return LOGGER;
+	}
+
+	//get if the pack overrides creation fix
+	public static boolean useCreationFix(File source) {
+		JsonObject mcMetaFile = getMcMeta(source);
+		if (mcMetaFile == null) return false;
+		CemFairy.getLogger().warn("McMeta Fix: " + (mcMetaFile.has("pack.model_creation_fix") ? mcMetaFile.get("pack.model_creation_fix").getAsBoolean() : CemConfig.getConfig().useTransparentParts()));
+		return mcMetaFile.has("pack.model_creation_fix") ? mcMetaFile.get("pack.model_creation_fix").getAsBoolean() : CemConfig.getConfig().useTransparentParts();
+	}
+
+	//mcmeta-file
+	@Nullable
+	public static JsonObject getMcMeta(File source) {
+		boolean continueLooping = true;
+		FileReader mcmetaFile = null;
+		File currentSource = source;
+		while(continueLooping) {
+			currentSource = currentSource.getParentFile();
+
+			if (currentSource.getName().equals("assets")) {
+				continueLooping = false;
+				currentSource = currentSource.getParentFile();
+				if (containsFile(currentSource, "/pack.mcmeta")) {
+					try {
+						mcmetaFile = new FileReader(currentSource.getPath()+"/pack.mcmeta");
+					} catch (FileNotFoundException e) {
+						CemFairy.getLogger().error("Get MCMeta Error: " + currentSource.getPath()+"/pack.mcmeta");
+						CemFairy.getLogger().error(e.getMessage());
+					}
+					if (mcmetaFile != null) {
+						return getGson().fromJson(mcmetaFile, JsonObject.class);
+					}
+				}
+			}
+		}
+		CemFairy.getLogger().warn("Couldn't Find Mc Meta File");
+		return null;
+	}
+
+	public static boolean containsFile(File directory, String contains) {
+		return new File(directory.getPath()+contains).exists();
 	}
 	
 	//json
