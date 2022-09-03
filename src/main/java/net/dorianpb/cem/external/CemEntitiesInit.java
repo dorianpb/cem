@@ -27,7 +27,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.PIG, CemPigRenderer::new);
 		register(BlockEntityType.BANNER, CemBannerRenderer::new);
 		register(EntityType.MOOSHROOM, CemMooshroomRenderer::new);
-		register(EntityType.AXOLOTL, CemAxolotlRenderer::new);
 		register(EntityType.ZOMBIE, CemZombieRenderer::new);
 		register(EntityType.HUSK, CemHuskZombieRenderer::new);
 		register(EntityType.DROWNED, CemDrownedZombieRenderer::new);
@@ -71,7 +70,6 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.PHANTOM, CemPhantomRenderer::new);
 		register(EntityType.GHAST, CemGhastRenderer::new);
 		register(EntityType.SALMON, CemSalmonRenderer::new);
-		register(EntityType.ALLAY, CemAllayRenderer::new);
 		register(EntityType.TRIDENT, CemTridentRenderer::new);
 	}
 }
