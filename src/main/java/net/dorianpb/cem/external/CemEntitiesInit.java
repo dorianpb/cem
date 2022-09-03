@@ -38,6 +38,7 @@ public class CemEntitiesInit extends CemEntityInitializer{
 		register(EntityType.PILLAGER, CemPillagerRenderer::new);
 		register(EntityType.VINDICATOR, CemVindicatorRenderer::new);
 		register(EntityType.EVOKER, CemEvokerRenderer::new);
+		register(EntityType.VEX, CemVexRenderer::new);
 		register(EntityType.ILLUSIONER, CemIllusionerRenderer::new);
 		register(EntityType.FOX, CemFoxRenderer::new);
 		register(EntityType.SLIME, CemSlimeRenderer::new);
