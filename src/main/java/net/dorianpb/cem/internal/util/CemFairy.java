@@ -9,13 +9,11 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /** Helps with internal stuff, all you need to know is that it keeps track of the renderers and files */
 public class CemFairy{
-	private static final Set<EntityType<? extends Entity>>           supportedEntities      = new HashSet<>();
+	private static final Set<EntityType<? extends Entity>> supportedEntities                = new HashSet<>();
 	private static final Set<BlockEntityType<? extends BlockEntity>> supportedBlockEntities = new HashSet<>();
 	private static final Set<String>                                 supportedOthers        = new HashSet<>();
 	private static final Logger                                      LOGGER                 = LogManager.getLogger("Custom Entity Models");
@@ -55,33 +53,65 @@ public class CemFairy{
 		String id = identifier.toString();
 		return id.substring(id.lastIndexOf("/") + 1, id.lastIndexOf(".jem"));
 	}
-	
-	//file stuff
-	public static Identifier transformPath(String path, Identifier location){
-		//relative to current folder
-		if(path.startsWith("./")){
-			return new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/') + 1) + path.substring(2));
+
+	public static Identifier transformPath(String path, Identifier location) {
+		var pathChunks = new LinkedList<>(Arrays.asList(path.split("/")));
+		var firstChunk = pathChunks.get(0);
+
+		// Remove the file name from the location path or trailing slash
+		var locationPath = new LinkedList<>(Arrays.asList(location.getPath().split("/")));
+		var lastLocationChunk = locationPath.get(locationPath.size() - 1);
+		if (lastLocationChunk.equals("") || lastLocationChunk.matches(".+\\..+")) {
+			locationPath.remove(locationPath.size() - 1);
+			location = new Identifier(location.getNamespace(), String.join("/", locationPath));
 		}
-		//go up a folder
-		else if(path.startsWith("../")){
-			return transformPath(path.substring(3), new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/'))));
+
+		// Uses a explicit namespace
+		if (pathChunks.get(0).contains(":")) {
+			var nsAndChunk = firstChunk.split(":");
+			location = new Identifier(nsAndChunk[0], "");
+			firstChunk = nsAndChunk[1];
+			pathChunks.set(0, firstChunk);
 		}
-		//relative to "assets/dorianpb/cem"
-		else if(path.startsWith("~/")){
-			return new Identifier("dorianpb", "cem/" + path.substring(2));
+
+		// Specifies an absolute path
+		if (firstChunk.equals("")) {
+			location = new Identifier(location.getNamespace(), "");
+			pathChunks.removeFirst();
 		}
-		//relative to "assets/namespace/"
-		else if(path.chars().filter(ch -> ch == ':').count() == 1){
-			String path2 = path.substring(path.indexOf(":") + 1);
-			if(path2.startsWith("/")){
-				path2 = path2.replaceFirst("/", "");
+
+		// Specifies a relative path
+		else if (firstChunk.equals(".")) {
+			pathChunks.removeFirst();
+		}
+
+		// Specifies an optifine folder or dorianpb folder path
+		else if (firstChunk.equals("~")) {
+			pathChunks.removeFirst();
+			location = location.getNamespace().equals("dorianpb")
+				? new Identifier(location.getNamespace(), "cem")
+				: new Identifier("minecraft", "optifine");
+		}
+
+		// Move the location path up for each ".." chunk at the beginning of the path
+		else if (firstChunk.equals("..")) {
+			var basePathChunks = new LinkedList<>(Arrays.asList(location.getPath().split("/")));
+			while (pathChunks.get(0).equals("..")) {
+				if (basePathChunks.size() == 0) { break; }
+				pathChunks.removeFirst();
+				basePathChunks.remove(basePathChunks.size() - 1);
 			}
-			return transformPath(path2, new Identifier(path.substring(0, path.indexOf(":")), ""));
+			location = new Identifier(location.getNamespace(), String.join("/", basePathChunks));
+
+		// Deal with Optifine's rather strange pathing behaviour
+		// When Optifine loads a texture path does not contain "/", it loads relative to the file.
+		} else if (location.getNamespace().equals("minecraft") && path.contains("/")) {
+			location = new Identifier(location.getNamespace(), "");
 		}
-		//look for file in current folder
-		else{
-			return new Identifier(location.getNamespace(), location.getPath().substring(0, location.getPath().lastIndexOf('/') + 1) + path);
-		}
+
+		// Finalize the transformed path as a new Identifier
+		if (!location.getPath().equals("")) { pathChunks.addFirst(location.getPath()); }
+		return new Identifier(location.getNamespace(), String.join("/", pathChunks));
 	}
 	
 	public static void postReadError(Exception exception, Identifier id){
