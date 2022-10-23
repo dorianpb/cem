@@ -10,5 +10,3 @@ public class CemInit implements ClientModInitializer{
 		CemConfigFairy.loadConfig();
 	}
 }
-
-//TODO write documentation for everything so people can adopt the mod and use it like a good boi
