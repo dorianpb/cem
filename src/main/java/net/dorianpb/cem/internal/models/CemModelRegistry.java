@@ -1,11 +1,9 @@
 package net.dorianpb.cem.internal.models;
 
-import net.dorianpb.cem.internal.api.CemModel.VanillaReferenceModelFactory;
+import com.google.common.collect.BiMap;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
-import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.dorianpb.cem.internal.util.CemStringParser;
 import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
@@ -20,7 +18,7 @@ import java.util.*;
 /** Contains all of the data for the CEM model */
 public class CemModelRegistry{
 	private final HashMap<ArrayList<String>, CemModelEntry> database; //actual storage of cemModelEntries
-	private final ArrayList<CemAnimation>                   animations; //actual storage of all the cemAnimations
+	private final List<CemAnimation>                        animations; //actual storage of all the cemAnimations
 	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
 	private final JemFile                                   file; //stores the jemFile
 	
@@ -39,10 +37,10 @@ public class CemModelRegistry{
 			JemModel data = this.file.getModel(part);
 			for(String key : data.getAnimations().keySet()){
 				try{
-					animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf(".")), this.findChild(part)),
-					                                data.getAnimations().get(key),
-					                                key.substring(key.indexOf(".") + 1),
-					                                this
+					this.animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf('.')), this.findChild(part)),
+					                                     data.getAnimations().get(key),
+					                                     key.substring(key.indexOf('.') + 1),
+					                                     this
 					));
 				} catch(Exception e){
 					CemFairy.getLogger().error("Error applying animation \"" + data.getAnimations().get(key) + "\" in \"" + file.getPath() + "\":");
@@ -52,119 +50,24 @@ public class CemModelRegistry{
 		}
 	}
 	
-	/**
-	 * Constructs a CemModelPart to use when creating a (Block)EntityModel.
-	 * @param params {@link CemRootPartParams}
-	 *
-	 * @return ModelPart used to create a (Block)EntityModel.
-	 */
-	public CemModelPart prepRootPart(CemRootPartParams params){
-		for(String parent : params.familyTree().keySet()){
-			for(String child : params.familyTree().get(parent)){
-				this.prepChild(parent, child);
-			}
-		}
-		CemModelPart newRoot = new CemModelPart();
-		Set<String> partList = new LinkedHashSet<>();
-		for(int i = params.familyTree().keySet().size() - 1; i >= 0; i--){
-			partList.add((String) params.familyTree().keySet().toArray()[i]);
-		}
-		partList.addAll(this.partNameRefs.keySet());
-		for(String partName : partList){
-			CemModelEntry entry = this.getEntryByPartName(partName);
-			if(entry != null){
-				this.getParent(params.partNameMap(), params.familyTree(), newRoot, partName).addChild(params.partNameMap().getOrDefault(partName, partName),
-				                                                                                      entry.getModel());
-			}
-		}
-		if(params.inflate() != null){
-			newRoot.inflate(params.inflate());
-		}
-		//new model creation fix!
-		if(CemConfigFairy.getConfig().useTransparentParts()){
-			Map<String, ModelTransform> newFixes = new HashMap<>();
-			if(params.fixes() != null){
-				params.fixes().forEach(((key, modelTransform) -> newFixes.put(params.partNameMap().getOrDefault(key, key), modelTransform)));
-			}
-			this.makePartTransparent(newRoot, params.vanillaReferenceModelFactory().get(), newFixes);
-		}
-		return newRoot;
-	}
-	
-	private CemModelPart getParent(Map<String, String> partNameMap, Map<String, List<String>> familyTree, ModelPart root, String name){
-		ArrayList<String> names = new ArrayList<>();
-		while(true){
-			name = this.findParent(familyTree, name);
-			if(name != null){
-				names.add(name);
-			}
-			else{
-				break;
-			}
-		}
-		if(names.size() == 0){
-			return (CemModelPart) root;
-		}
-		else{
-			ModelPart part = root;
-			for(int i = names.size() - 1; i >= 0; i--){
-				part = part.getChild(partNameMap.getOrDefault(names.get(i), names.get(i)));
-			}
-			return (CemModelPart) part;
-		}
-		
-	}
-	
-	private String findParent(Map<String, List<String>> familyTree, String name){
-		for(String key : familyTree.keySet()){
-			if(familyTree.get(key).contains(name)){
-				return key;
-			}
-		}
-		return null;
-	}
-	
-	private void makePartTransparent(CemModelPart target, ModelPart vanillaModel, @Nullable Map<String, ModelTransform> fixes){
-		Set<String> iterator = new HashSet<>();
-		iterator.addAll(target.children.keySet());
-		iterator.addAll(vanillaModel.children.keySet());
-		for(String key : iterator){
-			try{
-				if(target.children.containsKey(key) && vanillaModel.children.containsKey(key)){
-					TransparentCemModelPart replacement;
-					if(fixes != null && fixes.containsKey(key)){
-						var correctTransform = ModelTransform.of(fixes.get(key).pivotX,
-						                                         fixes.get(key).pivotY,
-						                                         fixes.get(key).pivotZ,
-						                                         vanillaModel.getChild(key).getTransform().pitch,
-						                                         vanillaModel.getChild(key).getTransform().yaw,
-						                                         vanillaModel.getChild(key).getTransform().roll
-						                                        );
-						replacement = new TransparentCemModelPart(target.getChild(key), correctTransform, vanillaModel.getChild(key).getTransform());
-					}
-					else{
-						replacement = new TransparentCemModelPart(target.getChild(key), vanillaModel.getChild(key).getTransform(), vanillaModel.getChild(key).getTransform());
-					}
-					this.makePartTransparent((CemModelPart) target.getChild(key), vanillaModel.getChild(key), fixes);
-					target.addChild(key, replacement);
-				}
-			} catch(Exception exception){
-				CemFairy.getLogger().warn(exception);
-			}
-		}
-	}
-	
-	private void prepChild(String parentPart, String childPart){
-		CemModelEntry parent = this.getEntryByPartName(parentPart);
-		CemModelEntry child = this.getEntryByPartName(childPart);
+	private static void prepChild(CemModelPart parent, CemModelPart child){
 		if(parent == null || child == null){
 			return;
 		}
-		CemModelPart parentPart1 = parent.getModel();
-		ModelPart childPart1 = child.getModel();
-		childPart1.pivotX = childPart1.pivotX - parentPart1.pivotX;
-		childPart1.pivotY = childPart1.pivotY - parentPart1.pivotY;
-		childPart1.pivotZ = childPart1.pivotZ - parentPart1.pivotZ;
+		child.pivotX = child.pivotX - parent.pivotX;
+		child.pivotY = child.pivotY - parent.pivotY;
+		child.pivotZ = child.pivotZ - parent.pivotZ;
+	}
+	
+	public CemModelPart prepRootPart(ModelPart vanillaPart,
+	                                 @Nullable BiMap<String, String> partNames,
+	                                 @Nullable Map<String, List<String>> partTree,
+	                                 @Nullable Map<String, ModelTransform> modelFixes,
+	                                 @Nullable Object identifier){
+		CemModelPart newRoot = new CemModelPart();
+		this.constructPart(newRoot, vanillaPart, partNames, modelFixes, identifier);
+		newRoot.setIdentifier(identifier);
+		return newRoot;
 	}
 	
 	public CemModelEntry getEntryByPartName(String key){
@@ -175,12 +78,59 @@ public class CemModelRegistry{
 		return null;
 	}
 	
+	private void constructPart(CemModelPart cemparent,
+	                           ModelPart vanillapart,
+	                           @Nullable BiMap<String, String> partNames,
+	                           @Nullable Map<String, ModelTransform> modelFixes,
+	                           Object identifier){
+		for(String partname : vanillapart.children.keySet()){
+			//find part
+			CemModelPart part, transpart = null;
+			if(partNames != null && this.partNameRefs.containsKey(partNames.inverse().getOrDefault(partname, partname))){
+				part = this.partNameRefs.get(partNames.inverse().getOrDefault(partname, partname)).getModel();
+			}
+			else if(this.partNameRefs.containsKey(partname)){
+				part = this.partNameRefs.get(partname).getModel();
+			}
+			else{
+				part = new CemModelPart();
+			}
+			
+			//continue with this branch
+			constructPart(part, vanillapart.getChild(partname), partNames, modelFixes, identifier);
+			
+			prepChild(cemparent, part);
+			
+			part.setIdentifier(identifier);
+			
+			//make transparent if we should
+			if(CemConfigFairy.getConfig().useTransparentParts()){
+				ModelTransform transform;
+				if(modelFixes != null && modelFixes.containsKey(partname)){
+					transform = ModelTransform.of(modelFixes.get(partname).pivotX,
+					                              modelFixes.get(partname).pivotY,
+					                              modelFixes.get(partname).pivotZ,
+					                              part.pitch,
+					                              part.yaw,
+					                              part.roll
+					                             );
+				}
+				else{
+					transform = part.getTransform();
+				}
+				transpart = new TransparentCemModelPart(part, transform, vanillapart.getChild(partname).getTransform());
+			}
+			
+			//add part to parent
+			cemparent.addChild(partname, CemConfigFairy.getConfig().useTransparentParts()? transpart : part);
+			
+		}
+	}
+	
 	private void addEntry(CemModelEntry entry, ArrayList<String> parentRefmap){
 		ArrayList<String> refmap;
-		if(parentRefmap != null && parentRefmap.size() > 0){
-			@SuppressWarnings("unchecked")
-			ArrayList<String> temp = (ArrayList<String>) parentRefmap.clone();
-			refmap = temp;
+		if(parentRefmap != null && !parentRefmap.isEmpty()){
+			refmap = new ArrayList<>(parentRefmap);
 		}
 		else{
 			refmap = new ArrayList<>();
@@ -248,10 +198,10 @@ public class CemModelRegistry{
 				return parent;
 			}
 			else{
-				StringBuilder newTarget = new StringBuilder();
+				StringBuilder newTarget = new StringBuilder(25);
 				newTarget.append((parent.getId() == null)? parent.getPart() : parent.getId());
-				for(int d = 1; d < refmap.size(); d++){
-					newTarget.append(":").append(refmap.get(d));
+				for(int i = 1; i < refmap.size(); i++){
+					newTarget.append(":").append(refmap.get(i));
 				}
 				return findChild(newTarget.toString(), parent);
 			}
@@ -300,11 +250,11 @@ public class CemModelRegistry{
 		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
 			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity, this.registry);
 			if(!Float.isNaN(val)){
-				switch(operation){
+				switch(this.operation){
 					case 't' -> this.target.setTranslate(this.axis, val);
 					case 'r' -> this.target.setRotate(this.axis, val);
 					case 's' -> this.target.getModel().setScale(this.axis, val);
-					default -> throw new IllegalStateException("Unknown operation \"" + operation + "\"");
+					default -> throw new IllegalStateException("Unknown operation \"" + this.operation + "\"");
 				}
 			}
 			else{
@@ -313,80 +263,4 @@ public class CemModelRegistry{
 		}
 	}
 	
-	public static class CemRootPartParams{
-		private final           Map<String, String>          partNameMap;
-		private final           Map<String, List<String>>    familyTree;
-		private final           VanillaReferenceModelFactory vanillaReferenceModelFactory;
-		private final @Nullable Map<String, ModelTransform>  fixes;
-		private final @Nullable Float                        inflate;
-		
-		private CemRootPartParams(Map<String, String> partNameMap,
-		                          Map<String, List<String>> familyTree,
-		                          VanillaReferenceModelFactory vanillaReferenceModelFactory,
-		                          @Nullable Map<String, ModelTransform> fixes,
-		                          @Nullable Float inflate){
-			this.partNameMap = partNameMap;
-			this.familyTree = familyTree;
-			this.vanillaReferenceModelFactory = vanillaReferenceModelFactory;
-			this.fixes = fixes;
-			this.inflate = inflate;
-		}
-		
-		public Map<String, String> partNameMap(){
-			return partNameMap;
-		}
-		
-		public Map<String, List<String>> familyTree(){
-			return familyTree;
-		}
-		
-		public VanillaReferenceModelFactory vanillaReferenceModelFactory(){
-			return vanillaReferenceModelFactory;
-		}
-		
-		public Map<String, ModelTransform> fixes(){
-			return fixes;
-		}
-		
-		public Float inflate(){
-			return inflate;
-		}
-	}
-	
-	public static class CemPrepRootPartParamsBuilder{
-		private           Map<String, String>          partNameMap = new HashMap<>();
-		private           Map<String, List<String>>    familyTree  = new HashMap<>();
-		private           VanillaReferenceModelFactory vanillaReferenceModelFactory;
-		private @Nullable Map<String, ModelTransform>  fixes       = null;
-		private @Nullable Float                        inflate     = null;
-		
-		public CemPrepRootPartParamsBuilder setPartNameMap(Map<String, String> partNameMap){
-			this.partNameMap = partNameMap;
-			return this;
-		}
-		
-		public CemPrepRootPartParamsBuilder setFamilyTree(Map<String, List<String>> familyTree){
-			this.familyTree = familyTree;
-			return this;
-		}
-		
-		public CemPrepRootPartParamsBuilder setVanillaReferenceModelFactory(VanillaReferenceModelFactory vanillaReferenceModelFactory){
-			this.vanillaReferenceModelFactory = vanillaReferenceModelFactory;
-			return this;
-		}
-		
-		public CemPrepRootPartParamsBuilder setFixes(@Nullable Map<String, ModelTransform> fixes){
-			this.fixes = fixes;
-			return this;
-		}
-		
-		public CemPrepRootPartParamsBuilder setInflate(@Nullable Float inflate){
-			this.inflate = inflate;
-			return this;
-		}
-		
-		public CemRootPartParams create(){
-			return new CemRootPartParams(partNameMap, familyTree, vanillaReferenceModelFactory, fixes, inflate);
-		}
-	}
 }
