@@ -19,6 +19,9 @@
 		],
 		"cem": [
 			"net.dorianpb.cem.external.CemEntitiesInit"
+		],
+		"modmenu": [
+			"net.dorianpb.cem.internal.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [

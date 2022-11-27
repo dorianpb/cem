@@ -1,7 +1,7 @@
 package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
-import net.dorianpb.cem.internal.config.CemConfigFairy;
+import net.dorianpb.cem.internal.config.CemConfig;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
 import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
@@ -21,7 +21,7 @@ public class CemArmorModel<C extends CemModel, T extends LivingEntity> extends B
 	
 	public static CemModelPart getRoot(CemModel model, @Nullable Float inflate){
 		CemModelPart root = new CemModelPart(64, 32);
-		if(CemConfigFairy.getConfig().useTransparentParts()){
+		if(CemConfig.getConfig().useTransparentParts()){
 			root.addChild(EntityModelPartNames.HEAD, prepPart(castPart((CemModelPart) ((BipedEntityModel<?>) model).head), EntityModelPartNames.HEAD));
 			root.addChild(EntityModelPartNames.HAT, prepPart(castPart((CemModelPart) ((BipedEntityModel<?>) model).hat), EntityModelPartNames.HAT));
 			root.addChild(EntityModelPartNames.BODY, prepPart(castPart((CemModelPart) ((BipedEntityModel<?>) model).body), EntityModelPartNames.BODY));
