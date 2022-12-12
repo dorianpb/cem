@@ -33,11 +33,11 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "com.gitlab.Lortseam.completeconfig:base:${project.complete_config_version}"
-    modImplementation "com.gitlab.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
+    modImplementation "com.github.Lortseam.completeconfig:base:${project.complete_config_version}"
+    modImplementation "com.github.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
 
-    include "com.gitlab.Lortseam.completeconfig:base:${project.complete_config_version}"
-    include "com.gitlab.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
+    include "com.github.Lortseam.completeconfig:base:${project.complete_config_version}"
+    include "com.github.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
 }
 
 loom {

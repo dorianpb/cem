@@ -10,9 +10,9 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -50,7 +50,7 @@ public abstract class EntityModelLoaderMixin{
 			
 			String entityName = CemFairy.getEntityNameFromId(id);
 			Optional<EntityType<?>> entityTypeOptional = EntityType.get(entityName);
-			Optional<BlockEntityType<?>> blockEntityTypeOptional = Registry.BLOCK_ENTITY_TYPE.getOrEmpty(Identifier.tryParse(entityName));
+			Optional<BlockEntityType<?>> blockEntityTypeOptional = Registries.BLOCK_ENTITY_TYPE.getOrEmpty(Identifier.tryParse(entityName));
 			
 			if(entityTypeOptional.isPresent()){
 				EntityType<? extends Entity> entityType = entityTypeOptional.get();
