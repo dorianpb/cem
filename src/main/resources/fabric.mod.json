@@ -19,6 +19,9 @@
 		],
 		"cem": [
 			"net.dorianpb.cem.external.CemEntitiesInit"
+		],
+		"modmenu": [
+			"net.dorianpb.cem.internal.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -29,11 +32,8 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.12.11",
-		"minecraft": ">=1.19"
-	},
-	"recommends": {
-		"completeconfig": "*",
-		"cloth-config2": "*"
+		"minecraft": ">=1.19",
+		"yet-another-config-lib": ">=1.7.1"
 	},
 	"conflicts": {
 		"optifabric": "*"

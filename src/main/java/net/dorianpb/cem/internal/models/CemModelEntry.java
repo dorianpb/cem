@@ -1,6 +1,6 @@
 package net.dorianpb.cem.internal.models;
 
-import net.dorianpb.cem.internal.config.CemConfigFairy;
+import net.dorianpb.cem.internal.config.CemConfig;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
@@ -176,7 +176,7 @@ public class CemModelEntry{
 	
 	/** this is done because there can be a discrepancy between the translate value in the .jem and the actual part */
 	void setTranslate(char axis, float requestedTranslate){
-		if(CemConfigFairy.getConfig().useOldAnimations()){
+		if(CemConfig.getConfig().useOldAnimations()){
 			float oldTranslate;
 			switch(axis){
 				case 'x' -> {
@@ -216,7 +216,7 @@ public class CemModelEntry{
 	}
 	
 	public float getTranslate(char axis){
-		if(CemConfigFairy.getConfig().useOldAnimations()){
+		if(CemConfig.getConfig().useOldAnimations()){
 			return switch(axis){
 				case 'x' -> this.translates[0];
 				case 'y' -> this.translates[1];
@@ -253,7 +253,7 @@ public class CemModelEntry{
 	}
 	
 	void setRotate(char axis, float requestedAngle){
-		if(CemConfigFairy.getConfig().useOldAnimations()){
+		if(CemConfig.getConfig().useOldAnimations()){
 			this.getModel().setRotation(axis, requestedAngle);
 		}
 		else{

@@ -25,7 +25,10 @@ repositories {
         name = 'JitPack'
         url 'https://jitpack.io'
     }
-
+    maven {
+        name = 'isXander'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 dependencies {
@@ -33,11 +36,10 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "com.github.Lortseam.completeconfig:base:${project.complete_config_version}"
-    modImplementation "com.github.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
-
-    include "com.github.Lortseam.completeconfig:base:${project.complete_config_version}"
-    include "com.github.Lortseam.completeconfig:gui-cloth:${project.complete_config_version}"
+    modImplementation ("dev.isxander:yet-another-config-lib:${project.yacl_version}") {
+        exclude module: 'modmenu'
+    }
+    modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 }
 
 loom {

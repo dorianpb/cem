@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** Helps with internal stuff, all you need to know is that it keeps track of the renderers and files */
-public class CemFairy{
+public class CemFairy {
 	private static final Set<EntityType<? extends Entity>>           supportedEntities      = new HashSet<>();
 	private static final Set<BlockEntityType<? extends BlockEntity>> supportedBlockEntities = new HashSet<>();
 	private static final Set<String>                                 supportedOthers        = new HashSet<>();
@@ -25,7 +25,7 @@ public class CemFairy{
 	public static Gson getGson(){
 		return GSON;
 	}
-	
+
 	//renderer stuff
 	public static boolean addSupport(EntityType<? extends Entity> entityType){
 		return supportedEntities.add(entityType);

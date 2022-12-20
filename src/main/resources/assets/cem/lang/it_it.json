@@ -1,9 +1,9 @@
 {
 	"modmenu.descriptionTranslation.cem": "Consente attraverso un resource pack di caricare modelli personalizzati nel gioco definiti nei file .jem e .jpm.",
 	"config.cem.use_optifine_folder": "Usa \"assets/minecraft/optifine/cem\"?",
-	"config.cem.use_optifine_folder.description": "Attivando questa opzione la mod caricherà i modelli CEM da\nassets/minecraft/optifine/cem,\ned è esattamente quello che fa la Optifine.\nRicarica le risorse (F3 + T) per\nfar funzionare questa opzione!",
+	"config.cem.use_optifine_folder.description": "Attivando questa opzione la mod caricherà i modelli CEM da 'assets/minecraft/optifine/cem', ed è esattamente quello che fa la Optifine",
 	"config.cem.use_new_model_creation_fix": "Usa il fix per la creazione dei modelli?",
-	"config.cem.use_new_model_creation_fix.description": "Questo previene che minecraft\nmuova direttamente le tue parti dei modelli\nin giro durante un animazione. Questo rompe\nalcuni modelli ma ne fixxa altri.\nPerfavore usa questa opzione se possibile.\nRicarica le risorse (F3 + T) per\nfar funzionare questa opzione!",
+	"config.cem.use_new_model_creation_fix.description": "Questo previene che minecraft muova direttamente le tue parti dei modelli in giro durante un animazione. Questo rompe alcuni modelli ma ne fixxa altri. Perfavore usa questa opzione se possibile.",
 	"config.cem.use_old_animations": "Usa la vecchia implementazione delle animazioni?",
-	"config.cem.use_old_animations.description": "Questo ripristina il funzionamento delle animazioni\ndalla versione <=0.6.2 di CEM. Probabilmente\nvorrai questa opzione disabilitata."
+	"config.cem.use_old_animations.description": "Questo ripristina il funzionamento delle animazioni dalla versione <=0.6.2 di CEM. Probabilmente vorrai questa opzione disabilitata."
 }

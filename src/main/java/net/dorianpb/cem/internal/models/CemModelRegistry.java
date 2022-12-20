@@ -1,7 +1,7 @@
 package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.api.CemModel.VanillaReferenceModelFactory;
-import net.dorianpb.cem.internal.config.CemConfigFairy;
+import net.dorianpb.cem.internal.config.CemConfig;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemFile.JemModel;
 import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
@@ -81,7 +81,7 @@ public class CemModelRegistry{
 			newRoot.inflate(params.inflate());
 		}
 		//new model creation fix!
-		if(CemConfigFairy.getConfig().useTransparentParts()){
+		if(CemConfig.getConfig().useTransparentParts()){
 			Map<String, ModelTransform> newFixes = new HashMap<>();
 			if(params.fixes() != null){
 				params.fixes().forEach(((key, modelTransform) -> newFixes.put(params.partNameMap().getOrDefault(key, key), modelTransform)));

@@ -1,7 +1,7 @@
 package net.dorianpb.cem.mixins;
 
 import com.google.gson.internal.LinkedTreeMap;
-import net.dorianpb.cem.internal.config.CemConfigFairy;
+import net.dorianpb.cem.internal.config.CemConfig;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.dorianpb.cem.internal.util.CemRegistryManager;
@@ -29,7 +29,7 @@ public abstract class EntityModelLoaderMixin{
 	private void cem$injectReload(ResourceManager manager, CallbackInfo ci){
 		CemRegistryManager.clearRegistries();
 		manager.findResources("cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "dorianpb"));
-		if(CemConfigFairy.getConfig().useOptifineFolder()){
+		if(CemConfig.getConfig().useOptifineFolder()){
 			manager.findResources("optifine/cem", path -> path.getPath().endsWith(".jem")).forEach((id, resource) -> loadResourceFromId(manager, id, "minecraft"));
 		}
 	}
