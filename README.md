@@ -88,7 +88,7 @@ This project is licensed with LGPL v3.0. Please don't repost this project anywhe
 * Implement the rest of the entities
 * Make animations perfect
 * `attach` support
-* A better icon! This one succs
+* A better icon! This one sucks
 
 ## For mod devs
 
