@@ -1,7 +1,7 @@
 package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.config.CemConfigFairy;
-import net.dorianpb.cem.internal.file.JemFile.JemModel;
+import net.dorianpb.cem.internal.file.JemModel;
 import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
 

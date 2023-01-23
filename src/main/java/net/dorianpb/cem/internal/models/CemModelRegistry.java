@@ -3,7 +3,7 @@ package net.dorianpb.cem.internal.models;
 import com.google.common.collect.BiMap;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
-import net.dorianpb.cem.internal.file.JemFile.JemModel;
+import net.dorianpb.cem.internal.file.JemModel;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.dorianpb.cem.internal.util.CemStringParser;
 import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
