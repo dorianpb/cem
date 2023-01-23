@@ -7,9 +7,14 @@
 		"BipedMixin",
 		"BlockEntityRendererAccessor",
 		"DilationAccessor",
+		"EntityModelLayersAccessor",
 		"EntityModelLoaderMixin",
 		"EntityRendererAccessor",
+		"EntityRenderersMixin",
+		"FeatureRendererMixin",
 		"HeadFeatureRendererMixin",
+		"LivingEntityRendererMixin",
+		"ModelAccessor",
 		"ModelCuboidDataMixin"
 	],
 	"injectors": {

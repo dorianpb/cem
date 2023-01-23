@@ -2,7 +2,7 @@ package net.dorianpb.cem.mixins;
 
 
 import net.dorianpb.cem.internal.api.CemModel;
-import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
+import net.dorianpb.cem.internal.models.TransparentCemModelPart;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BipedEntityModel.class)
 public abstract class BipedMixin{
-	@Inject(method = "setArmAngle", at = @At(value = "HEAD"), cancellable = true)
+	@SuppressWarnings({"InstanceofThis", "InstanceofIncompatibleInterface"})
+	@Inject(method = "setArmAngle", at = @At("HEAD"), cancellable = true)
 	private void cem$handleArmRot(Arm arm, MatrixStack matrices, CallbackInfo ci){
 		if(this instanceof CemModel){
 			var part = this.getArm(arm);

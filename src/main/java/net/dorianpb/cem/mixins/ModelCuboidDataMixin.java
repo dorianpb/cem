@@ -1,6 +1,6 @@
 package net.dorianpb.cem.mixins;
 
-import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
+import net.dorianpb.cem.internal.models.CemCuboid;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelCuboidData;
 import net.minecraft.client.model.ModelPart.Cuboid;
@@ -31,6 +31,7 @@ public abstract class ModelCuboidDataMixin{
 	@Shadow
 	private Vector2f textureUV, textureScale;
 	
+	@SuppressWarnings("NumericCastThatLosesPrecision")
 	@Inject(method = "createCuboid", at = @At("RETURN"), cancellable = true)
 	private void cem$injectCuboid(int textureWidth, int textureHeight, CallbackInfoReturnable<Cuboid> cir){
 		cir.setReturnValue(new CemCuboid(this.offset.getX(),

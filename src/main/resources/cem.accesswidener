@@ -7,3 +7,7 @@ accessible  class   net/minecraft/client/model/ModelPart$Vertex
 accessible  field   net/minecraft/client/model/ModelPart                                        cuboids         Ljava/util/List;
 accessible  field   net/minecraft/client/model/ModelPart                                        children        Ljava/util/Map;
 accessible  field   net/minecraft/client/model/ModelPart$Cuboid                                 sides           [Lnet/minecraft/client/model/ModelPart$Quad;
+
+#RenderLayer
+accessible  class   net/minecraft/client/render/RenderLayer$MultiPhaseParameters
+accessible  class   net/minecraft/client/render/RenderLayer$MultiPhase
