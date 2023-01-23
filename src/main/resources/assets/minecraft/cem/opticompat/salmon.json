@@ -1,0 +1,25 @@
+{
+	"partnames": {
+		"tail": "back_fin",
+		"fin_left": "left_fin",
+		"fin_right": "right_fin",
+		"fin_back_1": "top_front_fin",
+		"fin_back_2": "top_back_fin"
+	},
+	"parttree": {
+		"body_front": {
+			"top_front_fin": {}
+		},
+		"body_back": {
+			"back_fin": {},
+			"top_back_fin": {}
+		}
+	},
+	"modelfixes": {
+		"head": [0.0, 18.0, -4.0],
+		"fin_left": [0.0, 24.0, 0.0],
+		"fin_right": [0.0, 24.0, 0.0],
+		"body_back": [0.0, 18.0, 4.0],
+		"body_front": [0.0, 18.0, -4.0]
+	}
+}

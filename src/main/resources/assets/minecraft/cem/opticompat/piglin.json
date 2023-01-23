@@ -1,0 +1,11 @@
+{
+	"partnames": {
+		"headwear": "hat"
+	},
+	"parttree": {
+		"head": {
+			"left_ear": {},
+			"right_ear": {}
+		}
+	}
+}

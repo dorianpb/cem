@@ -1,0 +1,51 @@
+{
+	"partnames": {
+		"neck": "head_parts",
+		"mouth": "upper_mouth",
+		"headpiece": "head_saddle",
+		"noseband": "mouth_saddle_wrap",
+		"left_bit": "left_saddle_mouth",
+		"right_bit": "right_saddle_mouth",
+		"left_rein": "left_saddle_line",
+		"right_rein": "right_saddle_line",
+		"front_left_leg": "left_front_leg",
+		"child_front_left_leg": "left_front_baby_leg",
+		"front_right_leg": "right_front_leg",
+		"child_front_right_leg": "right_front_baby_leg",
+		"back_left_leg": "left_hind_leg",
+		"child_back_left_leg": "left_hind_baby_leg",
+		"back_right_leg": "right_hind_leg",
+		"child_back_right_leg": "right_hind_baby_leg"
+	},
+	"parttree": {
+		"body": {
+			"tail": {},
+			"saddle": {}
+		},
+		"head_parts": {
+			"head": {
+				"tail": {},
+				"saddle": {}
+			},
+			"mane": {},
+			"upper_mouth": {},
+			"mouth_saddle_wrap": {},
+			"head_saddle": {},
+			"left_saddle_mouth": {},
+			"right_saddle_mouth": {},
+			"left_saddle_line": {},
+			"right_saddle_line": {}
+		}
+	},
+	"modelfixes": {
+		"front_right_leg": [-4.0, 14.0, -10],
+		"front_left_leg": [4.0, 14.0, -10],
+		"back_right_leg": [-4.0, 14.0, 8.0],
+		"back_left_leg": [4.0, 14.0, 8.0],
+		"child_front_right_leg": [-4.0, 14.0, -10.0],
+		"child_front_left_leg": [4.0, 14.0, -10.0],
+		"child_back_right_leg": [-4.0, 14.0, 8.0],
+		"child_back_left_leg": [4.0, 14.0, 8.0],
+		"tail": [0.0, -8.0, 5.0]
+	}
+}

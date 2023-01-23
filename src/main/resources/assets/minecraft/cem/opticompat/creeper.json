@@ -1,0 +1,8 @@
+{
+	"partnames": {
+		"leg1": "right_hind_leg",
+		"leg2": "left_hind_leg",
+		"leg3": "right_front_leg",
+		"leg4": "left_front_leg"
+	}
+}
