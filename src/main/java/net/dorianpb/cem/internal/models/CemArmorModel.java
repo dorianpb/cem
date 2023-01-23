@@ -2,9 +2,6 @@ package net.dorianpb.cem.internal.models;
 
 import net.dorianpb.cem.internal.api.CemModel;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
-import net.dorianpb.cem.internal.models.CemModelEntry.TransparentCemModelPart;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;

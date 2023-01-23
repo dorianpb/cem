@@ -2,7 +2,7 @@ package net.dorianpb.cem.internal.api;
 
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.models.CemModelEntry;
-import net.dorianpb.cem.internal.models.CemModelEntry.CemModelPart;
+import net.dorianpb.cem.internal.models.CemModelPart;
 import net.minecraft.client.model.ModelPart;
 
 public interface CemModel{
