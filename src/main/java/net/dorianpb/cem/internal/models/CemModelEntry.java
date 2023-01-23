@@ -6,22 +6,19 @@ import net.dorianpb.cem.internal.file.JpmFile;
 import net.dorianpb.cem.internal.file.JpmFile.JpmBox;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class CemModelEntry{
-	private final String                                id;
-	private final String                                part;
-	private final Map<ArrayList<String>, CemModelEntry> children;
-	private final CemModelPart                          model;
-	private final float[]                               translates;
-	private final float[]                               rotates;
-	private final boolean[]                             invertAxis;
-	private final int                                   gen;
-	private final float[]                               offsets;
+	private final String                     id;
+	private final String                     part;
+	private final Map<String, CemModelEntry> children;
+	private final CemModelPart               model;
+	private final float[]                    translates;
+	private final float[]                    rotates;
+	private final boolean[]                  invertAxis;
+	private final int                        gen;
+	private final float[]                    offsets;
 	
 	
 	CemModelEntry(JemModel file, int textureWidth, int textureHeight){
@@ -144,17 +141,10 @@ public class CemModelEntry{
 	}
 	
 	private void addChild(CemModelEntry child){
-		ArrayList<String> key = new ArrayList<>(Collections.singletonList(child.id));
-		if(this.children.containsKey(key)){
-			throw new InvalidParameterException("Child " + key + " already exists for parent " + this.id);
+		if(this.children.containsKey(child.id)){
+			throw new InvalidParameterException("Child " + child.id + " already exists for parent " + this.id);
 		}
-		this.children.put(key, child);
-		for(Entry<ArrayList<String>, CemModelEntry> entry : child.children.entrySet()){
-			ArrayList<String> refs = entry.getKey();
-			CemModelEntry val = entry.getValue();
-			refs.add(0, child.id);
-			this.children.put(refs, val);
-		}
+		this.children.put(child.id, child);
 		this.model.addChild(child.id, child.model);
 	}
 	
@@ -261,7 +251,7 @@ public class CemModelEntry{
 		}
 	}
 	
-	Map<ArrayList<String>, CemModelEntry> getChildren(){
+	Map<String, CemModelEntry> getChildren(){
 		return this.children;
 	}
 	

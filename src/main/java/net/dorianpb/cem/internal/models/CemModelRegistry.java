@@ -61,21 +61,12 @@ public class CemModelRegistry{
 	
 	public CemModelPart prepRootPart(ModelPart vanillaPart,
 	                                 @Nullable BiMap<String, String> partNames,
-	                                 @Nullable Map<String, List<String>> partTree,
 	                                 @Nullable Map<String, ModelTransform> modelFixes,
 	                                 @Nullable Object identifier){
 		CemModelPart newRoot = new CemModelPart();
 		this.constructPart(newRoot, vanillaPart, partNames, modelFixes, identifier);
 		newRoot.setIdentifier(identifier);
 		return newRoot;
-	}
-	
-	public CemModelEntry getEntryByPartName(String key){
-		if(this.partNameRefs.containsKey(key)){
-			return this.partNameRefs.get(key);
-		}
-		CemFairy.getLogger().warn("Model part " + key + " isn't specified in " + this.file.getPath());
-		return null;
 	}
 	
 	private void constructPart(CemModelPart cemparent,
@@ -179,6 +170,7 @@ public class CemModelRegistry{
 		return this.file.getShadowsize();
 	}
 	
+	@SuppressWarnings("MethodParameterNamingConvention")
 	public void applyAnimations(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
 		for(CemAnimation anim : this.animations){
 			anim.apply(limbAngle, limbDistance, age, head_yaw, head_pitch, entity);
@@ -249,16 +241,16 @@ public class CemModelRegistry{
 		
 		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
 			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity, this.registry);
-			if(!Float.isNaN(val)){
+			if(Float.isNaN(val)){
+				this.target.setTranslate(this.axis, Float.MAX_VALUE);
+			}
+			else{
 				switch(this.operation){
 					case 't' -> this.target.setTranslate(this.axis, val);
 					case 'r' -> this.target.setRotate(this.axis, val);
 					case 's' -> this.target.getModel().setScale(this.axis, val);
 					default -> throw new IllegalStateException("Unknown operation \"" + this.operation + "\"");
 				}
-			}
-			else{
-				this.target.setTranslate(this.axis, Float.MAX_VALUE);
 			}
 		}
 	}
