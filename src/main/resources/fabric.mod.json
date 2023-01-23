@@ -29,7 +29,8 @@
 		"minecraft": ">=1.19"
 	},
 	"recommends": {
-		"completeconfig": "*",
+		"completeconfig-base": "*",
+		"completeconfig-gui-cloth": "*",
 		"cloth-config2": "*"
 	},
 	"conflicts": {
