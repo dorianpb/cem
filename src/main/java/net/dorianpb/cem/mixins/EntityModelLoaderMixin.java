@@ -178,7 +178,6 @@ public abstract class EntityModelLoaderMixin{
    cir.setReturnValue(CemRegistryManager.getRegistry(layer)
                                         .prepRootPart(cir.getReturnValue(),
                                                       OptifineFixes.getPartNames(layer),
-                                                      OptifineFixes.getPartTree(layer),
                                                       OptifineFixes.getModelFixes(layer),
                                                       layer
                                                      ));
