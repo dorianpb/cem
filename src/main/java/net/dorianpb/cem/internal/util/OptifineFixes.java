@@ -5,14 +5,15 @@ import com.google.common.collect.HashBiMap;
 import com.google.gson.internal.LinkedTreeMap;
 import net.minecraft.client.model.ModelTransform;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings("unchecked")
 public enum OptifineFixes{
 	;
 	private static final Map<String, BiMap<String, String>>       partnames      = new HashMap<>();
-	private static final Map<String, Map<String, List<String>>>   parttrees      = new LinkedHashMap<>();
 	private static final Map<String, Map<String, ModelTransform>> transformfixes = new HashMap<>();
 	
 	@SuppressWarnings("unchecked")
@@ -21,10 +22,6 @@ public enum OptifineFixes{
 		try{
 			if(json.containsKey("partnames")){
 				partnames.put(entity, parsePartNames((LinkedTreeMap<String, String>) json.get("partnames")));
-			}
-			
-			if(json.containsKey("parttree")){
-				parttrees.put(entity, parsePartTree((LinkedTreeMap<String, LinkedTreeMap>) json.get("parttree")));
 			}
 			
 			if(json.containsKey("modelfixes")){
@@ -39,26 +36,6 @@ public enum OptifineFixes{
 	
 	private static BiMap<String, String> parsePartNames(LinkedTreeMap<String, String> json){
 		return HashBiMap.create(json);
-	}
-	
-	private static Map<String, List<String>> parsePartTree(LinkedTreeMap<String, LinkedTreeMap> json){
-		Map<String, List<String>> parttree = new LinkedHashMap<>();
-		for(Entry<String, LinkedTreeMap> entry : json.entrySet()){
-			parseTree(parttree, entry.getKey(), entry.getValue());
-		}
-		return parttree;
-	}
-	
-	private static void parseTree(Map<String, List<String>> map, String parent, LinkedTreeMap<String, LinkedTreeMap> json){
-		for(Entry<String, LinkedTreeMap> entry : json.entrySet()){
-			if(!map.containsKey(parent)){
-				map.put(parent, new ArrayList<>());
-			}
-			
-			map.get(parent).add(entry.getKey());
-			
-			parseTree(map, entry.getKey(), entry.getValue());
-		}
 	}
 	
 	private static Map<String, ModelTransform> parseModelFixes(LinkedTreeMap<String, ArrayList<Double>> json){
@@ -79,6 +56,6 @@ public enum OptifineFixes{
 	
 	public static boolean hasFixesFor(Object entity){
 		String str = entity.toString();
-		return partnames.containsKey(str) || parttrees.containsKey(str) || transformfixes.containsKey(str);
+		return partnames.containsKey(str) || transformfixes.containsKey(str);
 	}
 }
