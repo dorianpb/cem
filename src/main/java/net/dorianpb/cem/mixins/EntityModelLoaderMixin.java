@@ -13,9 +13,9 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.entity.EntityType;
 import net.minecraft.resource.Resource;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -93,7 +93,7 @@ public abstract class EntityModelLoaderMixin{
    
    String entityName = getEntityNameFromId(id);
    Optional<EntityModelLayer> entityModelLayerOptional = tryParseEntityModelLayer(id);
-   Optional<BlockEntityType<?>> blockEntityTypeOptional = Registry.BLOCK_ENTITY_TYPE.getOrEmpty(Identifier.tryParse(entityName));
+   Optional<BlockEntityType<?>> blockEntityTypeOptional = Registries.BLOCK_ENTITY_TYPE.getOrEmpty(Identifier.tryParse(entityName));
    
    if(entityModelLayerOptional.isPresent()){
     EntityModelLayer entityModelLayer = entityModelLayerOptional.get();
