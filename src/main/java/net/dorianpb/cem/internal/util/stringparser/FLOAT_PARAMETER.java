@@ -42,22 +42,22 @@ enum FLOAT_PARAMETER implements ParsedFunctionFloat{
 			}
 			//entity parameters
 			case HEALTH -> {
-				return env.getLivingEntity().getHealth();
+				return env.livingEntity().getHealth();
 			}
 			case HURT_TIME -> {
-				return env.getLivingEntity().hurtTime;
+				return env.livingEntity().hurtTime;
 			}
 			case IDLE_TIME -> {
-				return env.getLivingEntity().getLastAttackTime();
+				return env.livingEntity().getLastAttackTime();
 			}
 			case MAX_HEALTH -> {
-				return env.getLivingEntity().getMaxHealth();
+				return env.livingEntity().getMaxHealth();
 			}
 			case MOVE_FORWARD -> {
-				return env.getLivingEntity().forwardSpeed;
+				return env.livingEntity().forwardSpeed;
 			}
 			case MOVE_STRAFING -> {
-				return env.getLivingEntity().sidewaysSpeed;
+				return env.livingEntity().sidewaysSpeed;
 			}
 			case POS_X -> {
 				return (float) env.entity().getX();
@@ -69,10 +69,10 @@ enum FLOAT_PARAMETER implements ParsedFunctionFloat{
 				return (float) env.entity().getZ();
 			}
 			case REVENGE_TIME -> {
-				return env.getLivingEntity().getLastAttackedTime();
+				return env.livingEntity().getLastAttackedTime();
 			}
 			case SWING_PROGRESS -> {
-				return env.getLivingEntity().handSwingProgress;
+				return env.livingEntity().handSwingProgress;
 			}
 		}
 		throw new NullPointerException("uwu");
