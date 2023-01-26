@@ -4,6 +4,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.InvalidObjectException;
 import java.security.InvalidParameterException;
@@ -22,7 +23,7 @@ public class JemFile{
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws InvalidObjectException{
 		this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
-		this.shadowsize = CemFairy.JSONparseFloat(json.get("shadowSize"));
+		this.shadowsize = JSONparseFloat(json.get("shadowSize"));
 		this.path = path;
 		String texturepath = CemFairy.JSONparseString(json.get("texture"));
 		if(texturepath == null || texturepath.isEmpty()){
@@ -42,6 +43,11 @@ public class JemFile{
 			this.models.put(newmodel.getPart(), newmodel);
 		}
 		this.validate();
+	}
+	
+	private static @Nullable Float JSONparseFloat(Object obj){
+		String val = CemFairy.JSONparseString(obj);
+		return val == null? null : Float.valueOf(val);
 	}
 	
 	private void validate(){

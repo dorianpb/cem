@@ -5,18 +5,21 @@ import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemModel;
 import net.dorianpb.cem.internal.util.CemFairy;
-import net.dorianpb.cem.internal.util.CemStringParser;
-import net.dorianpb.cem.internal.util.CemStringParser.ParsedExpression;
+import net.dorianpb.cem.internal.util.stringparser.CemStringParser;
+import net.dorianpb.cem.internal.util.stringparser.ParsedExpression;
+import net.dorianpb.cem.internal.util.stringparser.ParsedExpressionFloat;
+import net.dorianpb.cem.internal.util.stringparser.ParsedFunctionType;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.invoke.WrongMethodTypeException;
 import java.util.*;
 
 /** Contains all of the data for the CEM model */
-public class CemModelRegistry{
+public final class CemModelRegistry{
 	private final HashMap<ArrayList<String>, CemModelEntry> database; //actual storage of cemModelEntries
 	private final List<CemAnimation>                        animations; //actual storage of all the cemAnimations
 	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
@@ -88,7 +91,7 @@ public class CemModelRegistry{
 			}
 			
 			//continue with this branch
-			constructPart(part, vanillapart.getChild(partname), partNames, modelFixes, identifier);
+			this.constructPart(part, vanillapart.getChild(partname), partNames, modelFixes, identifier);
 			
 			prepChild(cemparent, part);
 			
@@ -195,18 +198,18 @@ public class CemModelRegistry{
 				for(int i = 1; i < refmap.size(); i++){
 					newTarget.append(":").append(refmap.get(i));
 				}
-				return findChild(newTarget.toString(), parent);
+				return this.findChild(newTarget.toString(), parent);
 			}
 		}
 		else{
 			for(ArrayList<String> part : this.database.keySet()){
-				ArrayList<Integer> hello = new ArrayList<>();
+				ArrayList<Integer> search = new ArrayList<>();
 				for(String ref : refmap){
-					hello.add(part.indexOf(ref));
+					search.add(part.indexOf(ref));
 				}
-				boolean hi = hello.size() != 1 || hello.get(0) > -1;
-				for(int i = 0; i < hello.size() - 1; i++){
-					hi = hi && hello.get(i) < hello.get(i + 1) && hello.get(i) > -1;
+				boolean hi = search.size() != 1 || search.get(0) > -1;
+				for(int i = 0; i < search.size() - 1; i++){
+					hi = hi && search.get(i) < search.get(i + 1) && search.get(i) > -1;
 				}
 				if(hi && (hit == null || part.size() < hit.size())){
 					hit = part;
@@ -225,22 +228,29 @@ public class CemModelRegistry{
 	}
 	
 	private static class CemAnimation{
-		private final CemModelRegistry registry;
-		private final CemModelEntry    target;
-		private final ParsedExpression expression;
-		private final char             operation;
-		private final char             axis;
+		private final CemModelEntry         target;
+		private final ParsedExpressionFloat expression;
+		private final char                  operation;
+		private final char                  axis;
 		
+		@SuppressWarnings("QuestionableName")
 		CemAnimation(CemModelEntry target, String expr, String var, CemModelRegistry registry){
 			this.target = target;
-			this.registry = registry;
-			this.expression = CemStringParser.parse(expr, this.registry, this.target);
+			
+			ParsedExpression parsedExpression = CemStringParser.parse(expr, registry, this.target);
+			if(parsedExpression.getType() == ParsedFunctionType.FLOAT){
+				this.expression = (ParsedExpressionFloat) parsedExpression;
+			}
+			else{
+				throw new WrongMethodTypeException("\"" + parsedExpression.getName() + " must evaluate to a number, not a boolean!");
+			}
+			
 			this.operation = var.charAt(0);
 			this.axis = var.charAt(1);
 		}
 		
 		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
-			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity, this.registry);
+			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity);
 			if(Float.isNaN(val)){
 				this.target.setTranslate(this.axis, Float.MAX_VALUE);
 			}

@@ -5,6 +5,7 @@ import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +31,7 @@ public class JemModel{
 		this.baseId = CemFairy.JSONparseString(json.get("baseId"));
 		this.model = CemFairy.JSONparseString(json.get("model"));
 		this.part = CemFairy.JSONparseString(json.get("part"));
-		this.attach = CemFairy.JSONparseBool(json.get("attach"));
+		this.attach = JSONparseBool(json.get("attach"));
 		this.scale = CemFairy.JSONparseDouble(json.getOrDefault("scale", 1.0D));
 		var yeah = ((ArrayList<LinkedTreeMap<String, Object>>) json.getOrDefault("animations", new ArrayList<>(Collections.singletonList(new LinkedTreeMap()))));
 		this.animations = new LinkedTreeMap<>();
@@ -63,6 +64,11 @@ public class JemModel{
 		}
 		this.modelDef = temp;
 		this.validate();
+	}
+	
+	private static @Nullable Boolean JSONparseBool(Object obj){
+		String val = CemFairy.JSONparseString(obj);
+		return val == null? null : Boolean.valueOf(val);
 	}
 	
 	private void validate(){

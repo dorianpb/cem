@@ -16,7 +16,7 @@ public final class TransparentCemModelPart extends CemModelPart{
 			this.part = CemModelPart.of(part);
 		}
 		this.setTransform(realTransform);
-		addChild("my_precious", part);
+		this.addChild("my_precious", part);
 		this.part.pivotX = part.pivotX - fakeTransform.pivotX;
 		this.part.pivotY = part.pivotY - fakeTransform.pivotY;
 		this.part.pivotZ = part.pivotZ - fakeTransform.pivotZ;
@@ -25,7 +25,7 @@ public final class TransparentCemModelPart extends CemModelPart{
 	
 	private TransparentCemModelPart(CemModelPart part){
 		this.part = part;
-		addChild("my_precious", part);
+		this.addChild("my_precious", part);
 	}
 	
 	public static TransparentCemModelPart of(TransparentCemModelPart modelPart){
