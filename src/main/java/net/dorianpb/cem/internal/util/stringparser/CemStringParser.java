@@ -36,6 +36,12 @@ public enum CemStringParser{
 				throw new IllegalArgumentException("Why is there a token named \"NUM\" that is not a NumToken?");
 			}
 		}
+		else if(token.getName().startsWith("var.")){
+			return new ParsedEntityVarFloat(token);
+		}
+		else if(token.getName().startsWith("varb.")){
+			return new ParsedEntityVarBool(token);
+		}
 		else if(token.getName().contains(".")){
 			return new ParsedVar(token, registry, parent);
 		}
@@ -77,8 +83,9 @@ public enum CemStringParser{
 		//remove duplicate whitespace
 		ArrayList<String> work = new ArrayList<>(Arrays.asList(remove_sectionsign.matcher(merge_whitespace.matcher(ensure_paran_whitespace.matcher(
 				                                                                                                  keep_exclamation_point_with_expression.matcher(ensure_whitespace_between_operators.matcher(input).replaceAll(" $1 ")).replaceAll(" ! $1")).replaceAll(" $1 "))
-		                                                                                                  .replaceAll(" ")).replaceAll("") //just to be safe
-		                                                                         .trim().split(" ")));
+		                                                                                                  .replaceAll(" "))
+		                                                                         .replaceAll("") /*just to be safe*/.trim()
+		                                                                         .split(" ")));
 		//try to eliminate garbage
 		Pattern garbagePattern = Pattern.compile("^[+\\-*/%!=|&><\\w(),].*$");
 		for(String badboi : work){
@@ -162,7 +169,7 @@ public enum CemStringParser{
 			}
 			//convert variable names to tokens
 			while(true){
-				i = regIndexOf(work, "^\\w(\\w\\d?:?)+([.]\\w\\w)?$");
+				i = regIndexOf(work, "^\\w(\\w\\d?:?)+([.]\\w+)?$");
 				if(i >= 0){
 					tokens.add(new Token(work.set(i, "§" + tokens.size())));
 				}

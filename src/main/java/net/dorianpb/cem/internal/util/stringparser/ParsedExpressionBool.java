@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public final class ParsedExpressionBool implements ParsedExpression{
 	private final ParsedFunctionBool          operation;
@@ -44,8 +45,15 @@ public final class ParsedExpressionBool implements ParsedExpression{
 		this.checkArgs(this.arguments, this.operation.getArgNumber());
 	}
 	
-	public boolean eval(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
-		return this.eval(new Environment(limbAngle, limbDistance, age, head_yaw, head_pitch, entity));
+	public boolean eval(float limbAngle,
+	                    float limbDistance,
+	                    float age,
+	                    float head_yaw,
+	                    float head_pitch,
+	                    Entity entity,
+	                    Map<String, Boolean> boolanimvars,
+	                    Map<String, Float> floatanimvars){
+		return this.eval(new Environment(limbAngle, limbDistance, age, head_yaw, head_pitch, entity, boolanimvars, floatanimvars));
 	}
 	
 	boolean eval(Environment env){

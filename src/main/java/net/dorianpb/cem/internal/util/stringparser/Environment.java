@@ -5,7 +5,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.passive.TameableEntity;
 
-record Environment(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
+record Environment(float limbAngle,
+                   float limbDistance,
+                   float age,
+                   float head_yaw,
+                   float head_pitch,
+                   Entity entity,
+                   java.util.Map<String, Boolean> boolanimvars,
+                   java.util.Map<String, Float> floatanimvars){
 	
 	LivingEntity livingEntity(){
 		return (LivingEntity) this.entity;

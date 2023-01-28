@@ -5,17 +5,12 @@ import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
 import net.dorianpb.cem.internal.file.JemModel;
 import net.dorianpb.cem.internal.util.CemFairy;
-import net.dorianpb.cem.internal.util.stringparser.CemStringParser;
-import net.dorianpb.cem.internal.util.stringparser.ParsedExpression;
-import net.dorianpb.cem.internal.util.stringparser.ParsedExpressionFloat;
-import net.dorianpb.cem.internal.util.stringparser.ParsedFunctionType;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.ModelTransform;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.invoke.WrongMethodTypeException;
 import java.util.*;
 
 /** Contains all of the data for the CEM model */
@@ -24,10 +19,14 @@ public final class CemModelRegistry{
 	private final List<CemAnimation>                        animations; //actual storage of all the cemAnimations
 	private final HashMap<String, CemModelEntry>            partNameRefs; //used to refer to parts by their model names rather than id names
 	private final JemFile                                   file; //stores the jemFile
+	private final Map<String, Boolean>                      boolanimvars;
+	private final Map<String, Float>                        floatanimvars;
 	
 	public CemModelRegistry(JemFile file){
 		this.database = new HashMap<>();
 		this.animations = new ArrayList<>();
+		this.boolanimvars = new HashMap<>();
+		this.floatanimvars = new HashMap<>();
 		this.partNameRefs = new HashMap<>();
 		this.file = file;
 		//models
@@ -40,11 +39,20 @@ public final class CemModelRegistry{
 			JemModel data = this.file.getModel(part);
 			for(String key : data.getAnimations().keySet()){
 				try{
-					this.animations.add(new CemAnimation(this.findChild(key.substring(0, key.indexOf('.')), this.findChild(part)),
-					                                     data.getAnimations().get(key),
-					                                     key.substring(key.indexOf('.') + 1),
-					                                     this
-					));
+					if(key.startsWith("var.")){
+						this.animations.add(new CemFloatVarAnimation(key.substring("var.".length()), data.getAnimations().get(key), this));
+					}
+					else if(key.startsWith("varb.")){
+						this.animations.add(new CemBoolVarAnimation(key.substring("varb.".length()), data.getAnimations().get(key), this));
+					}
+					else{
+						this.animations.add(new CemModelAnimation(this.findChild(key.substring(0, key.indexOf('.')), this.findChild(part)),
+						                                          data.getAnimations().get(key),
+						                                          key.substring(key.indexOf('.') + 1),
+						                                          this
+						));
+					}
+					
 				} catch(Exception e){
 					CemFairy.getLogger().error("Error applying animation \"" + data.getAnimations().get(key) + "\" in \"" + file.getPath() + "\":");
 					CemFairy.getLogger().error(e.getMessage());
@@ -60,6 +68,14 @@ public final class CemModelRegistry{
 		child.pivotX = child.pivotX - parent.pivotX;
 		child.pivotY = child.pivotY - parent.pivotY;
 		child.pivotZ = child.pivotZ - parent.pivotZ;
+	}
+	
+	Map<String, Boolean> getBoolanimvars(){
+		return this.boolanimvars;
+	}
+	
+	Map<String, Float> getFloatanimvars(){
+		return this.floatanimvars;
 	}
 	
 	public CemModelPart prepRootPart(ModelPart vanillaPart,
@@ -225,44 +241,6 @@ public final class CemModelRegistry{
 	
 	private CemModelEntry findChild(String target){
 		return this.findChild(target, null);
-	}
-	
-	private static class CemAnimation{
-		private final CemModelEntry         target;
-		private final ParsedExpressionFloat expression;
-		private final char                  operation;
-		private final char                  axis;
-		
-		@SuppressWarnings("QuestionableName")
-		CemAnimation(CemModelEntry target, String expr, String var, CemModelRegistry registry){
-			this.target = target;
-			
-			ParsedExpression parsedExpression = CemStringParser.parse(expr, registry, this.target);
-			if(parsedExpression.getType() == ParsedFunctionType.FLOAT){
-				this.expression = (ParsedExpressionFloat) parsedExpression;
-			}
-			else{
-				throw new WrongMethodTypeException("\"" + parsedExpression.getName() + " must evaluate to a number, not a boolean!");
-			}
-			
-			this.operation = var.charAt(0);
-			this.axis = var.charAt(1);
-		}
-		
-		void apply(float limbAngle, float limbDistance, float age, float head_yaw, float head_pitch, Entity entity){
-			float val = this.expression.eval(limbAngle, limbDistance, age, head_yaw, head_pitch, entity);
-			if(Float.isNaN(val)){
-				this.target.setTranslate(this.axis, Float.MAX_VALUE);
-			}
-			else{
-				switch(this.operation){
-					case 't' -> this.target.setTranslate(this.axis, val);
-					case 'r' -> this.target.setRotate(this.axis, val);
-					case 's' -> this.target.getModel().setScale(this.axis, val);
-					default -> throw new IllegalStateException("Unknown operation \"" + this.operation + "\"");
-				}
-			}
-		}
 	}
 	
 }
