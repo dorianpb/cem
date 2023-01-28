@@ -54,7 +54,7 @@ public class JemModel{
 				}
 			}
 			else{
-				CemFairy.getLogger().warn(" File \"" + resourceOptional + " not found,");
+				CemFairy.getLogger().warn(" File \"" + id + "\" not found,");
 				CemFairy.getLogger().warn(" falling back on reading model definition from " + path.toString() + "!");
 				temp = new JpmFile(json);
 			}
