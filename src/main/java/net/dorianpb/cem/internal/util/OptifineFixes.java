@@ -3,7 +3,9 @@ package net.dorianpb.cem.internal.util;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.gson.internal.LinkedTreeMap;
+import net.dorianpb.cem.mixins.EntityModelLayersAccessor;
 import net.minecraft.client.model.ModelTransform;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,12 +48,28 @@ public enum OptifineFixes{
 		return map;
 	}
 	
+	public static BiMap<String, String> getPartNames(EntityModelLayer entity){
+		return partnames.getOrDefault(entity.toString(), partnames.get(new EntityModelLayer(entity.getId(), EntityModelLayersAccessor.getMAIN()).toString()));
+	}
+	
 	public static BiMap<String, String> getPartNames(Object entity){
 		return partnames.get(entity.toString());
 	}
 	
+	public static Map<String, ModelTransform> getModelFixes(EntityModelLayer entity){
+		return transformfixes.getOrDefault(entity.toString(), transformfixes.get(new EntityModelLayer(entity.getId(), EntityModelLayersAccessor.getMAIN()).toString()));
+	}
+	
 	public static Map<String, ModelTransform> getModelFixes(Object entity){
 		return transformfixes.get(entity.toString());
+	}
+	
+	public static boolean hasFixesFor(EntityModelLayer entity){
+		//noinspection ConstantValue
+		return partnames.containsKey(entity.toString()) ||
+		       partnames.containsKey(new EntityModelLayer(entity.getId(), EntityModelLayersAccessor.getMAIN()).toString()) ||
+		       transformfixes.containsKey(entity.toString()) ||
+		       transformfixes.containsKey(new EntityModelLayer(entity.getId(), EntityModelLayersAccessor.getMAIN()).toString());
 	}
 	
 	public static boolean hasFixesFor(Object entity){
