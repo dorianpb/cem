@@ -47,13 +47,8 @@ public abstract class EntityModelLoaderMixin{
 		manager.findResources("cem", path -> path.getPath().endsWith(".jem") && !path.getPath().startsWith("cem/opticompat"))
 		       .forEach((id, resource) -> loadResourceFromId(id,
 		                                                     resource,
-		                                                     (EntityModelLayer layer, LinkedTreeMap<String, Object> json) -> acceptJemFile(layer, json, id, manager),
-		                                                     (BlockEntityType<? extends BlockEntity> blockEntityType, LinkedTreeMap<String, Object> json) -> acceptJemFile(
-				                                                     blockEntityType,
-				                                                     json,
-				                                                     id,
-				                                                     manager
-		                                                                                                                                                                  ),
+		                                                     (var layer, var json) -> acceptJemFile(layer, json, id, manager),
+		                                                     (var blockEntityType, var json) -> acceptJemFile(blockEntityType, json, id, manager),
 		                                                     true
 		                                                    ));
 		
@@ -61,13 +56,8 @@ public abstract class EntityModelLoaderMixin{
 			manager.findResources("optifine/cem", path -> path.getPath().endsWith(".jem") && path.getNamespace().equals("minecraft"))
 			       .forEach((id, resource) -> loadResourceFromId(id,
 			                                                     resource,
-			                                                     (EntityModelLayer layer, LinkedTreeMap<String, Object> json) -> acceptJemFile(layer, json, id, manager),
-			                                                     (BlockEntityType<? extends BlockEntity> blockEntityType, LinkedTreeMap<String, Object> json) -> acceptJemFile(
-					                                                     blockEntityType,
-					                                                     json,
-					                                                     id,
-					                                                     manager
-			                                                                                                                                                                  ),
+			                                                     (var layer, var json) -> acceptJemFile(layer, json, id, manager),
+			                                                     (var blockEntityType, var json) -> acceptJemFile(blockEntityType, json, id, manager),
 			                                                     true
 			                                                    ));
 		}
@@ -135,7 +125,7 @@ public abstract class EntityModelLoaderMixin{
 	private static void acceptJemFile(BlockEntityType<? extends BlockEntity> blockEntityType, LinkedTreeMap<String, Object> json, Identifier id, ResourceManager manager){
 		try{
 			JemFile file = new JemFile(json, id, manager);
-			CemRegistryManager.addRegistry(blockEntityType, file);
+			//			CemRegistryManager.addRegistry(blockEntityType, file);
 			CemFairy.getLogger().error("This build of CEM doesn't support Block Entities.");
 			
 		} catch(Exception e){
