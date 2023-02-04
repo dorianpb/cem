@@ -7,8 +7,36 @@ import java.util.Arrays;
 
 @SuppressWarnings({"UnsecureRandomNumberGeneration", "NumericCastThatLosesPrecision"})
 enum FLOAT_FUNCTION implements ParsedFunctionFloat{
-	SIN, COS, ASIN, ACOS, TAN, ATAN, ATAN2, TORAD, TODEG, MIN, MAX, CLAMP, ABS, FLOOR, CEIL, EXP, FRAC, LOG, POW, RANDOM, ROUND, SIGNUM, SQRT, FMOD, ADD, SUB, MULT, DIV, MOD,
-	;
+	SIN,
+	COS,
+	ASIN,
+	ACOS,
+	TAN,
+	ATAN,
+	ATAN2,
+	TORAD,
+	TODEG,
+	MIN,
+	MAX,
+	CLAMP,
+	ABS,
+	FLOOR,
+	CEIL,
+	EXP,
+	FRAC,
+	LOG,
+	POW,
+	RANDOM,
+	ROUND,
+	SIGNUM,
+	SQRT,
+	FMOD,
+	ADD,
+	SUB,
+	MULT,
+	DIV,
+	MOD,
+	LERP;
 	
 	@Override
 	public float eval(ArrayList<ParsedExpression> args, Environment env){
@@ -40,6 +68,10 @@ enum FLOAT_FUNCTION implements ParsedFunctionFloat{
 			case SIGNUM -> Math.signum(((ParsedExpressionFloat) args.get(0)).eval(env));
 			case SQRT -> MathHelper.sqrt(((ParsedExpressionFloat) args.get(0)).eval(env));
 			case FMOD -> MathHelper.floorMod(((ParsedExpressionFloat) args.get(0)).eval(env), ((ParsedExpressionFloat) args.get(1)).eval(env));
+			case LERP -> MathHelper.lerp(((ParsedExpressionFloat) args.get(0)).eval(env),
+			                             ((ParsedExpressionFloat) args.get(1)).eval(env),
+			                             ((ParsedExpressionFloat) args.get(2)).eval(env)
+			                            );
 			case ADD -> ((ParsedExpressionFloat) args.get(0)).eval(env) + ((ParsedExpressionFloat) args.get(1)).eval(env);
 			case SUB -> ((ParsedExpressionFloat) args.get(0)).eval(env) - ((ParsedExpressionFloat) args.get(1)).eval(env);
 			case MULT -> ((ParsedExpressionFloat) args.get(0)).eval(env) * ((ParsedExpressionFloat) args.get(1)).eval(env);
@@ -60,11 +92,11 @@ enum FLOAT_FUNCTION implements ParsedFunctionFloat{
 	@Override
 	public int getArgNumber(){
 		return switch(this){
+			case MIN, MAX -> -1;
+			case RANDOM -> 0;
 			case SIN, COS, ASIN, ACOS, TAN, ATAN, TORAD, TODEG, ABS, FLOOR, CEIL, EXP, FRAC, LOG, ROUND, SIGNUM, SQRT -> 1;
 			case ATAN2, POW, FMOD, ADD, SUB, MULT, DIV, MOD -> 2;
-			case MIN, MAX -> -1;
-			case CLAMP -> 3;
-			case RANDOM -> 0;
+			case CLAMP, LERP -> 3;
 		};
 	}
 }
