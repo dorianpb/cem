@@ -33,16 +33,16 @@ public abstract class FeatureRendererMixin{
 	
 	
 	@Inject(method = "renderModel", at = @At("HEAD"))
-	private static <T extends LivingEntity> void cem$kms(EntityModel<T> model,
-	                                                     Identifier texture,
-	                                                     MatrixStack matrices,
-	                                                     VertexConsumerProvider vertexConsumers,
-	                                                     int light,
-	                                                     T entity,
-	                                                     float red,
-	                                                     float green,
-	                                                     float blue,
-	                                                     CallbackInfo ci){
+	private static <T extends LivingEntity> void cem$replaceFeatureRendererTexture(EntityModel<T> model,
+	                                                                               Identifier texture,
+	                                                                               MatrixStack matrices,
+	                                                                               VertexConsumerProvider vertexConsumers,
+	                                                                               int light,
+	                                                                               T entity,
+	                                                                               float red,
+	                                                                               float green,
+	                                                                               float blue,
+	                                                                               CallbackInfo ci){
 		currenttex = CemFairy.getFeatureTextures().computeIfAbsent(model.hashCode(), (key) -> {
 			EntityModelLayer layer = cem$getCemModelPartForFeatureRenderer(model);
 			if(CemRegistryManager.hasEntityLayer(layer)){
