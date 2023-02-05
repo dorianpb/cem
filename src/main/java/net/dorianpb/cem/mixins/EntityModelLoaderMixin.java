@@ -36,7 +36,6 @@ public abstract class EntityModelLoaderMixin{
 	@Inject(method = "reload", at = @At("HEAD"))
 	private void cem$injectReload(ResourceManager manager, CallbackInfo ci){
 		CemRegistryManager.clearRegistries();
-		CemFairy.getFeatureTextures().clear();
 		
 		manager.findResources("cem/opticompat", path -> path.getPath().endsWith(".json"))
 		       .forEach((id, resource) -> loadResourceFromId(id, resource, OptifineFixes::accept, OptifineFixes::accept, false));

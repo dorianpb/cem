@@ -1,6 +1,5 @@
 package net.dorianpb.cem.internal.util;
 
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
@@ -8,16 +7,14 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 /** Helps with internal stuff, all you need to know is that it keeps track of the renderers and files */
 public enum CemFairy{
 	;
-	private static final Logger                   LOGGER          = LogManager.getLogger("Custom Entity Models");
-	private static final Gson                     GSON            = new Gson();
-	private static final Pattern                  slash           = Pattern.compile("/");
-	private static final Map<Integer, Identifier> featuretextures = Maps.newHashMap();
+	private static final Logger  LOGGER = LogManager.getLogger("Custom Entity Models");
+	private static final Gson    GSON   = new Gson();
+	private static final Pattern slash  = Pattern.compile("/");
 	
 	//Gson
 	public static Gson getGson(){
@@ -61,10 +58,6 @@ public enum CemFairy{
 			LOGGER.error(exception.getStackTrace()[1]);
 			LOGGER.error(exception.getStackTrace()[2]);
 		}
-	}
-	
-	public static Map<Integer, Identifier> getFeatureTextures(){
-		return featuretextures;
 	}
 	
 	//logger
