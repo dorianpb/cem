@@ -30,7 +30,7 @@ public class CemCowModel<T extends CowEntity> extends CowEntityModel<T> implemen
 		                                                                .setVanillaReferenceModelFactory(() -> getTexturedModelData().createModel())
 		                                                                .create()));
 		this.registry = registry;
-		this.rotatePart(this.registry.getEntryByPartName("body"), 'x', 90);
+		
 	}
 	
 	@Override
