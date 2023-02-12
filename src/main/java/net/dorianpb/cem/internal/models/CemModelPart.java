@@ -6,6 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 public class CemModelPart extends ModelPart{
@@ -18,15 +19,19 @@ public class CemModelPart extends ModelPart{
 	private Object identifier;
 	
 	CemModelPart(){
-		this(0, 0);
+		this(0, 0, new ArrayList<>());
 	}
 	
-	CemModelPart(int textureWidth, int textureHeight){
-		super(new ArrayList<>(), new HashMap<>());
+	CemModelPart(int textureWidth, int textureHeight, List<Cuboid> cuboids){
+		super(cuboids, new HashMap<>());
 		this.textureWidth = textureWidth;
 		this.textureHeight = textureHeight;
 		this.scale = new float[]{1, 1, 1};
 		this.rotation = new float[]{0, 0, 0};
+	}
+	
+	CemModelPart(int textureWidth, int textureHeight){
+		this(textureWidth, textureHeight, new ArrayList<>());
 	}
 	
 	public static CemModelPart of(ModelPart modelPart){
@@ -45,62 +50,6 @@ public class CemModelPart extends ModelPart{
 		newPart.copyTransform(modelPart);
 		newPart.visible = modelPart.visible;
 		return newPart;
-	}
-	
-	void addCuboid(float x, float y, float z, int sizeX, int sizeY, int sizeZ, float extra, boolean mirrorU, boolean mirrorV, int textureOffsetU, int textureOffsetV){
-		this.cuboids.add(new CemCuboid(x,
-		                               y,
-		                               z,
-		                               sizeX,
-		                               sizeY,
-		                               sizeZ,
-		                               extra,
-		                               extra,
-		                               extra,
-		                               mirrorU,
-		                               mirrorV,
-		                               this.textureWidth,
-		                               this.textureHeight,
-		                               textureOffsetU,
-		                               textureOffsetV
-		));
-	}
-	
-	void addCuboid(float x,
-	               float y,
-	               float z,
-	               int sizeX,
-	               int sizeY,
-	               int sizeZ,
-	               float extra,
-	               boolean mirrorU,
-	               boolean mirrorV,
-	               float[] uvNorth,
-	               float[] uvSouth,
-	               float[] uvEast,
-	               float[] uvWest,
-	               float[] uvUp,
-	               float[] uvDown){
-		this.cuboids.add(new CemCuboid(x,
-		                               y,
-		                               z,
-		                               sizeX,
-		                               sizeY,
-		                               sizeZ,
-		                               extra,
-		                               extra,
-		                               extra,
-		                               mirrorU,
-		                               mirrorV,
-		                               this.textureWidth,
-		                               this.textureHeight,
-		                               uvNorth,
-		                               uvSouth,
-		                               uvEast,
-		                               uvWest,
-		                               uvUp,
-		                               uvDown
-		));
 	}
 	
 	void setScale(float scaleX, float scaleY, float scaleZ){
@@ -183,10 +132,12 @@ public class CemModelPart extends ModelPart{
 	}
 	
 	void inflate(float scale){
-		this.cuboids.replaceAll(cuboid -> ((CemCuboid) cuboid).inflate(scale));
-		for(ModelPart child : this.children.values()){
-			((CemModelPart) child).inflate(scale);
-		}
+		throw new RuntimeException("i should probably fix this at some point");
+		//		this.cuboids.replaceAll(cuboid -> ((CemCuboid) cuboid).inflate(scale));
+		//todo fix
+		//		for(ModelPart child : this.children.values()){
+		//			((CemModelPart) child).inflate(scale);
+		//		}
 	}
 	
 	@Override

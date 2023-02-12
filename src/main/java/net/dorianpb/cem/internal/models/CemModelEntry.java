@@ -4,9 +4,12 @@ import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemModel;
 import net.dorianpb.cem.internal.file.JpmBox;
 import net.dorianpb.cem.internal.file.JpmFile;
+import net.minecraft.client.model.ModelPart.Cuboid;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CemModelEntry{
@@ -47,7 +50,7 @@ public class CemModelEntry{
 		                           data.getRotate().get(2).floatValue() * ((this.invertAxis[2])? 1 : -1),
 		                           };
 		
-		this.model = new CemModelPart(textureWidth, textureHeight);
+		this.model = new CemModelPart(textureWidth, textureHeight, this.makecuboids(data, textureWidth, textureHeight));
 		this.initmodel(data, parents, scale);
 		this.offsets = new float[]{0, 0, 0};
 		//CHILD INIT
@@ -60,6 +63,72 @@ public class CemModelEntry{
 			}
 		}
 		//END CHILD INIT
+	}
+	
+	private List<Cuboid> makecuboids(JpmFile data, int textureWidth, int textureHeight){
+		List<Cuboid> cuboids = new ArrayList<>(data.getBoxes() != null? data.getBoxes().size() : 0);
+		///MUST SUBTRACT FROM PARENT FOR this.gen1
+		float[] translate = {(data.getTranslate().get(0).floatValue()), (data.getTranslate().get(1).floatValue()), (data.getTranslate().get(2).floatValue()),
+		                     };
+		if(data.getBoxes() != null){
+			for(JpmBox box : data.getBoxes()){
+				//apply translates first, then ?invert pos, then ?subtract pos by size so that it is drawn correctly
+				//top level model pivots need to translated up by 24, then 1st this.gen children need to work off of that rather than the translate values provided by the
+				// jpmFile
+				//only top level models need translates applied, others are relative to parent (even this.gen1)
+				if(box.useUvMap()){
+					float extra = box.getSizeAdd().floatValue();
+					
+					cuboids.add(new CemCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                          ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					                          ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                          ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					                          ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                          ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                          box.getCoordinates().get(3).intValue(),
+					                          box.getCoordinates().get(4).intValue(),
+					                          box.getCoordinates().get(5).intValue(),
+					                          extra,
+					                          extra,
+					                          extra,
+					                          data.getMirrorTexture()[0],
+					                          data.getMirrorTexture()[1],
+					                          textureWidth,
+					                          textureHeight,
+					                          box.getUv("north"),
+					                          box.getUv("south"),
+					                          box.getUv("east"),
+					                          box.getUv("west"),
+					                          box.getUv("up"),
+					                          box.getUv("down")
+					));
+				}
+				else{
+					float extra = box.getSizeAdd().floatValue();
+					cuboids.add(new CemCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                          ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					                          ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                          ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					                          ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                          ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                          box.getCoordinates().get(3).intValue(),
+					                          box.getCoordinates().get(4).intValue(),
+					                          box.getCoordinates().get(5).intValue(),
+					                          extra,
+					                          extra,
+					                          extra,
+					                          data.getMirrorTexture()[0],
+					                          data.getMirrorTexture()[1],
+					                          textureWidth,
+					                          textureHeight,
+					                          box.getTextureOffset().get(0).intValue(),
+					                          box.getTextureOffset().get(1).intValue()
+					));
+					
+				}
+			}
+		}
+		return cuboids;
 	}
 	
 	private void initmodel(JpmFile data, float[] parents, float scale){
@@ -79,59 +148,6 @@ public class CemModelEntry{
 		                     ? (parents[2] + (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
 		                     : data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1))),
 		                 };
-		///MUST SUBTRACT FROM PARENT FOR this.gen1
-		float[] translate = {(data.getTranslate().get(0).floatValue()), (data.getTranslate().get(1).floatValue()), (data.getTranslate().get(2).floatValue()),
-		                     };
-		if(data.getBoxes() != null){
-			for(JpmBox box : data.getBoxes()){
-				//apply translates first, then ?invert pos, then ?subtract pos by size so that it is drawn correctly
-				//top level model pivots need to translated up by 24, then 1st this.gen children need to work off of that rather than the translate values provided by the
-				// jpmFile
-				//only top level models need translates applied, others are relative to parent (even this.gen1)
-				if(box.useUvMap()){
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
-					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
-					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
-					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
-					                     box.getCoordinates().get(3).intValue(),
-					                     box.getCoordinates().get(4).intValue(),
-					                     box.getCoordinates().get(5).intValue(),
-					                     box.getSizeAdd().floatValue(),
-					                     data.getMirrorTexture()[0],
-					                     data.getMirrorTexture()[1],
-					                     box.getUv("north"),
-					                     box.getUv("south"),
-					                     box.getUv("east"),
-					                     box.getUv("west"),
-					                     box.getUv("up"),
-					                     box.getUv("down")
-					                    );
-				}
-				else{
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
-					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
-					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
-					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
-					                     box.getCoordinates().get(3).intValue(),
-					                     box.getCoordinates().get(4).intValue(),
-					                     box.getCoordinates().get(5).intValue(),
-					                     box.getSizeAdd().floatValue(),
-					                     data.getMirrorTexture()[0],
-					                     data.getMirrorTexture()[1],
-					                     box.getTextureOffset().get(0).intValue(),
-					                     box.getTextureOffset().get(1).intValue()
-					                    );
-				}
-			}
-		}
 		//pivot point is relative to parent, so 0,0,0 means "same as parent"
 		//remember to invert them okay
 		//pivot points are given to me in perfect form, i think

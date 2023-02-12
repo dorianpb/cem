@@ -76,7 +76,7 @@ public class JpmFile{
 		}
 	}
 	
-	public Iterable<JpmBox> getBoxes(){
+	public List<JpmBox> getBoxes(){
 		return this.boxes;
 	}
 	
