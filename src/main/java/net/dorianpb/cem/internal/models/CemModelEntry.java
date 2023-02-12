@@ -16,6 +16,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class CemModelEntry{
 	private final String                                    id;
@@ -55,7 +56,7 @@ public class CemModelEntry{
 		                           data.getRotate().get(2).floatValue() * ((this.invertAxis[2])? 1 : -1),
 		                           };
 		
-		this.model = new CemModelPart(textureWidth, textureHeight);
+		this.model = new CemModelPart(textureWidth, textureHeight, this.makecuboids(data, textureWidth, textureHeight));
 		this.initmodel(data, parents, scale);
 		this.offsets = new float[]{0, 0, 0};
 		//CHILD INIT
@@ -70,26 +71,11 @@ public class CemModelEntry{
 		//END CHILD INIT
 	}
 	
-	private void initmodel(JpmFile data, float[] parents, float scale){
-		float[] pivot = new float[]{((this.gen == 0)
-		                             ? (parents[0] - (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
-		                             : ((this.gen == 1)
-		                                ? (parents[0] + (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
-		                                : data.getTranslate().get(0).floatValue() * (this.invertAxis[1]? -1 : 1))),
-		                            ((this.gen == 0)
-		                             ? (parents[1] - (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
-		                             : ((this.gen == 1)
-		                                ? (parents[1] + (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
-		                                : data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1))),
-		                            ((this.gen == 0)
-		                             ? (parents[2] - (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
-		                             : ((this.gen == 1)
-		                                ? (parents[2] + (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
-		                                : data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1))),
-		                            };
+	private List<Cuboid> makecuboids(JpmFile data, int textureWidth, int textureHeight){
+		List<Cuboid> cuboids = new ArrayList<>(data.getBoxes() != null? data.getBoxes().size() : 0);
 		///MUST SUBTRACT FROM PARENT FOR this.gen1
-		float[] translate = new float[]{(data.getTranslate().get(0).floatValue()), (data.getTranslate().get(1).floatValue()), (data.getTranslate().get(2).floatValue()),
-		                                };
+		float[] translate = {(data.getTranslate().get(0).floatValue()), (data.getTranslate().get(1).floatValue()), (data.getTranslate().get(2).floatValue()),
+		                     };
 		if(data.getBoxes() != null){
 			for(JpmBox box : data.getBoxes()){
 				//apply translates first, then ?invert pos, then ?subtract pos by size so that it is drawn correctly
@@ -97,81 +83,109 @@ public class CemModelEntry{
 				// jpmFile
 				//only top level models need translates applied, others are relative to parent (even this.gen1)
 				if(box.useUvMap()){
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
-					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					float extra = box.getSizeAdd().floatValue();
 					
-					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
-					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
-					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
-					                     box.getCoordinates().get(3).intValue(),
-					                     box.getCoordinates().get(4).intValue(),
-					                     box.getCoordinates().get(5).intValue(),
-					                     box.getSizeAdd().floatValue(),
-					                     data.getMirrorTexture()[0],
-					                     data.getMirrorTexture()[1],
-					                     box.getUv("north"),
-					                     box.getUv("south"),
-					                     box.getUv("east"),
-					                     box.getUv("west"),
-					                     box.getUv("up"),
-					                     box.getUv("down")
-					                    );
+					cuboids.add(new CemCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                          ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					                          ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                          ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					                          ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                          ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                          box.getCoordinates().get(3).intValue(),
+					                          box.getCoordinates().get(4).intValue(),
+					                          box.getCoordinates().get(5).intValue(),
+					                          extra,
+					                          extra,
+					                          extra,
+					                          data.getMirrorTexture()[0],
+					                          data.getMirrorTexture()[1],
+					                          textureWidth,
+					                          textureHeight,
+					                          box.getUv("north"),
+					                          box.getUv("south"),
+					                          box.getUv("east"),
+					                          box.getUv("west"),
+					                          box.getUv("up"),
+					                          box.getUv("down")
+					));
 				}
 				else{
-					this.model.addCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
-					                     ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					float extra = box.getSizeAdd().floatValue();
+					cuboids.add(new CemCuboid(((box.getCoordinates().get(0).floatValue() + ((this.gen == 0)? translate[0] : 0)) * ((this.invertAxis[0])? -1 : 1)) -
+					                          ((this.invertAxis[0])? box.getCoordinates().get(3).floatValue() : 0),
+					                          ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
+					                          ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
+					                          ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
+					                          ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
+					                          box.getCoordinates().get(3).intValue(),
+					                          box.getCoordinates().get(4).intValue(),
+					                          box.getCoordinates().get(5).intValue(),
+					                          extra,
+					                          extra,
+					                          extra,
+					                          data.getMirrorTexture()[0],
+					                          data.getMirrorTexture()[1],
+					                          textureWidth,
+					                          textureHeight,
+					                          box.getTextureOffset().get(0).intValue(),
+					                          box.getTextureOffset().get(1).intValue()
+					));
 					
-					                     ((box.getCoordinates().get(1).floatValue() + ((this.gen == 0)? translate[1] : 0)) * ((this.invertAxis[1])? -1 : 1)) -
-					                     ((this.invertAxis[1])? box.getCoordinates().get(4).floatValue() : 0),
-					
-					                     ((box.getCoordinates().get(2).floatValue() + ((this.gen == 0)? translate[2] : 0)) * ((this.invertAxis[2])? -1 : 1)) -
-					                     ((this.invertAxis[2])? box.getCoordinates().get(5).floatValue() : 0),
-					                     box.getCoordinates().get(3).intValue(),
-					                     box.getCoordinates().get(4).intValue(),
-					                     box.getCoordinates().get(5).intValue(),
-					                     box.getSizeAdd().floatValue(),
-					                     data.getMirrorTexture()[0],
-					                     data.getMirrorTexture()[1],
-					                     box.getTextureOffset().get(0).intValue(),
-					                     box.getTextureOffset().get(1).intValue()
-					                    );
 				}
 			}
 		}
+		return cuboids;
+	}
+	
+	private void initmodel(JpmFile data, float[] parents, float scale){
+		float[] pivot = {((this.gen == 0)
+		                  ? (parents[0] - (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
+		                  : ((this.gen == 1)
+		                     ? (parents[0] + (data.getTranslate().get(0).floatValue() * (this.invertAxis[0]? -1 : 1)))
+		                     : data.getTranslate().get(0).floatValue() * (this.invertAxis[1]? -1 : 1))),
+		                 ((this.gen == 0)
+		                  ? (parents[1] - (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
+		                  : ((this.gen == 1)
+		                     ? (parents[1] + (data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1)))
+		                     : data.getTranslate().get(1).floatValue() * (this.invertAxis[1]? -1 : 1))),
+		                 ((this.gen == 0)
+		                  ? (parents[2] - (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
+		                  : ((this.gen == 1)
+		                     ? (parents[2] + (data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1)))
+		                     : data.getTranslate().get(2).floatValue() * (this.invertAxis[2]? -1 : 1))),
+		                 };
 		//pivot point is relative to parent, so 0,0,0 means "same as parent"
 		//remember to invert them okay
 		//pivot points are given to me in perfect form, i think
 		this.model.setPivot(pivot[0], pivot[1], pivot[2]);
-		this.model.setRotation(rotates[0], rotates[1], rotates[2]);
+		this.model.setRotation(this.rotates[0], this.rotates[1], this.rotates[2]);
 		this.model.setScale(scale, scale, scale);
 	}
 	
 	private void addChild(CemModelEntry child){
-		ArrayList<String> key = new ArrayList<>(Collections.singletonList(child.getId()));
+		ArrayList<String> key = new ArrayList<>(Collections.singletonList(child.id));
 		if(this.children.containsKey(key)){
-			throw new InvalidParameterException("Child " + key + " already exists for parent " + this.getId());
+			throw new InvalidParameterException("Child " + key + " already exists for parent " + this.id);
 		}
 		this.children.put(key, child);
 		for(ArrayList<String> refs : child.children.keySet()){
 			CemModelEntry val = child.children.get(refs);
-			refs.add(0, child.getId());
+			refs.add(0, child.id);
 			this.children.put(refs, val);
 		}
-		this.model.addChild(child.getId(), child.getModel());
+		this.model.addChild(child.id, child.model);
 	}
 	
 	String getId(){
-		return id;
+		return this.id;
 	}
 	
 	public CemModelPart getModel(){
-		return model;
+		return this.model;
 	}
 	
 	String getPart(){
-		return part;
+		return this.part;
 	}
 	
 	/** this is done because there can be a discrepancy between the translate value in the .jem and the actual part */
@@ -182,17 +196,17 @@ public class CemModelEntry{
 				case 'x' -> {
 					oldTranslate = this.translates[0];
 					this.translates[0] = requestedTranslate;
-					this.getModel().pivotX += (this.translates[0] - oldTranslate);
+					this.model.pivotX += (this.translates[0] - oldTranslate);
 				}
 				case 'y' -> {
 					oldTranslate = this.translates[1];
 					this.translates[1] = requestedTranslate;
-					this.getModel().pivotY += (this.translates[1] - oldTranslate);
+					this.model.pivotY += (this.translates[1] - oldTranslate);
 				}
 				case 'z' -> {
 					oldTranslate = this.translates[2];
 					this.translates[2] = requestedTranslate;
-					this.getModel().pivotZ += (this.translates[2] - oldTranslate);
+					this.model.pivotZ += (this.translates[2] - oldTranslate);
 				}
 			}
 		}
@@ -200,15 +214,15 @@ public class CemModelEntry{
 			float currentTranslate = this.getTranslate(axis);
 			switch(axis){
 				case 'x' -> {
-					this.getModel().pivotX += requestedTranslate - currentTranslate;
+					this.model.pivotX += requestedTranslate - currentTranslate;
 					this.offsets[0] += requestedTranslate - currentTranslate;
 				}
 				case 'y' -> {
-					this.getModel().pivotY += requestedTranslate - currentTranslate;
+					this.model.pivotY += requestedTranslate - currentTranslate;
 					this.offsets[1] += requestedTranslate - currentTranslate;
 				}
 				case 'z' -> {
-					this.getModel().pivotZ += requestedTranslate - currentTranslate;
+					this.model.pivotZ += requestedTranslate - currentTranslate;
 					this.offsets[2] += requestedTranslate - currentTranslate;
 				}
 			}
@@ -227,23 +241,23 @@ public class CemModelEntry{
 		else{
 			switch(axis){
 				case 'x' -> {
-					float value = this.gen != 0? this.translates[0] + this.offsets[0] : this.getModel().pivotX;
-					if(this.getModel().parent != null){
-						value += this.getModel().parent.pivotX;
+					float value = this.gen != 0? this.translates[0] + this.offsets[0] : this.model.pivotX;
+					if(this.model.parent != null){
+						value += this.model.parent.pivotX;
 					}
 					return value;
 				}
 				case 'y' -> {
-					float value = this.gen != 0? this.translates[1] + this.offsets[1] : this.getModel().pivotY;
-					if(this.getModel().parent != null){
-						value += this.getModel().parent.pivotY;
+					float value = this.gen != 0? this.translates[1] + this.offsets[1] : this.model.pivotY;
+					if(this.model.parent != null){
+						value += this.model.parent.pivotY;
 					}
 					return value;
 				}
 				case 'z' -> {
-					float value = this.gen != 0? this.translates[2] + this.offsets[2] : this.getModel().pivotZ;
-					if(this.getModel().parent != null){
-						value += this.getModel().parent.pivotZ;
+					float value = this.gen != 0? this.translates[2] + this.offsets[2] : this.model.pivotZ;
+					if(this.model.parent != null){
+						value += this.model.parent.pivotZ;
 					}
 					return value;
 				}
@@ -254,14 +268,14 @@ public class CemModelEntry{
 	
 	void setRotate(char axis, float requestedAngle){
 		if(CemConfigFairy.getConfig().useOldAnimations()){
-			this.getModel().setRotation(axis, requestedAngle);
+			this.model.setRotation(axis, requestedAngle);
 		}
 		else{
 			float angle = requestedAngle;
-			if(this.getModel().parent != null){
-				angle -= this.getModel().parent.getRotation(axis);
+			if(this.model.parent != null){
+				angle -= this.model.parent.getRotation(axis);
 			}
-			this.getModel().setRotation(axis, angle);
+			this.model.setRotation(axis, angle);
 		}
 	}
 	
@@ -277,15 +291,19 @@ public class CemModelEntry{
 		private       TransparentCemModelPart parent;
 		
 		public CemModelPart(){
-			this(0, 0);
+			this(0, 0, new ArrayList<>());
 		}
 		
-		public CemModelPart(int textureWidth, int textureHeight){
-			super(new ArrayList<>(), new HashMap<>());
+		CemModelPart(int textureWidth, int textureHeight, List<Cuboid> cuboids){
+			super(cuboids, new HashMap<>());
 			this.textureWidth = textureWidth;
 			this.textureHeight = textureHeight;
 			this.scale = new float[]{1, 1, 1};
 			this.rotation = new float[]{0, 0, 0};
+		}
+		
+		CemModelPart(int textureWidth, int textureHeight){
+			this(textureWidth, textureHeight, new ArrayList<>());
 		}
 		
 		public static CemModelPart of(ModelPart modelPart){
@@ -320,9 +338,9 @@ public class CemModelEntry{
 			this.cuboids.add(new CemCuboid(x,
 			                               y,
 			                               z,
-			                               (float) sizeX,
-			                               (float) sizeY,
-			                               (float) sizeZ,
+			                               sizeX,
+			                               sizeY,
+			                               sizeZ,
 			                               extra,
 			                               extra,
 			                               extra,
@@ -353,9 +371,9 @@ public class CemModelEntry{
 			this.cuboids.add(new CemCuboid(x,
 			                               y,
 			                               z,
-			                               (float) sizeX,
-			                               (float) sizeY,
-			                               (float) sizeZ,
+			                               sizeX,
+			                               sizeY,
+			                               sizeZ,
 			                               extra,
 			                               extra,
 			                               extra,
@@ -413,9 +431,9 @@ public class CemModelEntry{
 		
 		public float getScale(char axis){
 			return switch(axis){
-				case 'x' -> scale[0];
-				case 'y' -> scale[1];
-				case 'z' -> scale[2];
+				case 'x' -> this.scale[0];
+				case 'y' -> this.scale[1];
+				case 'z' -> this.scale[2];
 				default -> throw new IllegalStateException("Unknown axis \"" + axis + "\"");
 			};
 		}
@@ -425,21 +443,21 @@ public class CemModelEntry{
 				case 'x' -> {
 					float angle = this.pitch;
 					if(this.parent != null){
-						angle += parent.pitch;
+						angle += this.parent.pitch;
 					}
 					return angle + this.rotation[0];
 				}
 				case 'y' -> {
 					float angle = this.yaw;
 					if(this.parent != null){
-						angle += parent.yaw;
+						angle += this.parent.yaw;
 					}
 					return angle + this.rotation[1];
 				}
 				case 'z' -> {
 					float angle = this.roll;
 					if(this.parent != null){
-						angle += parent.roll;
+						angle += this.parent.roll;
 					}
 					return angle + this.rotation[2];
 				}
@@ -488,7 +506,7 @@ public class CemModelEntry{
 		
 		@Override
 		public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha){
-			matrices.scale(scale[0], scale[1], scale[2]);
+			matrices.scale(this.scale[0], this.scale[1], this.scale[2]);
 			super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		}
 		
@@ -512,7 +530,6 @@ public class CemModelEntry{
 		private final CemModelPart part;
 		
 		public TransparentCemModelPart(ModelPart part, ModelTransform fakeTransform, ModelTransform realTransform){
-			super();
 			if(!(part instanceof CemModelPart)){
 				this.part = CemModelPart.of(part);
 			}
@@ -520,7 +537,7 @@ public class CemModelEntry{
 				this.part = (CemModelPart) part;
 			}
 			this.setTransform(realTransform);
-			addChild("my_precious", part);
+			this.addChild("my_precious", part);
 			this.part.pivotX = part.pivotX - fakeTransform.pivotX;
 			this.part.pivotY = part.pivotY - fakeTransform.pivotY;
 			this.part.pivotZ = part.pivotZ - fakeTransform.pivotZ;
@@ -528,9 +545,8 @@ public class CemModelEntry{
 		}
 		
 		private TransparentCemModelPart(CemModelPart part){
-			super();
 			this.part = part;
-			addChild("my_precious", part);
+			this.addChild("my_precious", part);
 		}
 		
 		public static TransparentCemModelPart of(TransparentCemModelPart modelPart){
@@ -542,7 +558,7 @@ public class CemModelEntry{
 		
 		@Override
 		public ModelPart getChild(String name){
-			return part.getChild(name);
+			return this.part.getChild(name);
 		}
 		
 		@Override
@@ -563,13 +579,13 @@ public class CemModelEntry{
 		}
 		
 		public void rotateInnerPart(MatrixStack matrix, float xOffset, float yOffset, float zOffset){
-			part.pivotX += this.pivotX + xOffset;
-			part.pivotY += this.pivotY + yOffset;
-			part.pivotZ += this.pivotZ + zOffset;
-			part.rotate(matrix);
-			part.pivotX -= this.pivotX + xOffset;
-			part.pivotY -= this.pivotY + yOffset;
-			part.pivotZ -= this.pivotZ + zOffset;
+			this.part.pivotX += this.pivotX + xOffset;
+			this.part.pivotY += this.pivotY + yOffset;
+			this.part.pivotZ += this.pivotZ + zOffset;
+			this.part.rotate(matrix);
+			this.part.pivotX -= this.pivotX + xOffset;
+			this.part.pivotY -= this.pivotY + yOffset;
+			this.part.pivotZ -= this.pivotZ + zOffset;
 		}
 	}
 	
@@ -735,55 +751,55 @@ public class CemModelEntry{
 			}
 			
 			private float getX(){
-				return x;
+				return this.x;
 			}
 			
 			private float getY(){
-				return y;
+				return this.y;
 			}
 			
 			private float getZ(){
-				return z;
+				return this.z;
 			}
 			
 			private float getSizeX(){
-				return sizeX;
+				return this.sizeX;
 			}
 			
 			private float getSizeY(){
-				return sizeY;
+				return this.sizeY;
 			}
 			
 			private float getSizeZ(){
-				return sizeZ;
+				return this.sizeZ;
 			}
 			
 			private float getExtraX(){
-				return extraX;
+				return this.extraX;
 			}
 			
 			private float getExtraY(){
-				return extraY;
+				return this.extraY;
 			}
 			
 			private float getExtraZ(){
-				return extraZ;
+				return this.extraZ;
 			}
 			
 			private boolean isMirrorU(){
-				return mirrorU;
+				return this.mirrorU;
 			}
 			
 			private boolean isMirrorV(){
-				return mirrorV;
+				return this.mirrorV;
 			}
 			
 			protected int getTextureWidth(){
-				return textureWidth;
+				return this.textureWidth;
 			}
 			
 			protected int getTextureHeight(){
-				return textureHeight;
+				return this.textureHeight;
 			}
 		}
 		
@@ -811,11 +827,11 @@ public class CemModelEntry{
 			}
 			
 			private int getU(){
-				return u;
+				return this.u;
 			}
 			
 			private int getV(){
-				return v;
+				return this.v;
 			}
 		}
 		
@@ -851,27 +867,27 @@ public class CemModelEntry{
 			}
 			
 			private float[] getUvNorth(){
-				return uvNorth;
+				return this.uvNorth;
 			}
 			
 			private float[] getUvSouth(){
-				return uvSouth;
+				return this.uvSouth;
 			}
 			
 			private float[] getUvEast(){
-				return uvEast;
+				return this.uvEast;
 			}
 			
 			private float[] getUvWest(){
-				return uvWest;
+				return this.uvWest;
 			}
 			
 			private float[] getUvDown(){
-				return uvDown;
+				return this.uvDown;
 			}
 			
 			private float[] getUvUp(){
-				return uvUp;
+				return this.uvUp;
 			}
 		}
 	}
