@@ -1,5 +1,6 @@
 package net.dorianpb.cem.internal.models;
 
+import net.dorianpb.cem.internal.util.SodiumCuboidFixer;
 import net.minecraft.client.model.ModelPart.Cuboid;
 import net.minecraft.client.model.ModelPart.Quad;
 import net.minecraft.util.math.Direction;
@@ -56,10 +57,7 @@ public class CemCuboid extends Cuboid{
 		                                    textureHeight,
 		                                    uvNorth,
 		                                    uvSouth,
-		                                    uvEast,
-		                                    uvWest,
-		                                    uvDown,
-		                                    uvUp
+		                                    uvEast, uvWest, uvDown, uvUp
 		);
 		this.sides[4] = new Quad(this.sides[4].vertices, uvNorth[0], uvNorth[1], uvNorth[2], uvNorth[3], textureWidth, textureHeight, false, Direction.NORTH);
 		this.sides[5] = new Quad(this.sides[5].vertices, uvSouth[0], uvSouth[1], uvSouth[2], uvSouth[3], textureWidth, textureHeight, false, Direction.SOUTH);
@@ -67,6 +65,9 @@ public class CemCuboid extends Cuboid{
 		this.sides[1] = new Quad(this.sides[1].vertices, uvWest[0], uvWest[1], uvWest[2], uvWest[3], textureWidth, textureHeight, false, Direction.WEST);
 		this.sides[2] = new Quad(this.sides[2].vertices, uvDown[0], uvDown[1], uvDown[2], uvDown[3], textureWidth, textureHeight, false, Direction.DOWN);
 		this.sides[3] = new Quad(this.sides[3].vertices, uvUp[0], uvUp[1], uvUp[2], uvUp[3], textureWidth, textureHeight, false, Direction.UP);
+		if(SodiumCuboidFixer.needFix()){
+			SodiumCuboidFixer.replacequad(this, uvNorth, uvSouth, uvEast, uvWest, uvUp, uvDown, textureWidth, textureHeight);
+		}
 	}
 	
 	public CemCuboid(float x,
