@@ -1,9 +1,0 @@
-{
-	"modmenu.descriptionTranslation.cem": "Allows for loading custom models into the game as defined by .jem and .jpm files in a resource pack.",
-	"config.cem.use_optifine_folder": "Use \"assets/minecraft/optifine/cem\"?",
-	"config.cem.use_optifine_folder.description": "This will load CEM models from\nassets/minecraft/optifine/cem,\nwhich is exactly what optifine does.\nReload resources (F3 + T) for\nthis to take effect!",
-	"config.cem.use_new_model_creation_fix": "Use model creation fix?",
-	"config.cem.use_new_model_creation_fix.description": "This prevents minecraft from\ndirectly moving your model parts\naround when animating. This breaks\na few models but fixes other ones.\nPlease use if possible.\nReload resources (F3 + T) for\nthis to take effect!",
-	"config.cem.use_old_animations": "Use older animation implementation?",
-	"config.cem.use_old_animations.description": "This restores animation behavior\nfrom CEM version <=0.6.2. You\nprobably want this off."
-}

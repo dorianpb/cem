@@ -1,0 +1,9 @@
+{
+	"modmenu.descriptionTranslation.cem": "允許使用自訂模型載入資源包中的 .jem 和 .jpm 檔案",
+	"config.cem.use_optifine_folder": "使用「assets/minecraft/optifine/cem」？",
+	"config.cem.use_optifine_folder.description": "這會從 assets/minecraft/optifine/cem 載入 CEM 模型\n這正是 OptiFine 所做的。\n重新載入資源包（F3 + T）\n以將此生效！",
+	"config.cem.use_new_model_creation_fix": "使用模型創建修復功能？",
+	"config.cem.use_new_model_creation_fix.description": "這防止 Minecraft 直接移動模型的各個部分\n這樣可以修復一些模型的問題\n但也可能會破壞其他模型\n如果可能請啟用\n重新載入資源包（F3 + T）\n以將此生效！",
+	"config.cem.use_old_animations": "使用舊版動畫實現？",
+	"config.cem.use_old_animations.description": "這個選項會恢復 CEM 版本 <=0.6.2 的動畫行為\n你可能想要關閉它。"
+}
