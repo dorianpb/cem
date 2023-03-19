@@ -20,16 +20,17 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemZombieVillagerModel<>(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = new CemZombieVillagerModel<>(this.registry);
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 			
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
 					                                  new CemArmorModel<>((CemZombieVillagerModel<ZombieVillagerEntity>) this.model, 0.5F),
-					                                  new CemArmorModel<>((CemZombieVillagerModel<ZombieVillagerEntity>) this.model, 1.0F)
+					                                  new CemArmorModel<>((CemZombieVillagerModel<ZombieVillagerEntity>) this.model, 1.0F),
+					                                  context.getModelManager()
 					);
 				}
 				else{
@@ -38,7 +39,7 @@ public class CemZombieVillagerRenderer extends ZombieVillagerEntityRenderer impl
 			});
 			
 		} catch(Exception e){
-			modelError(e);
+			this.modelError(e);
 		}
 	}
 	

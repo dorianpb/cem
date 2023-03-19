@@ -23,9 +23,9 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemDrownedZombieModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = new CemDrownedZombieModel(this.registry);
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof DrownedOverlayFeatureRenderer<DrownedEntity>){
@@ -34,7 +34,8 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				else if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
 					                                  new CemArmorModel<>((CemDrownedZombieModel) this.model, 0.5F),
-					                                  new CemArmorModel<>((CemDrownedZombieModel) this.model, 0.5F)
+					                                  new CemArmorModel<>((CemDrownedZombieModel) this.model, 0.5F),
+					                                  context.getModelManager()
 					);
 				}
 				else{
@@ -42,7 +43,7 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				}
 			});
 		} catch(Exception e){
-			modelError(e);
+			this.modelError(e);
 		}
 	}
 	
@@ -79,14 +80,14 @@ public class CemDrownedZombieRenderer extends DrownedEntityRenderer implements C
 				}
 			}
 			else{
-				this.registry = CemRegistryManager.getRegistry(CemDrownedZombieRenderer.getType());
+				this.registry = CemRegistryManager.getRegistry(getType());
 				SKIN = origSKIN;
 			}
 			try{
-				this.model = new CemDrownedZombieModel(registry, 0.25F);
+				this.model = new CemDrownedZombieModel(this.registry, 0.25F);
 				
 			} catch(Exception e){
-				modelError(e);
+				this.modelError(e);
 			}
 		}
 		

@@ -14,10 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class CemModelEntry{
 	private final String                                    id;
@@ -591,7 +588,8 @@ public class CemModelEntry{
 	}
 	
 	public static class CemCuboid extends Cuboid{
-		private final CemCuboidParams params;
+		private static final Set<Direction>  directions = Set.of(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.UP, Direction.DOWN);
+		private final        CemCuboidParams params;
 		
 		public CemCuboid(float x,
 		                 float y,
@@ -625,7 +623,8 @@ public class CemModelEntry{
 			      extraZ,
 			      false,
 			      textureWidth,
-			      textureHeight
+			      textureHeight,
+			      directions
 			     );
 			this.params = new CemCuboidUvParams(x,
 			                                    y,
@@ -633,23 +632,14 @@ public class CemModelEntry{
 			                                    sizeX,
 			                                    sizeY,
 			                                    sizeZ,
-			                                    extraX,
-			                                    extraY,
-			                                    extraZ,
-			                                    mirrorU,
-			                                    mirrorV,
-			                                    textureWidth,
-			                                    textureHeight,
-			                                    uvNorth,
-			                                    uvSouth,
-			                                    uvEast, uvWest, uvDown, uvUp
+			                                    extraX, extraY, extraZ, mirrorU, mirrorV, textureWidth, textureHeight, uvNorth, uvSouth, uvEast, uvWest, uvDown, uvUp
 			);
-			this.sides[4] = new Quad(this.sides[4].vertices, uvNorth[0], uvNorth[1], uvNorth[2], uvNorth[3], textureWidth, textureHeight, false, Direction.NORTH);
+			this.sides[0] = new Quad(this.sides[0].vertices, uvDown[0], uvDown[1], uvDown[2], uvDown[3], textureWidth, textureHeight, false, Direction.DOWN);
+			this.sides[1] = new Quad(this.sides[1].vertices, uvUp[0], uvUp[1], uvUp[2], uvUp[3], textureWidth, textureHeight, false, Direction.UP);
+			this.sides[2] = new Quad(this.sides[2].vertices, uvWest[0], uvWest[1], uvWest[2], uvWest[3], textureWidth, textureHeight, false, Direction.WEST);
+			this.sides[3] = new Quad(this.sides[3].vertices, uvNorth[0], uvNorth[1], uvNorth[2], uvNorth[3], textureWidth, textureHeight, false, Direction.NORTH);
+			this.sides[4] = new Quad(this.sides[4].vertices, uvEast[0], uvEast[1], uvEast[2], uvEast[3], textureWidth, textureHeight, false, Direction.EAST);
 			this.sides[5] = new Quad(this.sides[5].vertices, uvSouth[0], uvSouth[1], uvSouth[2], uvSouth[3], textureWidth, textureHeight, false, Direction.SOUTH);
-			this.sides[0] = new Quad(this.sides[0].vertices, uvEast[0], uvEast[1], uvEast[2], uvEast[3], textureWidth, textureHeight, false, Direction.EAST);
-			this.sides[1] = new Quad(this.sides[1].vertices, uvWest[0], uvWest[1], uvWest[2], uvWest[3], textureWidth, textureHeight, false, Direction.WEST);
-			this.sides[2] = new Quad(this.sides[2].vertices, uvDown[0], uvDown[1], uvDown[2], uvDown[3], textureWidth, textureHeight, false, Direction.DOWN);
-			this.sides[3] = new Quad(this.sides[3].vertices, uvUp[0], uvUp[1], uvUp[2], uvUp[3], textureWidth, textureHeight, false, Direction.UP);
 			if(SodiumCuboidFixer.needFix()){
 				SodiumCuboidFixer.replacequad(this, uvNorth, uvSouth, uvEast, uvWest, uvUp, uvDown, textureWidth, textureHeight);
 			}
@@ -670,7 +660,7 @@ public class CemModelEntry{
 		                 int textureHeight,
 		                 int u,
 		                 int v){
-			super(u, v, x, mirrorV? y + sizeY : y, z, sizeX, mirrorV? -sizeY : sizeY, sizeZ, extraX, extraY, extraZ, mirrorU, textureWidth, textureHeight);
+			super(u, v, x, mirrorV? y + sizeY : y, z, sizeX, mirrorV? -sizeY : sizeY, sizeZ, extraX, extraY, extraZ, mirrorU, textureWidth, textureHeight, directions);
 			this.params = new CemCuboidTexOffsetParams(x, y, z, sizeX, sizeY, sizeZ, extraX, extraY, extraZ, mirrorU, mirrorV, textureWidth, textureHeight, u, v);
 		}
 		

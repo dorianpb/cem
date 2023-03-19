@@ -17,18 +17,19 @@ public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRe
 	private final CemModelRegistry registry;
 	
 	public CemGiantZombieRenderer(EntityRendererFactory.Context context){
-		super(context, 6F);
+		super(context, 6.0F);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemGiantZombieModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = new CemGiantZombieModel(this.registry);
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
 					return new ArmorFeatureRenderer<>(this,
 					                                  new CemArmorModel<>((CemGiantZombieModel) this.model, 0.5F),
-					                                  new CemArmorModel<>((CemGiantZombieModel) this.model, 1.0F)
+					                                  new CemArmorModel<>((CemGiantZombieModel) this.model, 1.0F),
+					                                  context.getModelManager()
 					);
 				}
 				else{
@@ -36,7 +37,7 @@ public class CemGiantZombieRenderer extends GiantEntityRenderer implements CemRe
 				}
 			});
 		} catch(Exception e){
-			modelError(e);
+			this.modelError(e);
 		}
 	}
 	

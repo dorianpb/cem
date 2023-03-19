@@ -24,20 +24,24 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 		this.entityType = entityType;
 		this.registry = CemRegistryManager.getRegistry(entityType);
 		try{
-			this.model = getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = this.getCemPiglinModel(this.registry, entityType.equals(EntityType.ZOMBIFIED_PIGLIN));
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
-					return new ArmorFeatureRenderer<>(this, new CemArmorModel<>((CemPiglinModel) this.model, 0.5F), new CemArmorModel<>((CemPiglinModel) this.model, 1.02F));
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemArmorModel<>((CemPiglinModel) this.model, 0.5F),
+					                                  new CemArmorModel<>((CemPiglinModel) this.model, 1.02F),
+					                                  context.getModelManager()
+					);
 				}
 				else{
 					return feature;
 				}
 			});
 		} catch(Exception e){
-			modelError(e);
+			this.modelError(e);
 		}
 	}
 	
@@ -81,7 +85,7 @@ public class CemPiglinRenderer extends PiglinEntityRenderer implements CemRender
 	
 	@Override
 	public String getId(){
-		return entityType.toString();
+		return this.entityType.toString();
 	}
 	
 	@Override

@@ -20,20 +20,24 @@ public class CemZombieRenderer extends ZombieEntityRenderer implements CemRender
 		super(context);
 		this.registry = CemRegistryManager.getRegistry(getType());
 		try{
-			this.model = new CemZombieModel(registry);
-			if(registry.hasShadowRadius()){
-				this.shadowRadius = registry.getShadowRadius();
+			this.model = new CemZombieModel(this.registry);
+			if(this.registry.hasShadowRadius()){
+				this.shadowRadius = this.registry.getShadowRadius();
 			}
 			this.features.replaceAll((feature) -> {
 				if(feature instanceof ArmorFeatureRenderer){
-					return new ArmorFeatureRenderer<>(this, new CemArmorModel<>((CemZombieModel) this.model, 0.5F), new CemArmorModel<>((CemZombieModel) this.model, 1.0F));
+					return new ArmorFeatureRenderer<>(this,
+					                                  new CemArmorModel<>((CemZombieModel) this.model, 0.5F),
+					                                  new CemArmorModel<>((CemZombieModel) this.model, 1.0F),
+					                                  context.getModelManager()
+					);
 				}
 				else{
 					return feature;
 				}
 			});
 		} catch(Exception e){
-			modelError(e);
+			this.modelError(e);
 		}
 	}
 	
