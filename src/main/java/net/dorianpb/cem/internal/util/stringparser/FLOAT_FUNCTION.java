@@ -57,7 +57,7 @@ enum FLOAT_FUNCTION implements ParsedFunctionFloat{
 			                               ((ParsedExpressionFloat) args.get(2)).eval(env)
 			                              );
 			case ABS -> MathHelper.abs(((ParsedExpressionFloat) args.get(0)).eval(env));
-			case FLOOR -> MathHelper.fastFloor(((ParsedExpressionFloat) args.get(0)).eval(env));
+			case FLOOR -> MathHelper.floor(((ParsedExpressionFloat) args.get(0)).eval(env));
 			case CEIL -> MathHelper.ceil(((ParsedExpressionFloat) args.get(0)).eval(env));
 			case EXP -> (float) Math.exp(((ParsedExpressionFloat) args.get(0)).eval(env));
 			case FRAC -> MathHelper.fractionalPart(((ParsedExpressionFloat) args.get(0)).eval(env));
