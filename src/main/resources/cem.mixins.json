@@ -1,23 +1,23 @@
 {
-	"required": true,
-	"minVersion": "0.8",
-	"package": "net.dorianpb.cem.mixins",
-	"compatibilityLevel": "JAVA_16",
-	"client": [
-		"BipedMixin",
-		"BlockEntityRendererAccessor",
-		"DilationAccessor",
-		"EntityModelLayersAccessor",
-		"EntityModelLoaderMixin",
-		"EntityRendererAccessor",
-		"EntityRenderersMixin",
-		"FeatureRendererMixin",
-		"HeadFeatureRendererMixin",
-		"LivingEntityRendererMixin",
-		"ModelAccessor",
-		"ModelCuboidDataMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.dorianpb.cem.mixins",
+    "compatibilityLevel": "JAVA_16",
+    "client": [
+        "BipedMixin",
+        "BlockEntityRendererAccessor",
+        "DilationAccessor",
+        "EntityModelLayersAccessor",
+        "EntityModelLoaderMixin",
+        "EntityRendererAccessor",
+        "EntityRenderersMixin",
+        "FeatureRendererMixin",
+        "HeadFeatureRendererMixin",
+        "LivingEntityRendererMixin",
+        "ModelAccessor",
+        "ModelCuboidDataMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
 }

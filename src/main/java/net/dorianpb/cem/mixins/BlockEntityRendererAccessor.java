@@ -12,14 +12,14 @@ import java.util.Map;
 
 @Mixin(BlockEntityRendererFactories.class)
 @SuppressWarnings("unused")
-public interface BlockEntityRendererAccessor{
-	@Invoker
-	static void callRegister(BlockEntityType<? extends BlockEntity> type, BlockEntityRendererFactory<? extends BlockEntity> factory){
-		throw new UnsupportedOperationException();
-	}
-	
-	@Accessor
-	static Map<BlockEntityType<?>, BlockEntityRendererFactory<?>> getFACTORIES(){
-		throw new UnsupportedOperationException();
-	}
+public interface BlockEntityRendererAccessor {
+    @Invoker
+    static void callRegister(BlockEntityType<? extends BlockEntity> type, BlockEntityRendererFactory<? extends BlockEntity> factory) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Accessor
+    static Map<BlockEntityType<?>, BlockEntityRendererFactory<?>> getFACTORIES() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -1,18 +1,18 @@
 {
-	"partnames": {
-		"headwear": "hat",
-		"headwear2": "hat_rim",
-		"bodywear": "jacket"
-	},
-	"parttree": {
-		"body": {
-			"jacket": {}
-		},
-		"head": {
-			"hat": {
-				"hat_rim": {}
-			},
-			"nose": {}
-		}
-	}
+    "partnames": {
+        "headwear": "hat",
+        "headwear2": "hat_rim",
+        "bodywear": "jacket"
+    },
+    "parttree": {
+        "body": {
+            "jacket": {}
+        },
+        "head": {
+            "hat": {
+                "hat_rim": {}
+            },
+            "nose": {}
+        }
+    }
 }

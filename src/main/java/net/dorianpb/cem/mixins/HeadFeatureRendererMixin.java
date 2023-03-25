@@ -10,16 +10,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(HeadFeatureRenderer.class)
-public abstract class HeadFeatureRendererMixin{
-	@SuppressWarnings("MethodMayBeStatic")
-	@Redirect(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
-	          at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;rotate(Lnet/minecraft/client/util/math/MatrixStack;)V"))
-	private void cem$copyHeadRotCorrectly(ModelPart instance, MatrixStack matrix){
-		if(instance instanceof TransparentCemModelPart){
-			((TransparentCemModelPart) instance).rotateInnerPart(matrix);
-		}
-		else{
-			instance.rotate(matrix);
-		}
-	}
+public abstract class HeadFeatureRendererMixin {
+    @SuppressWarnings("MethodMayBeStatic")
+    @Redirect(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
+              at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;rotate(Lnet/minecraft/client/util/math/MatrixStack;)V"))
+    private void cem$copyHeadRotCorrectly(ModelPart instance, MatrixStack matrix) {
+        if(instance instanceof TransparentCemModelPart) {
+            ((TransparentCemModelPart) instance).rotateInnerPart(matrix);
+        } else {
+            instance.rotate(matrix);
+        }
+    }
 }

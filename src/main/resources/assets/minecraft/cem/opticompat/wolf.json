@@ -1,13 +1,21 @@
 {
-	"partnames": {
-		"leg1": "right_hind_leg",
-		"leg2": "left_hind_leg",
-		"leg3": "right_front_leg",
-		"leg4": "left_front_leg",
-		"mane": "upper_body"
-	},
-	"modelfixes": {
-		"upper_body": [-1.0, 14.0, 2.0],
-		"tail": [-1.0, 12.0, 10.0]
-	}
+    "partnames": {
+        "leg1": "right_hind_leg",
+        "leg2": "left_hind_leg",
+        "leg3": "right_front_leg",
+        "leg4": "left_front_leg",
+        "mane": "upper_body"
+    },
+    "modelfixes": {
+        "upper_body": [
+            -1.0,
+            14.0,
+            2.0
+        ],
+        "tail": [
+            -1.0,
+            12.0,
+            10.0
+        ]
+    }
 }

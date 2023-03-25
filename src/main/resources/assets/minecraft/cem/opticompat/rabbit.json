@@ -1,10 +1,10 @@
 {
-	"partnames": {
-		"left_foot": "left_hind_foot",
-		"right_foot": "right_hind_foot",
-		"left_thigh": "left_haunch",
-		"right_thigh": "right_haunch",
-		"left_arm": "left_front_leg",
-		"right_arm": "right_front_leg"
-	}
+    "partnames": {
+        "left_foot": "left_hind_foot",
+        "right_foot": "right_hind_foot",
+        "left_thigh": "left_haunch",
+        "right_thigh": "right_haunch",
+        "left_arm": "left_front_leg",
+        "right_arm": "right_front_leg"
+    }
 }

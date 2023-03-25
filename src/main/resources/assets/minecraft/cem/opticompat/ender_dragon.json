@@ -1,52 +1,60 @@
 {
-	"partnames": {
-		"spine": "neck",
-		"front_left_leg": "left_front_leg",
-		"front_left_shin": "left_front_leg_tip",
-		"front_left_foot": "left_front_foot",
-		"back_left_leg": "left_hind_leg",
-		"back_left_shin": "left_hind_leg_tip",
-		"back_left_foot": "left_hind_foot",
-		"front_right_leg": "right_front_leg",
-		"front_right_shin": "right_front_leg_tip",
-		"front_right_foot": "right_front_foot",
-		"back_right_leg": "right_hind_leg",
-		"back_right_shin": "right_hind_leg_tip",
-		"back_right_foot": "right_hind_foot"
-	},
-	"parttree": {
-		"head": {
-			"jaw": {}
-		},
-		"right_wing": {
-			"right_wing_tip": {}
-		},
-		"left_wing": {
-			"left_wing_tip": {}
-		},
-		"right_hind_leg": {
-			"right_hind_leg_tip": {
-				"right_hind_foot": {}
-			}
-		},
-		"left_hind_leg": {
-			"left_hind_leg_tip": {
-				"left_hind_foot": {}
-			}
-		},
-		"right_front_leg": {
-			"right_front_leg_tip": {
-				"right_front_foot": {}
-			}
-		},
-		"left_front_leg": {
-			"left_front_leg_tip": {
-				"left_front_foot": {}
-			}
-		}
-	},
-	"modelfixes": {
-		"head": [0.0, 18.0, -24.0],
-		"neck": [0.0, 19.0, -13.0]
-	}
+    "partnames": {
+        "spine": "neck",
+        "front_left_leg": "left_front_leg",
+        "front_left_shin": "left_front_leg_tip",
+        "front_left_foot": "left_front_foot",
+        "back_left_leg": "left_hind_leg",
+        "back_left_shin": "left_hind_leg_tip",
+        "back_left_foot": "left_hind_foot",
+        "front_right_leg": "right_front_leg",
+        "front_right_shin": "right_front_leg_tip",
+        "front_right_foot": "right_front_foot",
+        "back_right_leg": "right_hind_leg",
+        "back_right_shin": "right_hind_leg_tip",
+        "back_right_foot": "right_hind_foot"
+    },
+    "parttree": {
+        "head": {
+            "jaw": {}
+        },
+        "right_wing": {
+            "right_wing_tip": {}
+        },
+        "left_wing": {
+            "left_wing_tip": {}
+        },
+        "right_hind_leg": {
+            "right_hind_leg_tip": {
+                "right_hind_foot": {}
+            }
+        },
+        "left_hind_leg": {
+            "left_hind_leg_tip": {
+                "left_hind_foot": {}
+            }
+        },
+        "right_front_leg": {
+            "right_front_leg_tip": {
+                "right_front_foot": {}
+            }
+        },
+        "left_front_leg": {
+            "left_front_leg_tip": {
+                "left_front_foot": {}
+            }
+        }
+    },
+    "modelfixes": {
+        "head": [
+            0.0,
+            18.0,
+            -24.0
+        ],
+        "neck": [
+            0.0,
+            19.0,
+            -13.0
+        ]
+    }
 }

@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.function.Function;
 
 @Mixin(Model.class)
-public interface ModelAccessor{
-	@Accessor
-	Function<Identifier, RenderLayer> getLayerFactory();
-	
-	@Mutable
-	@Accessor
-	void setLayerFactory(Function<Identifier, RenderLayer> layerFactory);
+public interface ModelAccessor {
+    @Accessor
+    Function<Identifier, RenderLayer> getLayerFactory();
+
+    @Mutable
+    @Accessor
+    void setLayerFactory(Function<Identifier, RenderLayer> layerFactory);
 }

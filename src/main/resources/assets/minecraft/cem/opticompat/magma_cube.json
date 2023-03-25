@@ -1,13 +1,13 @@
 {
-	"partnames": {
-		"core": "inside_cube",
-		"segment1": "cube0",
-		"segment2": "cube1",
-		"segment3": "cube2",
-		"segment4": "cube3",
-		"segment5": "cube4",
-		"segment6": "cube5",
-		"segment7": "cube6",
-		"segment8": "cube7"
-	}
+    "partnames": {
+        "core": "inside_cube",
+        "segment1": "cube0",
+        "segment2": "cube1",
+        "segment3": "cube2",
+        "segment4": "cube3",
+        "segment5": "cube4",
+        "segment6": "cube5",
+        "segment7": "cube6",
+        "segment8": "cube7"
+    }
 }

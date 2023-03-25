@@ -1,20 +1,20 @@
 {
-	"partnames": {
-		"body": "bone",
-		"torso": "body"
-	},
-	"parttree": {
-		"bone": {
-			"body": {
-				"stinger": {},
-				"left_antenna": {},
-				"right_antenna": {}
-			},
-			"right_wing": {},
-			"left_wing": {},
-			"front_legs": {},
-			"middle_legs": {},
-			"back_legs": {}
-		}
-	}
+    "partnames": {
+        "body": "bone",
+        "torso": "body"
+    },
+    "parttree": {
+        "bone": {
+            "body": {
+                "stinger": {},
+                "left_antenna": {},
+                "right_antenna": {}
+            },
+            "right_wing": {},
+            "left_wing": {},
+            "front_legs": {},
+            "middle_legs": {},
+            "back_legs": {}
+        }
+    }
 }

@@ -1,9 +1,9 @@
 {
-	"modmenu.descriptionTranslation.cem": "Позволяет загружать в игру пользовательские модели, определённые файлами .jem и .jpm в пакетах ресурсов.",
-	"config.cem.use_optifine_folder": "Использовать \"assets/minecraft/optifine/cem\"?",
-	"config.cem.use_optifine_folder.description": "Позволяет загружать пользовательские\nмодели из assets/minecraft/optifine/cem,\nкак это делает Optifine. Для применения\nизменений требуется перезагрузить\nпакеты ресурсов (F3+T).",
-	"config.cem.use_new_model_creation_fix": "Исправлять создание моделей?",
-	"config.cem.use_new_model_creation_fix.description": "Предотвращает прямое перемещение\nчастей модели при анимации. Это\nломает поведение некоторых моделей,\nно исправляет другие. Рекомендуется\nпо возможности держать включённым.\nДля применения изменений требуется\nперезагрузить пакеты ресурсов (F3+T).",
-	"config.cem.use_old_animations": "Использовать старую реализацию анимации?",
-	"config.cem.use_old_animations.description": "Восстанавливает поведение анимации\nиз CEM 0.6.2 и ниже. Скорее всего, вам\nследует это отключить."
+    "modmenu.descriptionTranslation.cem": "Позволяет загружать в игру пользовательские модели, определённые файлами .jem и .jpm в пакетах ресурсов.",
+    "config.cem.use_optifine_folder": "Использовать \"assets/minecraft/optifine/cem\"?",
+    "config.cem.use_optifine_folder.description": "Позволяет загружать пользовательские\nмодели из assets/minecraft/optifine/cem,\nкак это делает Optifine. Для применения\nизменений требуется перезагрузить\nпакеты ресурсов (F3+T).",
+    "config.cem.use_new_model_creation_fix": "Исправлять создание моделей?",
+    "config.cem.use_new_model_creation_fix.description": "Предотвращает прямое перемещение\nчастей модели при анимации. Это\nломает поведение некоторых моделей,\nно исправляет другие. Рекомендуется\nпо возможности держать включённым.\nДля применения изменений требуется\nперезагрузить пакеты ресурсов (F3+T).",
+    "config.cem.use_old_animations": "Использовать старую реализацию анимации?",
+    "config.cem.use_old_animations.description": "Восстанавливает поведение анимации\nиз CEM 0.6.2 и ниже. Скорее всего, вам\nследует это отключить."
 }

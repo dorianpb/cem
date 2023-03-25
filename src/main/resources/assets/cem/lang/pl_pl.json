@@ -1,9 +1,9 @@
 {
-	"modmenu.descriptionTranslation.cem": "Pozwala na ładowanie do gry niestandardowych modeli zdefiniowanych przez pliki .jem i .jpm w paczce zasobów.",
-	"config.cem.use_optifine_folder": "Użyć \"assets/minecraft/optifine/cem\"?",
-	"config.cem.use_optifine_folder.description": "To załaduje modele CEM z\nassets/minecraft/optifine/cem\nDokładnie to samo robi optifine.\nPrzeładuj zasoby (F3 + T) aby\nzmiany zostały zastosowane!",
-	"config.cem.use_new_model_creation_fix": "Użyć poprawki tworzenia modelu?",
-	"config.cem.use_new_model_creation_fix.description": "Zapobiega to bezpośredniemu\nprzemeiszczaniu części twojego modelu\nprzez minecraft podczas animowania.\nPsuje to kilka modeli, ale naprawia inne.\nProszę używać, jeśli to możliwe.\nPrzeładuj zasoby (F3 + T) aby\nzmiany zostały zastosowane!",
-	"config.cem.use_old_animations": "Użyć starszej implementacji animacji?",
-	"config.cem.use_old_animations.description": "Przywraca to zachowanie animacji\nz wersji CEM <=0.6.2. Prawdopodobnie\nchcesz, żeby było to wyłączone."
+    "modmenu.descriptionTranslation.cem": "Pozwala na ładowanie do gry niestandardowych modeli zdefiniowanych przez pliki .jem i .jpm w paczce zasobów.",
+    "config.cem.use_optifine_folder": "Użyć \"assets/minecraft/optifine/cem\"?",
+    "config.cem.use_optifine_folder.description": "To załaduje modele CEM z\nassets/minecraft/optifine/cem\nDokładnie to samo robi optifine.\nPrzeładuj zasoby (F3 + T) aby\nzmiany zostały zastosowane!",
+    "config.cem.use_new_model_creation_fix": "Użyć poprawki tworzenia modelu?",
+    "config.cem.use_new_model_creation_fix.description": "Zapobiega to bezpośredniemu\nprzemeiszczaniu części twojego modelu\nprzez minecraft podczas animowania.\nPsuje to kilka modeli, ale naprawia inne.\nProszę używać, jeśli to możliwe.\nPrzeładuj zasoby (F3 + T) aby\nzmiany zostały zastosowane!",
+    "config.cem.use_old_animations": "Użyć starszej implementacji animacji?",
+    "config.cem.use_old_animations.description": "Przywraca to zachowanie animacji\nz wersji CEM <=0.6.2. Prawdopodobnie\nchcesz, żeby było to wyłączone."
 }

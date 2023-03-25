@@ -12,17 +12,17 @@ record Environment(float limbAngle,
                    float head_pitch,
                    Entity entity,
                    java.util.Map<String, Boolean> boolanimvars,
-                   java.util.Map<String, Float> floatanimvars){
-	
-	LivingEntity livingEntity(){
-		return (LivingEntity) this.entity;
-	}
-	
-	TameableEntity tameableEntity(){
-		return (TameableEntity) this.entity;
-	}
-	
-	PiglinEntity piglinEntity(){
-		return (PiglinEntity) this.entity;
-	}
+                   java.util.Map<String, Float> floatanimvars) {
+
+    LivingEntity livingEntity() {
+        return (LivingEntity) this.entity;
+    }
+
+    TameableEntity tameableEntity() {
+        return (TameableEntity) this.entity;
+    }
+
+    PiglinEntity piglinEntity() {
+        return (PiglinEntity) this.entity;
+    }
 }
