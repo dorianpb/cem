@@ -1,6 +1,6 @@
 package net.dorianpb.cem.internal.util;
 
-import net.dorianpb.cem.internal.models.CemModelEntry.CemCuboid;
+import net.dorianpb.cem.internal.models.CemModelEntry;
 import net.minecraft.util.math.Direction;
 import org.joml.Vector3f;
 
@@ -40,7 +40,7 @@ public enum SodiumCuboidFixer{
 		return success;
 	}
 	
-	public static void replacequad(CemCuboid cuboid,
+	public static void replacequad(CemModelEntry.CemCuboid cuboid,
 	                               float[] uvNorth,
 	                               float[] uvSouth,
 	                               float[] uvEast,
@@ -52,14 +52,62 @@ public enum SodiumCuboidFixer{
 		try{
 			Object modelCuboid = copymethod.invoke(cuboid);
 			Object[] quads = (Object[]) quadsfield.get(modelCuboid);
-			
-			quads[0] = newquad.newInstance(positionsfield.get(quads[0]), uvDown[0], uvDown[1], uvDown[2], uvDown[3], textureWidth, textureHeight, false, Direction.DOWN);
-			quads[1] = newquad.newInstance(positionsfield.get(quads[1]), uvUp[0], uvUp[1], uvUp[2], uvUp[3], textureWidth, textureHeight, false, Direction.UP);
-			quads[2] = newquad.newInstance(positionsfield.get(quads[2]), uvWest[0], uvWest[1], uvWest[2], uvWest[3], textureWidth, textureHeight, false, Direction.WEST);
-			quads[3] = newquad.newInstance(positionsfield.get(quads[3]), uvNorth[0], uvNorth[1], uvNorth[2], uvNorth[3], textureWidth, textureHeight, false, Direction.NORTH);
-			quads[4] = newquad.newInstance(positionsfield.get(quads[4]), uvEast[0], uvEast[1], uvEast[2], uvEast[3], textureWidth, textureHeight, false, Direction.EAST);
-			quads[5] = newquad.newInstance(positionsfield.get(quads[5]), uvSouth[0], uvSouth[1], uvSouth[2], uvSouth[3], textureWidth, textureHeight, false, Direction.SOUTH);
-			
+
+			quads[4] = newquad.newInstance(positionsfield.get(quads[4]),
+										   uvNorth[0],
+										   uvNorth[1],
+										   uvNorth[2],
+										   uvNorth[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.NORTH);
+			quads[5] = newquad.newInstance(positionsfield.get(quads[5]),
+										   uvSouth[0],
+										   uvSouth[1],
+										   uvSouth[2],
+										   uvSouth[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.SOUTH);
+			quads[0] = newquad.newInstance(positionsfield.get(quads[0]),
+										   uvEast[0],
+										   uvEast[1],
+										   uvEast[2],
+										   uvEast[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.EAST);
+			quads[1] = newquad.newInstance(positionsfield.get(quads[1]),
+										   uvWest[0],
+										   uvWest[1],
+										   uvWest[2],
+										   uvWest[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.WEST);
+			quads[2] = newquad.newInstance(positionsfield.get(quads[2]),
+										   uvDown[0],
+										   uvDown[1],
+										   uvDown[2],
+										   uvDown[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.DOWN);
+			quads[3] = newquad.newInstance(positionsfield.get(quads[3]),
+										   uvUp[0],
+										   uvUp[1],
+										   uvUp[2],
+										   uvUp[3],
+										   textureWidth,
+										   textureHeight,
+										   false,
+										   Direction.UP);
+
 		} catch(IllegalAccessException | InvocationTargetException | InstantiationException e){
 			throw new RuntimeException(e);
 		}
