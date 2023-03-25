@@ -1,22 +1,25 @@
 package net.dorianpb.cem.internal.file;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.util.CemFairy;
 import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceFactory;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.InvalidObjectException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
-public class JemModel {
+public final class JemModel {
     private final String                        baseId;
     private final String                        model;
     private final String                        part;
@@ -27,7 +30,7 @@ public class JemModel {
 
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    JemModel(LinkedTreeMap json, Identifier path, ResourceManager resourceManager) throws InvalidObjectException {
+    JemModel(LinkedTreeMap json, Identifier path, ResourceFactory resourceManager) throws IOException {
         this.baseId = CemFairy.JSONparseString(json.get("baseId"));
         this.model = CemFairy.JSONparseString(json.get("model"));
         this.part = CemFairy.JSONparseString(json.get("part"));
@@ -48,12 +51,12 @@ public class JemModel {
                                                                  .fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8),
                                                                            LinkedTreeMap.class);
                     if(file == null) {
-                        throw new InvalidObjectException("Invalid File");
+                        throw new IOException("Invalid File");
                     }
                     temp = new JpmFile(file);
-                } catch(Exception exception) {
+                } catch(JsonIOException | IOException | JsonSyntaxException exception) {
                     CemFairy.postReadError(exception, id);
-                    throw new InvalidObjectException("Error loading dependent file: " + id + exception.getMessage());
+                    throw new IOException("Error loading dependent file: " + id + exception.getMessage());
                 }
             } else {
                 CemFairy.getLogger().warn(" File \"" + id + "\" not found,");
@@ -98,8 +101,8 @@ public class JemModel {
         return this.modelDef;
     }
 
-    public LinkedTreeMap<String, String> getAnimations() {
-        return this.animations;
+    public Map<String, String> getAnimations() {
+        return Collections.unmodifiableMap(this.animations);
     }
 
 }

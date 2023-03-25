@@ -6,22 +6,21 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.InvalidObjectException;
-import java.security.InvalidParameterException;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class JemFile {
-    private static final Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
-    private final        Identifier                texture;
-    private final        List<Double>              textureSize;
-    private final        Float                     shadowsize;
-    private final        HashMap<String, JemModel> models;
-    private final        Identifier                path;
+    private static final    Pattern                   allowTextureChars = Pattern.compile("^[a-z0-9/._\\-]+$");
+    private final @Nullable Identifier                texture;
+    private final           List<Double>              textureSize;
+    private final           Float                     shadowsize;
+    private final           HashMap<String, JemModel> models;
+    private final           Identifier                path;
 
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws InvalidObjectException {
+    public JemFile(LinkedTreeMap<String, Object> json, Identifier path, ResourceManager resourceManager) throws IOException {
         this.textureSize = CemFairy.JSONparseDoubleList(json.get("textureSize"));
         this.shadowsize = JSONparseFloat(json.get("shadowSize"));
         this.path = path;
@@ -53,17 +52,17 @@ public class JemFile {
 
     private void validate() {
         if(this.models == null) {
-            throw new InvalidParameterException("Element \"models\" is required");
+            throw new IllegalStateException("Element \"models\" is required");
         }
         if(this.textureSize == null) {
-            throw new InvalidParameterException("Element \"textureSize\" is required");
+            throw new IllegalStateException("Element \"textureSize\" is required");
         }
         if(this.texture != null && !allowTextureChars.matcher(this.texture.getPath()).find()) {
-            throw new InvalidParameterException("Non [a-z0-9/._-] character in path of location: " + this.texture);
+            throw new IllegalStateException("Non [a-z0-9/._-] character in path of location: " + this.texture);
         }
     }
 
-    private JemFile(Identifier texture, List<Double> textureSize, Float shadowsize, HashMap<String, JemModel> models, Identifier path) {
+    private JemFile(@Nullable Identifier texture, List<Double> textureSize, Float shadowsize, HashMap<String, JemModel> models, Identifier path) {
         this.texture = texture;
         this.textureSize = textureSize;
         this.shadowsize = shadowsize;
@@ -71,16 +70,16 @@ public class JemFile {
         this.path = path;
     }
 
-    public Identifier getTexture() {
+    public @Nullable Identifier getTexture() {
         return this.texture;
     }
 
     public List<Double> getTextureSize() {
-        return this.textureSize;
+        return Collections.unmodifiableList(this.textureSize);
     }
 
     public Set<String> getModelList() {
-        return this.models.keySet();
+        return Collections.unmodifiableSet(this.models.keySet());
     }
 
     public JemModel getModel(String key) {

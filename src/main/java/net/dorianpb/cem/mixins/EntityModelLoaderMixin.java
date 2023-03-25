@@ -1,5 +1,7 @@
 package net.dorianpb.cem.mixins;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import net.dorianpb.cem.internal.config.CemConfigFairy;
 import net.dorianpb.cem.internal.file.JemFile;
@@ -22,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -76,7 +79,7 @@ public abstract class EntityModelLoaderMixin {
             LinkedTreeMap<String, Object> json = CemFairy.getGson()
                                                          .fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8), LinkedTreeMap.class);
             if(json == null) {
-                throw new Exception("Invalid File");
+                throw new IOException("Invalid File");
             }
 
             //            JemFile file = new JemFile(json, id, manager);
@@ -96,7 +99,7 @@ public abstract class EntityModelLoaderMixin {
             } else {
                 throw new NoSuchElementException("Unknown object \"" + id.getNamespace() + ":" + entityName + "\"!");
             }
-        } catch(Exception exception) {
+        } catch(JsonIOException | NoSuchElementException | JsonSyntaxException | IOException exception) {
             CemFairy.getLogger().error("Error parsing " + id + ":");
             String message = exception.getMessage();
             CemFairy.getLogger().error(exception);
@@ -113,8 +116,8 @@ public abstract class EntityModelLoaderMixin {
             JemFile file = new JemFile(json, id, manager);
             CemRegistryManager.addRegistry(entityModelLayer, file);
 
-        } catch(Exception e) {
-            throw new RuntimeException(e);
+        } catch(IOException e) {
+            throw new IllegalStateException(e);
         }
     }
 
@@ -127,8 +130,8 @@ public abstract class EntityModelLoaderMixin {
             //			CemRegistryManager.addRegistry(blockEntityType, file);
             CemFairy.getLogger().error("This build of CEM doesn't support Block Entities.");
 
-        } catch(Exception e) {
-            throw new RuntimeException(e);
+        } catch(IOException e) {
+            throw new IllegalStateException(e);
         }
     }
 
