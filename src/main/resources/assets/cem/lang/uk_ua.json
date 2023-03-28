@@ -1,0 +1,9 @@
+{
+	"modmenu.descriptionTranslation.cem": "Дозволяє завантаження власних моделей сутностей з форматів файлів .jem та .jpm у пакетах ресурсів.",
+	"config.cem.use_optifine_folder": "Використовувати директорії OptiFine",
+	"config.cem.use_optifine_folder.description": "Завантажувати власні моделі сутностей з assets/minecraft/optifine/cem - директорію, яку використовує мод Optifine.\nЩоб застосувати зміни, перезавантажте ресурси за допомогою F3 + T!",
+	"config.cem.use_new_model_creation_fix": "Виправлене створення моделей",
+	"config.cem.use_new_model_creation_fix.description": "Блокувати стандартні анімації Minecraft. Це виправить деякі моделі, але інші можуть відображатися некоректно. Будь ласка, використовуйте цей параметр тільки там, де це можливо.\nЩоб застосувати зміни, перезавантажте ресурси за допомогою F3 + T!",
+	"config.cem.use_old_animations": "Старий метод анімації",
+	"config.cem.use_old_animations.description": "Відновити поведінку анімації до версії моду CEM <=0.6.2. Скоріш за все, вам потрібно вимкнути цей параметр."
+}
