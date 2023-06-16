@@ -25,8 +25,7 @@ public abstract class EntityRenderersMixin {
     @SuppressWarnings("unchecked")
     @Redirect(method = "method_32174",
               at = @At(value = "INVOKE",
-                       target = "Lcom/google/common/collect/ImmutableMap$Builder;put(Ljava/lang/Object;Ljava/lang/Object;)" +
-                                "Lcom/google/common/collect/ImmutableMap$Builder;"))
+                       target = "Lcom/google/common/collect/ImmutableMap$Builder;put(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;"))
     private static <K extends EntityType<?>, V extends EntityRenderer<?>> ImmutableMap.Builder<K, V> cem$prepareEntityRenderer(ImmutableMap.Builder<K, V> instance,
                                                                                                                                Object key,
                                                                                                                                Object value) {
@@ -49,15 +48,18 @@ public abstract class EntityRenderersMixin {
                                                          ", can't assign texture!");
                     } else {
                         Model model = (Model) modelField.get(value);
+
+                        @SuppressWarnings("CastToIncompatibleInterface")
                         Function<Identifier, RenderLayer> function = ((ModelAccessor) model).getLayerFactory();
+
                         Identifier texture = registry.getTexture();
                         ((ModelAccessor) model).setLayerFactory(identifier -> function.apply(texture));
                     }
-                } catch(Exception e) {
+                } catch(ClassCastException | SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
                     CemFairy.getLogger().error(e.getMessage());
                 }
             }
         }
         return instance.put((K) key, (V) value);
     }
-}
+} 

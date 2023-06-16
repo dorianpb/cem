@@ -18,6 +18,9 @@
     "entrypoints": {
         "client": [
             "net.dorianpb.cem.internal.CemInit"
+        ],
+        "modmenu": [
+            "net.dorianpb.cem.internal.config.ModMenuIntegration"
         ]
     },
     "mixins": [
@@ -31,11 +34,10 @@
         "minecraft": ">=1.19"
     },
     "recommends": {
-        "completeconfig-base": "*",
-        "completeconfig-gui-cloth": "*",
-        "cloth-config2": "*"
+        "yet-another-config_lib_v3": "^3.0.1+1.20"
     },
     "conflicts": {
-        "optifabric": "*"
+        "optifabric": "*",
+        "entity_model_features": "*"
     }
 }

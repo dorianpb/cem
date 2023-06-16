@@ -1,22 +1,19 @@
 package net.dorianpb.cem.internal.config;
 
 import net.dorianpb.cem.internal.util.CemFairy;
-import net.fabricmc.loader.api.FabricLoader;
 
 public enum CemConfigFairy {
     ;
     private static CemOptions config;
 
+    @SuppressWarnings("ErrorNotRethrown")
     public static void loadConfig() {
-        if(FabricLoader.getInstance().isModLoaded("completeconfig-base")) {
+        try {
             config = CemConfig.getConfig();
-
-            if(FabricLoader.getInstance().isModLoaded("completeconfig-gui-cloth")) {
-                CemConfig.createScreen();
-            }
-        } else {
+        } catch(NoClassDefFoundError e) {
             CemFairy.getLogger().warn("Unable to set up config due to missing dependencies; using defaults!");
-            config = CemOptions.instance;
+            CemFairy.getLogger().warn("Missing class: {}", e.getMessage());
+            config = CemOptions.INSTANCE;
         }
     }
 

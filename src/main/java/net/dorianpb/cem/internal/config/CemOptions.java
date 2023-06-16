@@ -2,7 +2,7 @@ package net.dorianpb.cem.internal.config;
 
 @SuppressWarnings("unused")
 public interface CemOptions {
-    CemOptions instance = new CemOptions() {
+    CemOptions INSTANCE = new CemOptions() {
     };
 
     default boolean useOptifineFolder() {
