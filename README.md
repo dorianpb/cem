@@ -15,6 +15,8 @@ build it yourself. This mod requires the installation of the [Fabric Loader](htt
 If you want to configure this mod, the installation
 of [YACL](https://github.com/isXander/YetAnotherConfigLib "yacl") is also required.
 
+Additionally, [this resource pack](https://github.com/dorianpb/cem-opticompat-pack "cem-opticompat-pack") or a derivative of it is required to work with optifine CEM.
+
 ## How to use
 
 This mod loads .jem and .jpm files from "assets/dorianpb/cem" folder in resource packs. For resource packs intended to
