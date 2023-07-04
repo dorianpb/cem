@@ -1,0 +1,10 @@
+{
+    "modmenu.descriptionTranslation.cem": "Cho phép tải các mô hình tùy chỉnh vào trò chơi như được xác định bởi các tệp .jem và .jpm trong gói tài nguyên.",
+    "config.cem.missing_dependencies": "Không thể tải màn hình cấu hình do thiếu phần phụ thuộc:",
+    "config.cem.use_optifine_folder": "Sử dụng \"assets/minecraft/optifine/cem\"?",
+    "config.cem.use_optifine_folder.description": "Thao tác này sẽ tải các mô hình CEM từ\nassets/minecraft/optifine/cem,\nchính xác là những gì optifine thực hiện.",
+    "config.cem.use_new_model_creation_fix": "Sử dụng bản sửa lỗi tạo mô hình?",
+    "config.cem.use_new_model_creation_fix.description": "Điều này ngăn minecraft\ndi chuyển trực tiếp các bộ phận mô hình của bạn\nxung quanh khi tạo hoạt ảnh. Điều này làm hỏng\na một số mô hình nhưng sửa các mô hình khác.\nVui lòng sử dụng nếu có thể.",
+    "config.cem.use_old_animations": "Sử dụng triển khai hoạt ảnh cũ hơn?",
+    "config.cem.use_old_animations.description": "Điều này khôi phục hành vi hoạt hình\ntừ phiên bản CEM <=0.6.2. \ncó thể bạn muốn tắt tính năng này."
+}
