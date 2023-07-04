@@ -1,0 +1,9 @@
+{
+	"modmenu.descriptionTranslation.cem": "Kaynak Paketi içerisinde .jem ve .jpm dosyaları ile tanımlanan özel modellerin yüklenmesine izin verir.",
+	"config.cem.use_optifine_folder": "\"assets/minecraft/optifine/cem\" yolu kullanılsın mı?",
+	"config.cem.use_optifine_folder.description": "Böylece \nassets/minecraft/optifine/cem,\nOptifine'in yaptığı gibi yükleme yapar.\nDeğişikliklerin uygulanması için\nkaynakları yeniden yükleyin (F3 + T)!",
+	"config.cem.use_new_model_creation_fix": "Yeni model oluşturma düzeltmesi kullanılsın mı?",
+	"config.cem.use_new_model_creation_fix.description": "Bu Minecraft'ın modellerinizin\nanimasyon sırasında hareket\netmesini engeller. Bazı modelleri bozsa da\n diğerlerinin düzgün çalışmasını sağlar.\nMümkün oldukça kullanın.\nDeğişikliklerin uygulanması için\nkaynakları yeniden yükleyin (F3 + T)",
+	"config.cem.use_old_animations": "Eski animasyonlar kullanılsın mı?",
+	"config.cem.use_old_animations.description": "Bu CEM Verisyon <= 0.6.2'den geri yükleme yapar. Büyük ihtimalle devre dışı bırakmak istersin."
+}
