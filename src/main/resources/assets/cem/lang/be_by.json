@@ -1,0 +1,10 @@
+{
+    "modmenu.descriptionTranslation.cem": "Дазволіць загрузку карыстальніцкіх мадэлей у гульню з назвамі файлаў .jem and .jpm у пакетах рэсурсаў.",
+    "config.cem.missing_dependencies": "Немагчыма загрузіць экран налад з-за адсутнасці залежнасцей:",
+    "config.cem.use_optifine_folder": "Выкарыстоўваць \"assets/minecraft/optifine/cem\"?",
+    "config.cem.use_optifine_folder.description": "Гэта загрузіць CEM мадэлі з\nassets/minecraft/optifine/cem,\nшто менавіта робіць optifine.",
+    "config.cem.use_new_model_creation_fix": "Выкарыстоўваць выпраўленне пры стварэнні мадэлі?",
+    "config.cem.use_new_model_creation_fix.description": "Гэта прадухіляе minecraft ад\nнепасрэднага перамяшчэння\nчастак вашай мадэлі падчас анімацыі. Гэта ламае\nламае некаторыя мадэлі, але выпраўляе іншыя.\nКалі ласка, выкарыстоўвайце, калі магчыма.",
+    "config.cem.use_old_animations": "Выкарыстоўваць больш старую рэалізацыю анімацыі?",
+    "config.cem.use_old_animations.description": "Гэта ўзнаўляе рэалізацыю анімацыі\nз CEM версіі <=0.6.2. Здаецца\nвы гэта выключыце."
+}
